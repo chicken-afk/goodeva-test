@@ -22,7 +22,7 @@ class CreateMasterProducts extends Migration
             $table->text('description')->nullable();
             $table->string('sku')->unique();
             $table->integer('price_display');
-            $table->integer('price_promo');
+            $table->integer('price_promo')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
