@@ -18,6 +18,7 @@ class CreateActiveProductsTable extends Migration
             $table->string('uuid', 100);
             $table->integer('user_id');
             $table->integer('company_id');
+            $table->boolean('is_bundle')->default(0);
             $table->boolean('is_active')->default(1);
             $table->string('active_product_name');
             $table->string('product_image');
