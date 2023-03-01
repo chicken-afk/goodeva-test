@@ -1,0 +1,322 @@
+@extends('master')
+@section('css')
+<link href="{{ asset('css/pages/wizard/wizard-1.css') }}" rel="stylesheet" type="text/css">
+@endsection
+@section('script')
+<script src="{{ asset('js/pages/custom/wizard/wizard-1.js') }}"></script>
+<script src="{{ asset('js/pages/crud/file-upload/dropzonejs.js') }}"></script>
+<script src="{{ asset('js/addproduct.js') }}"></script>
+<script>
+    let token   = `<?php echo csrf_token() ?>`,
+    data['_token'] = token
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': token
+            }
+        });
+   function postData() {
+    $.ajax({
+        url: `{{ route('postProduct') }}`,
+        type : "POST",
+        data : data,
+        success:function(response){
+            console.log('response')
+        },
+        error:function(response){
+            console.log("Error gan")
+        }
+    });
+}
+</script>
+@endsection
+@section('content')
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <div class="d-flex flex-row">
+
+            @include('partials.masterdata.menu')
+
+            <!--begin::Content-->
+         
+            <div class="flex-row-fluid ml-lg-12">
+                <div class="card card-custom">
+                    <div class="card-body p-0">
+                        <!--begin::Wizard-->
+                        <div class="wizard wizard-1" id="kt_wizard" data-wizard-state="first" data-wizard-clickable="false">
+                            <!--begin::Wizard Nav-->
+                            <div class="wizard-nav border-bottom">
+                                <div class="wizard-steps p-8 p-lg-10">
+                                    <!--begin::Wizard Step 1 Nav-->
+                                    <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
+                                        <div class="wizard-label">
+                                            <i class="wizard-icon flaticon-bag"></i>
+                                            <h3 class="wizard-title">1. Produk Detail</h3>
+                                        </div>
+                                        <span class="svg-icon svg-icon-xl wizard-arrow">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                    <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)" x="11" y="5" width="2" height="14" rx="1"></rect>
+                                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)"></path>
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                    </div>
+                                    <!--end::Wizard Step 1 Nav-->
+                                    <!--begin::Wizard Step 2 Nav-->
+                                    <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                                        <div class="wizard-label">
+                                            <i class="wizard-icon flaticon-list"></i>
+                                            <h3 class="wizard-title">2. Varian</h3>
+                                        </div>
+                                        <span class="svg-icon svg-icon-xl wizard-arrow">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                    <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)" x="11" y="5" width="2" height="14" rx="1"></rect>
+                                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)"></path>
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                    </div>
+                                    <!--end::Wizard Step 2 Nav-->
+                                    <!--begin::Wizard Step 3 Nav-->
+                                    <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                                        <div class="wizard-label">
+                                            <i class="wizard-icon flaticon-web"></i>
+                                            <h3 class="wizard-title">3. Tambahan</h3>
+                                        </div>
+                                        <span class="svg-icon svg-icon-xl wizard-arrow">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                    <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)" x="11" y="5" width="2" height="14" rx="1"></rect>
+                                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)"></path>
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                    </div>
+                                    <!--end::Wizard Step 3 Nav-->
+                      
+                                    <!--begin::Wizard Step 5 Nav-->
+                                    <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                                        <div class="wizard-label">
+                                            <i class="wizard-icon flaticon-globe"></i>
+                                            <h3 class="wizard-title">5. Review and Submit</h3>
+                                        </div>
+                                        <span class="svg-icon svg-icon-xl wizard-arrow last">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                    <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)" x="11" y="5" width="2" height="14" rx="1"></rect>
+                                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)"></path>
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                    </div>
+                                    <!--end::Wizard Step 5 Nav-->
+                                </div>
+                            </div>
+                            <!--end::Wizard Nav-->
+                            <!--begin::Wizard Body-->
+                            <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                                <div class="col-xl-12 col-xxl-7">
+                                    <!--begin::Wizard Form-->
+                                    <form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form">
+                                        <!--begin::Wizard Step 1-->
+                                        <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                            <h3 class="mb-10 font-weight-bold text-dark">Masukan Detail Produk</h3>
+                                            <!--begin::Input-->
+                                            <div class="form-group fv-plugins-icon-container has-success">
+                                                <label>Nama Produk</label>
+                                                <input id="productName" type="text" class="form-control form-control-solid form-control-lg" name="product_name" placeholder="Enter">
+                                                <span class="form-text text-muted">Please enter your product name.</span>
+                                            <div class="fv-plugins-message-container"></div></div>
+                                            <!--end::Input-->
+                                             <!--begin::Input-->
+                                             <div class="form-group fv-plugins-icon-container has-success">
+                                                <label>SKU</label>
+                                                <input type="text" class="form-control form-control-solid form-control-lg" name="sku" placeholder="Enter" id="productSKU">
+                                                <span class="form-text text-muted">Please enter product SKU.</span>
+                                             <div class="fv-plugins-message-container"></div></div>
+                                            <!--end::Input-->
+                                            <!--begin::Input-->
+                                             <div class="form-group fv-plugins-icon-container has-success">
+                                                <label>Deskripsi</label>
+                                                <input type="text" class="form-control form-control-solid form-control-lg" name="description" placeholder="Enter Description" id="productDescription">
+                                                <span class="form-text text-muted">Deskripsi tentang produk.</span>
+                                             <div class="fv-plugins-message-container"></div></div>
+                                            <!--end::Input-->
+                          
+                                            <div class="row">
+                                                <div class="col-xl-6">
+                                                    <!--begin::Input-->
+                                                    <div class="form-group fv-plugins-icon-container has-success">
+                                                        <label>Outlet</label>
+                                                        <select name="outlet" class="form-control form-control-solid form-control-lg" id="productOutlet">
+                                                            <option selected="selected" value="0" selected="selected">Pilih Outlet</option>
+                                                            @foreach ($row['outlets'] as $key => $value )                   
+                                                            <option value="{{ $value->id }}" >{{ $value->outlet_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    <div class="fv-plugins-message-container"></div></div>
+                                                    <!--end::Input-->
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <!--begin::Select-->
+                                                    <div class="form-group fv-plugins-icon-container has-success">
+                                                        <label>Kategori</label>
+                                                        <select name="category" class="form-control form-control-solid form-control-lg" id="productCategory">
+                                                            <option selected="selected"value="0" selected="selected">Pilih Kategori</option>
+                                                            @foreach ($row['categories'] as $key => $value )             
+                                                                <option value="{{ $value->id }}">{{ $value->category_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    <div class="fv-plugins-message-container"></div></div>
+                                                    <!--end::Select-->
+                                                </div>
+                                            </div>
+                                                                                        <!--begin::Input-->
+                                            <div class="form-group">
+                                                <label>Harga</label>
+                                                <input type="text" class="form-control form-control-solid form-control-lg" placeholder="Example : 30000" name="price_display" id="productPrice" >
+                                                <span class="form-text text-muted">Please enter your Price.</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Harga Promo</label>
+                                                <input type="text" class="form-control form-control-solid form-control-lg" placeholder="Example : 28000" name="price_promo" id="productPricePromo" >
+                                                <span class="form-text text-muted">Please enter your Promo Price.</span>
+                                            </div>
+                                            <!--end::Input-->
+
+                                            <div class="form-group">
+                                                <label for="">Gambar Produk</label>
+                                                <div class="dropzone dropzone-default dz-clickable" id="kt_dropzone_1">
+                                                    <div class="dropzone-msg dz-message needsclick">
+                                                        <h3 class="dropzone-msg-title">Drop files here or click to upload.</h3>
+                                                        <span class="dropzone-msg-desc">Upload Gambar Produk disini</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end::Wizard Step 1-->
+                                        <!--begin::Wizard Step 2-->
+                                        <div class="pb-5" data-wizard-type="step-content">
+                                            <h4 class="mb-10 font-weight-bold text-dark">Masukan Varian
+                                                <span class="orm-text text-muted">*Tidak Wajib</span>
+                                                <div class="alert alert-warning" role="alert">
+                                                    Kosongkan data dan tekan next untuk melewati
+                                                </div>
+                                            </h4>
+                                            <div id="input-varian">
+                                                <div class="row">
+                                                    <div class="col-xl-4">
+                                                        <!--begin::Input-->
+                                                        <div class="form-group fv-plugins-icon-container has-success">
+                                                            <label>SKU</label>
+                                                            <input type="text" class="form-control form-control-solid form-control-lg" name="varian_sku[]">
+                                                            <span class="form-text text-muted">Please enter your Package Width in CM.</span>
+                                                        <div class="fv-plugins-message-container"></div></div>
+                                                        <!--end::Input-->
+                                                    </div>
+                                                    <div class="col-xl-4">
+                                                        <!--begin::Input-->
+                                                        <div class="form-group fv-plugins-icon-container has-success">
+                                                            <label>Variant Name</label>
+                                                            <input type="text" class="form-control form-control-solid form-control-lg" name="varian_name[]">
+                                                            <span class="form-text text-muted">Please enter your Package Height in CM.</span>
+                                                        <div class="fv-plugins-message-container"></div></div>
+                                                        <!--end::Input-->
+                                                    </div>
+                                                    <div class="col-xl-4">
+                                                        <!--begin::Input-->
+                                                        <div class="form-group fv-plugins-icon-container has-success">
+                                                            <label>Harga</label>
+                                                            <input type="text" class="form-control form-control-solid form-control-lg" name="varian_price[]">
+                                                            <span class="form-text text-muted">Please enter your Package Length in CM.</span>
+                                                        <div class="fv-plugins-message-container"></div></div>
+                                                        <!--end::Input-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-primary px-9 py-4" onclick="addForm()">+</button>
+
+                                        </div>
+                                        <!--end::Wizard Step 2-->
+                                        <!--begin::Wizard Step 3-->
+                                        <div class="pb-5" data-wizard-type="step-content">
+                                            <h4 class="mb-10 font-weight-bold text-dark">Masukan Topping
+                                                <span class="orm-text text-muted">*Tidak Wajib</span>
+                                                <div class="alert alert-warning" role="alert">
+                                                    Kosongkan data dan tekan next untuk melewati
+                                                </div>
+                                            </h4>
+                                            <div id="input-topping">
+                                                <div class="row">
+                                                    <div class="col-xl-8">
+                                                        <!--begin::Input-->
+                                                        <div class="form-group fv-plugins-icon-container has-success">
+                                                            <label>Nama Topping</label>
+                                                            <input type="text" class="form-control form-control-solid form-control-lg" name="topping_name[]">
+                                                            <span class="form-text text-muted">Contoh : Telor Dadar, Keju dll</span>
+                                                        <div class="fv-plugins-message-container"></div></div>
+                                                        <!--end::Input-->
+                                                    </div>
+                                                    <div class="col-xl-4">
+                                                        <!--begin::Input-->
+                                                        <div class="form-group fv-plugins-icon-container has-success">
+                                                            <label>Harga</label>
+                                                            <input type="text" class="form-control form-control-solid form-control-lg" name="topping_price[]">
+                                                            <span class="form-text text-muted">Please enter your Package Length in CM.</span>
+                                                        <div class="fv-plugins-message-container"></div></div>
+                                                        <!--end::Input-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-primary px-9 py-4" onclick="addFormToping()">+</button>
+                                            <!--end::Select-->
+                                        </div>
+                                        <!--end::Wizard Step 3-->
+                                        <!--begin::Wizard Step 5-->
+                                        <div class="pb-5" data-wizard-type="step-content" id="reviewPage">
+                                            {{-- REfresh page using javascript --}}
+                                        </div>
+                                        <!--end::Wizard Step 5-->
+                                        <!--begin::Wizard Actions-->
+                                        <div class="d-flex justify-content-between border-top mt-5 pt-10">
+                                            <div class="mr-2">
+                                                <button type="button" class="btn btn-light-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-prev">Previous</button>
+                                            </div>
+                                            <div>
+                                                <button onclick="postData()" type="button" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4">Submit</button>
+                                                <button onclick="generatFormData()" type="button" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-next">Next</button>
+                                            </div>
+                                        </div>
+                                        <!--end::Wizard Actions-->
+                                    <div></div><div></div><div></div><div></div>
+                                
+                                    <!--end::Wizard Form-->
+                                </div>
+                            </div>
+                            <!--end::Wizard Body-->
+                        </div>
+                        <!--end::Wizard-->
+                    </div>
+                    <!--end::Wizard-->
+                </div>
+            </div>
+         </form>
+        </div>
+    </div>
+    <!--end::Container-->
+</div>
+@endsection

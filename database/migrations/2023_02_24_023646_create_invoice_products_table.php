@@ -17,7 +17,7 @@ class CreateInvoiceProductsTable extends Migration
             $table->id();
             $table->integer('invoice_id');
             $table->integer('active_product_id');
-            $table->integer('qty', 5);
+            $table->integer('qty');
             $table->string('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
