@@ -25,8 +25,11 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/products', [ProductController::class, 'index'])->name('getProduct');
 Route::get('/products-add', [ProductController::class, 'addProductPage'])->name('addProductPage');
 Route::post('/product-post', [ProductController::class, 'store'])->name('postProduct');
+Route::get('/stock-edit/{uuid}', [ProductController::class, 'editStock'])->name('editStock');
+Route::get('/delete-product/{uuid}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
+Route::get('/bundle-add', [ProductController::class, 'createBundlePage'])->name('createBundlePage');
 
-// Route Product
+// Route Categories
 Route::get('/categories', [CategoryController::class, 'index'])->name('getCategory');
 Route::post('/categories', [CategoryController::class, 'add'])->name('postCategory');
 Route::get('/delete-category/{id}', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');

@@ -7,69 +7,141 @@ use DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\RandomData;
+use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductController extends Controller
 {
+    protected int $user_id;
+    protected int $company_id;
 
-    public function index(RandomData $random) {
-        $row['datas'] = DB::table('active_products')->get();
+    public function __construct()
+    {
+        $this->user_id = 1;
+        $this->company_id = 1;
+    }
 
+    public function index(RandomData $random, Request $request)
+    {
+        $row['datas'] = DB::table('active_products')->where('active_products.company_id', $this->company_id)
+            ->join('categories', 'categories.id', 'active_products.category_id')
+            ->join('outlets', 'outlets.id', 'active_products.outlet_id')
+            ->select('active_products.*', 'categories.category_name', 'outlets.outlet_name')
+            ->where('active_products.deleted_at', null)
+            ->get();
+
+        foreach ($row['datas'] as $key => $value) {
+            $text = "";
+            $topping_text = "";
+            $varian = DB::table('variants')->where('master_product_id', $value->id)->select('varian_name', 'varian_price', 'varian_promo')->get();
+            foreach ($varian as $val) {
+                $text = $text . $val->varian_name . " : Rp. " . number_format($val->varian_price, 2) . ", ";
+            }
+            $toppings = DB::table('toppings')->where('master_product_id', $value->id)->select('topping_name', 'topping_price')->get();
+            foreach ($toppings as $v) {
+                $topping_text = $topping_text . $v->topping_name . " : Rp. " . number_format($val->topping_price, 2) . ", ";
+            }
+            $text = $text == "" ? "Tidak ada varian" : $text;
+            $topping_text = $topping_text == "" ? "Tidak ada topping" : $topping_text;
+            $row['datas'][$key]->varian = $text;
+            $row['datas'][$key]->topping = $topping_text;
+        }
+
+        $row['categories'] = DB::table('categories')->where('company_id', $this->company_id)->select('id', 'category_name')->get();
+        $row['outlets'] = DB::table('outlets')->where('company_id', $this->company_id)->select('id', 'outlet_name')->get();
+        // dd($row["datas"]);
+
+        // dd($row['datas']);
         return view('main.product', compact('row'));
     }
 
-    public function store(Request $request, Random $random) {
+    public function deleteProduct($uuid)
+    {
+        // /For Testing only
+        $product = DB::table('active_products')->where('uuid', $uuid)->first();
+        if (!$product) {
+            Alert::error('Success', 'Produk tidak ditemukan');
+        } {
+            DB::table('active_products')->where('uuid', $uuid)->update([
+                'deleted_at' => now()
+            ]);;
+            DB::table('variants')->where('master_product_id', $product->id)->update([
+                'deleted_at' => now()
+            ]);;
+            DB::table('toppings')->where('master_product_id', $product->id)->update([
+                'deleted_at' => now()
+            ]);;
+        }
+
+        Alert::success('Success', 'Berhasil Menghapus Product');
+
+        return redirect()->back();
+    }
+
+    public function store(Request $request, RandomData $random)
+    {
+
+
+
         // Validator disini nanti
 
         // End Validator
         $uuid = $random->uuid('active_products');
+        $rSku = rand(10, 100);
 
-        $mProductId = DB::table('master_product')->insertGetId([
-            'outlet_id' => $request->outlet_id,
-            'user_id' => 1,
-            'company_id' => $request->company_id,
-            'category_id' => $request->category_id,
-            'product_name' => $request->productName,
-            'description' => $request->productDescription,
-            'product_image' => "Link image nanti dulu",
-            "sku" => $request->productSKU,
-            'price_display' => $request->productPrice,
-            'price_promo' => $request->productPricePromo,
-            'created_at' => now()
-        ]);
 
-        $insertProduct = DB::table('active_products')->insert([
+        $base64_image = $request->product_image;
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64_image)) {
+            $data = substr($base64_image, strpos($base64_image, ',') + 1);
+
+            $data = base64_decode($data);
+            $imageL = "images/product/" . $uuid . ".png";
+            Storage::disk('public')->put($imageL, $data);
+        }
+
+        $mProductId = DB::table('active_products')->insertGetid([
             'uuid' => $uuid,
             'is_bundle' => 0,
+            'outlet_id' => $request->outlet_id,
+            'category_id' => $request->category_id,
             'active_product_name' => $request->productName,
-            'product_image' => "Link image nanti dulu",
-            "sku" => $request->productSKU,
+            'product_image' => "storage/" . $imageL,
+            "sku" => $request->productSKU . "-" . $rSku,
             'price_display' => $request->productPrice,
             'price_promo' => $request->productPricePromo,
             'is_active' => 1,
             'is_available' => 1,
-            'created_at' => now()
+            'user_id' => $this->user_id,
+            'company_id' => $this->company_id,
+            'created_at' => now(),
+            'description' => $request->productDescription,
         ]);
 
         // Insert Varian
-        foreach($request->varian as $value) {
-            DB::table('variants')->insert([
-                'master_product_id' => $mProductId,
-                'user_id' => 1,
-                'varian_name' => $value->varian_name,
-                'varian_price' => $value->varian_price,
-                'varian_sku' => $value->varian_sku,
-                'varian_description' => 'null',
-                'varian_promo' => $value->varian_price,
-                'created_at' => now()
-            ]);
+        if ($request->has('varian')) {
+            foreach ($request->varian as $value) {
+                DB::table('variants')->insert([
+                    'master_product_id' => $mProductId,
+                    'user_id' => $this->user_id,
+                    'varian_price' => $value["varian_price"],
+                    'varian_sku' => $value["varian_sku"] . "-" . $rSku,
+                    'varian_name' => $value["varian_name"],
+                    'varian_description' => 'null',
+                    'varian_promo' => $value["varian_price"],
+                    'created_at' => now()
+                ]);
+            }
         }
         // Insert Topping
-        foreach($request->topping as $value) {
-            DB::table('toppings')->insert([
-                'topping_name' => $request->value->topping_name,
-                'price' => $request->topping_price,
-                'created_at' => now()
-            ]);
+        if ($request->has('topping')) {
+            foreach ($request->topping as $value) {
+                DB::table('toppings')->insert([
+                    'topping_name' => $value["topping_name"],
+                    'topping_price' => $value["topping_price"],
+                    'created_at' => now(),
+                    'master_product_id' => $mProductId,
+                ]);
+            }
         }
 
         return response()->json([
@@ -78,11 +150,29 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function addProductPage() {
+    public function addProductPage()
+    {
         $row['categories'] = DB::table('categories')->where('is_active', 1)->select('id', 'category_name')->get();
         $row['outlets'] = DB::table('outlets')->where('is_active', 1)->select('id', 'outlet_name')->get();
         return view('main.add-data-product', compact('row'));
     }
 
+    public function editStock($uuid)
+    {
+        $pAvail = DB::table('active_products')->where('uuid', $uuid)->first()->is_available;
+        $isAvail = $pAvail == 0 ? 1 : 0;
+        DB::table('active_products')->where('uuid', $uuid)->update([
+            'is_available' => $isAvail,
+            'updated_at' => now()
+        ]);
+        Alert::success('Success', 'Berhasil Merubah Stock');
+        return redirect()->back();
+    }
 
+    public function createBundlePage()
+    {
+        $row['categories'] = DB::table('categories')->where('is_active', 1)->select('id', 'category_name')->get();
+        $row['outlets'] = DB::table('outlets')->where('is_active', 1)->select('id', 'outlet_name')->get();
+        return view('main.add-bundle-product', compact('row'));
+    }
 }

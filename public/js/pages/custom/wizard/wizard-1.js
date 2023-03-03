@@ -16,38 +16,59 @@ var KTWizard1 = function () {
 			_formEl,
 			{
 				fields: {
-					address1: {
+					product_name: {
 						validators: {
 							notEmpty: {
-								message: 'Address is required'
+								message: 'Name is required'
 							}
 						}
 					},
-					postcode: {
+					sku: {
 						validators: {
 							notEmpty: {
-								message: 'Postcode is required'
+								message: 'sku is required'
 							}
 						}
 					},
-					city: {
+					description: {
 						validators: {
 							notEmpty: {
-								message: 'City is required'
+								message: 'Description is required'
 							}
 						}
 					},
-					state: {
+					outlet: {
 						validators: {
 							notEmpty: {
-								message: 'State is required'
+								message: 'Outlet is required'
 							}
 						}
 					},
-					country: {
+					category: {
 						validators: {
 							notEmpty: {
-								message: 'Country is required'
+								message: 'Kategori is required'
+							}
+						}
+					},
+					price_display: {
+						validators: {
+							notEmpty: {
+								message: 'Harga is required'
+							}
+						}
+					},
+					price_promo: {
+						validators: {
+							notEmpty: {
+								message: 'Harga Promo is required'
+							}
+						}
+					},
+					product_image: {
+						validators: {
+							notEmpty: {
+								message: 'Gambar is required'
 							}
 						}
 					}
@@ -265,34 +286,34 @@ var KTWizard1 = function () {
 		});
 
 		// Submit event
-		_wizardObj.on('submit', function (wizard) {
-			Swal.fire({
-				text: "All is good! Please confirm the form submission.",
-				icon: "success",
-				showCancelButton: true,
-				buttonsStyling: false,
-				confirmButtonText: "Yes, submit!",
-				cancelButtonText: "No, cancel",
-				customClass: {
-					confirmButton: "btn font-weight-bold btn-primary",
-					cancelButton: "btn font-weight-bold btn-default"
-				}
-			}).then(function (result) {
-				if (result.value) {
-					_formEl.submit(); // Submit form
-				} else if (result.dismiss === 'cancel') {
-					Swal.fire({
-						text: "Your form has not been submitted!.",
-						icon: "error",
-						buttonsStyling: false,
-						confirmButtonText: "Ok, got it!",
-						customClass: {
-							confirmButton: "btn font-weight-bold btn-primary",
-						}
-					});
-				}
-			});
-		});
+		// _wizardObj.on('submit', function (wizard) {
+		// 	Swal.fire({
+		// 		text: "All is good! Please confirm the form submission.",
+		// 		icon: "success",
+		// 		showCancelButton: true,
+		// 		buttonsStyling: false,
+		// 		confirmButtonText: "Yes, submit!",
+		// 		cancelButtonText: "No, cancel",
+		// 		customClass: {
+		// 			confirmButton: "btn font-weight-bold btn-primary",
+		// 			cancelButton: "btn font-weight-bold btn-default"
+		// 		}
+		// 	}).then(function (result) {
+		// 		if (result.value) {
+		// 			_formEl.submit(); // Submit form
+		// 		} else if (result.dismiss === 'cancel') {
+		// 			Swal.fire({
+		// 				text: "Your form has not been submitted!.",
+		// 				icon: "error",
+		// 				buttonsStyling: false,
+		// 				confirmButtonText: "Ok, got it!",
+		// 				customClass: {
+		// 					confirmButton: "btn font-weight-bold btn-primary",
+		// 				}
+		// 			});
+		// 		}
+		// 	});
+		// });
 	}
 
 	return {
