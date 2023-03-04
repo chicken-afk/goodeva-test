@@ -28,6 +28,7 @@ Route::post('/product-post', [ProductController::class, 'store'])->name('postPro
 Route::get('/stock-edit/{uuid}', [ProductController::class, 'editStock'])->name('editStock');
 Route::get('/delete-product/{uuid}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
 Route::get('/bundle-add', [ProductController::class, 'createBundlePage'])->name('createBundlePage');
+Route::post('/bundle-store', [ProductController::class, 'storeBundle'])->name('storeBundle');
 
 // Route Categories
 Route::get('/categories', [CategoryController::class, 'index'])->name('getCategory');

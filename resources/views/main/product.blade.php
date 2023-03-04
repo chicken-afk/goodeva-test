@@ -2,7 +2,9 @@
 @section('script')
     <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script>
-        $('#productTable').DataTable();
+        $('#productTable').DataTable({
+            order: [11, 'desc']
+        });
     </script>
 @endsection
 @section('css')
@@ -148,7 +150,6 @@
                         id="productTable">
                         <thead>
                             <tr>
-                                <th>SKU</th>
                                 <th>OUTLET</th>
                                 <th>IMAGE</th>
                                 <th>NAMA PRODUCT</th>
@@ -156,8 +157,8 @@
                                 <th>HARGA</th>
                                 <th>HARGA PROMO</th>
                                 <th>Stock</th>
-                                <th>Bundel</th>
-                                <th>Varian</th>
+                                <th class="p-0 min-w-200px">Bundel</th>
+                                <th class="p-0 min-w-200px">Varian</th>
                                 <th>Topping</th>
                                 <th>created at</th>
                                 <th>Actions</th>
@@ -166,7 +167,6 @@
                         <tbody>
                             @foreach ($row['datas'] as $key => $value)
                                 <tr>
-                                    <td>{{ $value->sku }}</td>
                                     <td>{{ $value->outlet_name }}</td>
                                     <td>
                                         <a href="{{ $value->product_image }}" target="_blank">
@@ -203,25 +203,37 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <span type="button"
-                                            class="btn btn-light-{{ $value->is_bundle == 1 ? 'success' : 'danger' }} btn-sm">
-                                            {{ $value->is_bundle == 1 ? 'ya' : 'bukan' }}
-                                        </span>
+                                        @if ($value->product_items->count() > 0)
+                                            @foreach ($value->product_items as $k => $v)
+                                                {{ $v->active_product_name }} : {{ $v->qty }} <br>
+                                            @endforeach
+                                        @else
+                                            <div class="text-danger">Bukan Bundel</div>
+                                        @endif
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-light-success btn-sm" data-toggle="popover"
-                                            data-trigger="click" title="Varian" data-content="{!! $value->varian !!}">
-                                            Klik
-                                        </button>
+                                        @if ($value->varian->count() > 0)
+                                            @foreach ($value->varian as $k => $v)
+                                                {{ $v->varian_name }} : Rp. {{ number_format($v->varian_price) }} <br>
+                                            @endforeach
+                                        @else
+                                            <div class="text-danger">Tidak ada Varian</div>
+                                        @endif
                                     </td>
-                                    <td><button type="button" class="btn btn-light-warning btn-sm" data-toggle="popover"
-                                            data-trigger="click" title="Topping" data-content="{!! $value->topping !!}">
-                                            Klik
-                                        </button></td>
+                                    <td>
+                                        @if ($value->topping->count() > 0)
+                                            @foreach ($value->topping as $k => $v)
+                                                {{ $v->topping_name }} : Rp. {{ number_format($v->topping_price) }} <br>
+                                            @endforeach
+                                        @else
+                                            <div class="text-danger">Tidak ada topping</div>
+                                        @endif
+                                    </td>
                                     <td>{{ date('d - m - Y', strtotime($value->created_at)) }}</td>
-                                    <td nowrap="nowrap"><span class="dtr-data"> <a href="javascript:;"
+                                    <td nowrap="nowrap"><span class="dtr-data">
+                                            {{-- <a href="javascript:;"
                                                 class="btn btn-sm btn-clean btn-icon" title="Edit details"> <i
-                                                    class="la la-edit"></i> </a>
+                                                    class="la la-edit"></i> </a> --}}
                                             <a href="{{ route('deleteProduct', $value->uuid) }}"
                                                 class="btn btn-sm btn-clean btn-icon" title="Delete"> <i
                                                     class="la la-trash"></i> </a>

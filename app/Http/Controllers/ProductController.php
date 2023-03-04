@@ -28,28 +28,25 @@ class ProductController extends Controller
             ->join('outlets', 'outlets.id', 'active_products.outlet_id')
             ->select('active_products.*', 'categories.category_name', 'outlets.outlet_name')
             ->where('active_products.deleted_at', null)
+            ->orderByDesc('active_products.id')
             ->get();
+        // dd($row['datas']);
 
         foreach ($row['datas'] as $key => $value) {
-            $text = "";
-            $topping_text = "";
             $varian = DB::table('variants')->where('master_product_id', $value->id)->select('varian_name', 'varian_price', 'varian_promo')->get();
-            foreach ($varian as $val) {
-                $text = $text . $val->varian_name . " : Rp. " . number_format($val->varian_price, 2) . ", ";
-            }
             $toppings = DB::table('toppings')->where('master_product_id', $value->id)->select('topping_name', 'topping_price')->get();
-            foreach ($toppings as $v) {
-                $topping_text = $topping_text . $v->topping_name . " : Rp. " . number_format($val->topping_price, 2) . ", ";
-            }
-            $text = $text == "" ? "Tidak ada varian" : $text;
-            $topping_text = $topping_text == "" ? "Tidak ada topping" : $topping_text;
-            $row['datas'][$key]->varian = $text;
-            $row['datas'][$key]->topping = $topping_text;
+            $items = DB::table('active_product_items')->where('active_product_items.master_product_id', $value->id)->join('active_products', 'active_products.id', 'active_product_items.active_product_id')
+                ->select('active_products.active_product_name', 'active_products.sku', 'active_product_items.qty')->get();
+
+
+            $row['datas'][$key]->varian = $varian;
+            $row['datas'][$key]->topping = $toppings;
+            $row['datas'][$key]->product_items = $items;
         }
 
         $row['categories'] = DB::table('categories')->where('company_id', $this->company_id)->select('id', 'category_name')->get();
         $row['outlets'] = DB::table('outlets')->where('company_id', $this->company_id)->select('id', 'outlet_name')->get();
-        // dd($row["datas"]);
+        // dd($row["datas"][0]->product_items[0]);
 
         // dd($row['datas']);
         return view('main.product', compact('row'));
@@ -106,7 +103,7 @@ class ProductController extends Controller
             'category_id' => $request->category_id,
             'active_product_name' => $request->productName,
             'product_image' => "storage/" . $imageL,
-            "sku" => $request->productSKU . "-" . $rSku,
+            "sku" => $request->productSKU . "::" . $rSku,
             'price_display' => $request->productPrice,
             'price_promo' => $request->productPricePromo,
             'is_active' => 1,
@@ -173,6 +170,58 @@ class ProductController extends Controller
     {
         $row['categories'] = DB::table('categories')->where('is_active', 1)->select('id', 'category_name')->get();
         $row['outlets'] = DB::table('outlets')->where('is_active', 1)->select('id', 'outlet_name')->get();
+        $row['products'] = DB::table('active_products')->where('deleted_at', null)->where('is_bundle', 0)->select('id', 'active_product_name as product_name', 'sku')->get();
         return view('main.add-bundle-product', compact('row'));
+    }
+
+    public function storeBundle(Request $request, RandomData $random)
+    {
+        // dd($request);
+        $uuid = $random->uuid('active_products');
+        $rSku = rand(10, 100);
+
+        $base64_image = $request->base64_image;
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64_image)) {
+            $data = substr($base64_image, strpos($base64_image, ',') + 1);
+
+            $data = base64_decode($data);
+            $imageL = "images/product/" . $uuid . ".png";
+            Storage::disk('public')->put($imageL, $data);
+        }
+
+        $mProductId = DB::table('active_products')->insertGetid([
+            'uuid' => $uuid,
+            'is_bundle' => 1,
+            'outlet_id' => $request->outlet,
+            'category_id' => $request->category,
+            'active_product_name' => $request->product_name,
+            'product_image' => "storage/" . $imageL,
+            "sku" => $request->sku . "::" . $rSku,
+            'price_display' => $request->price_display,
+            'price_promo' => $request->price_promo,
+            'is_active' => 1,
+            'is_available' => 1,
+            'user_id' => $this->user_id,
+            'company_id' => $this->company_id,
+            'created_at' => now(),
+            'description' => $request->description,
+        ]);
+
+        // Active Product Items
+        if ($request->product_id != null) {
+            foreach ($request->product_id as $key => $value) {
+                DB::table('active_product_items')->insert([
+                    'master_product_id' => $mProductId,
+                    'active_product_id' => $value,
+                    'qty' => $request->qty[$key],
+                    'created_at' => now()
+                ]);
+            }
+            Alert::success('Sukses', "Berhasil Membuat Bundle $request->product_name");
+            return redirect()->route('getProduct');
+        } else {
+            Alert::error('Gagal', 'Minimal 1 produk item di isi');
+            return redirect()->back();
+        }
     }
 }

@@ -178,7 +178,6 @@ License: You must have a valid license purchased only from themeforest(the above
     </script>
 
     <!--end::Global Config-->
-
     <!--begin::Global Theme Bundle(used by all pages)-->
     <script src="{{ asset('plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('plugins/custom/prismjs/prismjs.bundle.js') }}"></script>

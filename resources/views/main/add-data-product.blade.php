@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="sweetalert2.min.css">
 @endsection
 @section('script')
-    <script src="sweetalert2.min.js"></script>
+    {{-- <script src="sweetalert2.min.js"></script> --}}
     <script src="{{ asset('js/pages/custom/wizard/wizard-1.js') }}"></script>
     <script src="{{ asset('js/pages/crud/file-upload/dropzonejs.js') }}"></script>
     <script src="{{ asset('js/addproduct.js') }}"></script>
@@ -195,27 +195,35 @@
                                             <div class="pb-5" data-wizard-type="step-content"
                                                 data-wizard-state="current">
                                                 <h3 class="mb-10 font-weight-bold text-dark">Masukan Detail Produk</h3>
-                                                <!--begin::Input-->
-                                                <div class="form-group fv-plugins-icon-container has-success">
-                                                    <label>Nama Produk</label>
-                                                    <input id="productName" type="text"
-                                                        class="form-control form-control-solid form-control-lg"
-                                                        name="product_name" placeholder="Enter">
-                                                    <span class="form-text text-muted">Please enter your product
-                                                        name.</span>
-                                                    <div class="fv-plugins-message-container"></div>
+                                                <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <!--begin::Input-->
+                                                        <div class="form-group fv-plugins-icon-container has-success">
+                                                            <label>Nama Produk</label>
+                                                            <input id="productName" type="text"
+                                                                class="form-control form-control-solid form-control-lg"
+                                                                name="product_name" placeholder="Enter">
+                                                            <span class="form-text text-muted">Please enter your product
+                                                                name.</span>
+                                                            <div class="fv-plugins-message-container"></div>
+                                                        </div>
+                                                        <!--end::Input-->
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <!--begin::Input-->
+                                                        <div class="form-group fv-plugins-icon-container has-success">
+                                                            <label>SKU</label>
+                                                            <input style="text-transform:uppercase" type="text"
+                                                                class="form-control form-control-solid form-control-lg"
+                                                                name="sku" placeholder="Enter" id="productSKU">
+                                                            <span class="form-text text-muted">Please enter product
+                                                                SKU.</span>
+                                                            <div class="fv-plugins-message-container"></div>
+                                                        </div>
+                                                        <!--end::Input-->
+                                                    </div>
                                                 </div>
-                                                <!--end::Input-->
-                                                <!--begin::Input-->
-                                                <div class="form-group fv-plugins-icon-container has-success">
-                                                    <label>SKU</label>
-                                                    <input style="text-transform:uppercase" type="text"
-                                                        class="form-control form-control-solid form-control-lg"
-                                                        name="sku" placeholder="Enter" id="productSKU">
-                                                    <span class="form-text text-muted">Please enter product SKU.</span>
-                                                    <div class="fv-plugins-message-container"></div>
-                                                </div>
-                                                <!--end::Input-->
+
                                                 <!--begin::Input-->
                                                 <div class="form-group fv-plugins-icon-container has-success">
                                                     <label>Deskripsi</label>
@@ -266,25 +274,34 @@
                                                         <!--end::Select-->
                                                     </div>
                                                 </div>
-                                                <!--begin::Input-->
-                                                <div class="form-group">
-                                                    <label>Harga</label>
-                                                    <input type="text"
-                                                        class="form-control form-control-solid form-control-lg"
-                                                        placeholder="Example : 30000" name="price_display"
-                                                        id="productPrice">
-                                                    <span class="form-text text-muted">Please enter your Price.</span>
+                                                <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <!--begin::Input-->
+                                                        <div class="form-group">
+                                                            <label>Harga</label>
+                                                            <input type="text"
+                                                                class="form-control form-control-solid form-control-lg"
+                                                                placeholder="Example : 30000" name="price_display"
+                                                                id="productPrice">
+                                                            <span class="form-text text-muted">Please enter your
+                                                                Price.</span>
+                                                        </div>
+
+                                                        <!--end::Input-->
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <div class="form-group">
+                                                            <label>Harga Promo</label>
+                                                            <input type="text"
+                                                                class="form-control form-control-solid form-control-lg"
+                                                                placeholder="Example : 28000" name="price_promo"
+                                                                id="productPricePromo">
+                                                            <span class="form-text text-muted">Please enter your Promo
+                                                                Price.</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Harga Promo</label>
-                                                    <input type="text"
-                                                        class="form-control form-control-solid form-control-lg"
-                                                        placeholder="Example : 28000" name="price_promo"
-                                                        id="productPricePromo">
-                                                    <span class="form-text text-muted">Please enter your Promo
-                                                        Price.</span>
-                                                </div>
-                                                <!--end::Input-->
+
 
                                                 <div class="form-group">
                                                     <label for="">Gambar Produk</label><br>
