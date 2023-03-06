@@ -160,7 +160,7 @@
                                         aria-labelledby="kt_tab_pane_12_3">
                                         <!--begin::Table-->
                                         <div class="table-responsive">
-                                            <table class="table table-borderless table-vertical-center">
+                                            <table class="table table-separate table-head-custom table-checkable">
                                                 <thead>
                                                     <tr>
                                                         <th class="p-0 min-w-200px">Kategori Produk</th>

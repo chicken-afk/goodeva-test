@@ -5,7 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +41,11 @@ Route::get('/outlets', [OutletController::class, 'index'])->name('getOutlets');
 Route::post('/outlets', [OutletController::class, 'add'])->name('postOutlet');
 Route::get('/delete-outlet/{id}', [OutletController::class, 'deleteOutlet'])->name('deleteOutlet');
 Route::post('/update-outlet', [OutletController::class, 'updateOutlet'])->name('updateOutlet');
+
+
+
+/**
+ * Route For Users
+ */
+
+Route::get('/user-dashboard', [UserController::class, 'view'])->name('userPage');
