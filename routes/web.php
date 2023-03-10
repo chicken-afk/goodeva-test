@@ -49,3 +49,4 @@ Route::post('/update-outlet', [OutletController::class, 'updateOutlet'])->name('
  */
 
 Route::get('/user-dashboard', [UserController::class, 'view'])->name('userPage');
+Route::get('/carts', [UserController::class, 'carts'])->name('cartPage');

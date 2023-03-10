@@ -31,7 +31,7 @@
     {{-- End Header Navbar --}}
     {{-- <div class="product-wrap container"> --}}
     {{-- </div> --}}
-    <div class="main">
+    <div class="main-cart">
         @yield('content')
     </div>
 

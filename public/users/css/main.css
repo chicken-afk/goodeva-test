@@ -231,7 +231,7 @@ main {
 .modal-product {
     border-top-left-radius: 40px !important;
     border-top-right-radius: 40px !important;
-    opacity: 0.9;
+    opacity: 1;
     min-height: 900px;
 }
 
@@ -242,6 +242,7 @@ main {
 }
 
 .sticky-bottom {
+    background-color: white !important;
     padding: 0;
     position: fixed;
     bottom: 0;
@@ -511,4 +512,116 @@ fieldset:disabled .btn {
     border-color: rgb(153, 153, 153) !important;
 }
 
-/* Modal Animation */
+.fillter-section .fillter-category:focus {
+    box-shadow: none !important;
+    border: 1px black !important;
+}
+
+
+.card-orders {
+    background-color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    box-shadow: 0 15px 10px rgba(8, 15, 116, 0.05), 0 12px 28px rgba(0, 9, 128, 0.075) !important;
+    margin-bottom: 50px;
+}
+
+.card-orders .card-header {
+    background-color: #ffffff !important;
+}
+
+.card-orders .card-header .title-orders {
+    font-size: medium;
+    color: #140f08;
+    display: flex;
+    font-weight: 500 !important;
+}
+
+.footer {
+    position: fixed !important;
+    bottom: 0;
+    justify-content: center !important;
+    border-radius: 0%;
+    width: 100%;
+    height: 65px;
+    z-index: 1000 !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: none !important;
+    background-color: white !important;
+}
+
+.footer button {
+    border-radius: 20px !important;
+    width: 100%;
+    height: 55px;
+    border: none !important;
+}
+
+.back-button {
+    background-color: white !important;
+    margin-bottom: 10px;
+    align-items: center !important;
+    border-radius: 10px;
+    box-shadow: 0 30px 30px rgba(0, 9, 128, 0.05), 0 12px 28px rgba(0, 9, 128, 0.075) !important;
+    color: #131010;
+}
+
+.back-button i {
+    font-size: small !important;
+    font-weight: 500 !important;
+}
+
+.main-cart {
+    overflow: hidden;
+    margin-top: 60px;
+    /* height: 1500px; */
+    /* Used in this example to enable scrolling */
+}
+
+.main-cart .container {
+    background-color: #F8F8F8;
+}
+
+body {
+    background-color: #fffefe !important;
+}
+
+.title-orders .child {
+    justify-content: right;
+    display: inline-block !important;
+}
+
+.title-orders .child p {
+    font-size: xx-small;
+    margin-top: 5px;
+    color: #464948;
+    margin-bottom: 0px;
+}
+
+.title-orders .child-2 {
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.title-orders span {
+    color: #1d4fd7;
+    display: inline-block;
+    font-size: x-small;
+    justify-content: right !important;
+}
+
+.order-list .product-name {
+    padding-right: 10px !important;
+    font-size: x-small !important;
+    font-weight: 610;
+    color: rgb(44, 43, 43);
+}
+
+.mini {
+    width: 60px;
+    height: 60px;
+}
