@@ -523,7 +523,7 @@ fieldset:disabled .btn {
     border: none !important;
     border-radius: 10px !important;
     box-shadow: 0 15px 10px rgba(8, 15, 116, 0.05), 0 12px 28px rgba(0, 9, 128, 0.075) !important;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
 }
 
 .card-orders .card-header {
@@ -614,14 +614,54 @@ body {
     justify-content: right !important;
 }
 
+.mini {
+    /* width: 80px;
+    height: 80px; */
+    width: 5rem;
+    height: 5rem;
+}
+
+.x-mini {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.order-list {
+    margin-bottom: 1em;
+}
+
 .order-list .product-name {
     padding-right: 10px !important;
-    font-size: x-small !important;
+    font-size: small !important;
     font-weight: 610;
     color: rgb(44, 43, 43);
 }
 
-.mini {
-    width: 60px;
-    height: 60px;
+.product-name p {
+    font-size: xx-small;
+    font-weight: 600;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.order-list .price {
+    font-size: small;
+    font-weight: 600;
+    color: #361f04;
+}
+
+.detail-users label {
+    font-size: x-small;
+    font-weight: 600;
+}
+
+.detail-users input:focus {
+    border-color: rgba(243, 139, 42, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
+    outline: 0 none;
+}
+
+.detail-users p {
+    font-size: xx-small;
+    color: red;
 }

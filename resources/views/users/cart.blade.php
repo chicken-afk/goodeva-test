@@ -1,5 +1,9 @@
 @extends('users.main-cart')
 
+@section('js')
+    <script src="{{ asset('users/js/cart.js') }}"></script>
+@endsection
+
 @section('content')
     <div class="container">
         <a href="{{ route('userPage') }}" class="back-button">
@@ -18,27 +22,38 @@
 
                 </h4>
             </div>
-            <div class="card-body">
-                <div class="order-list">
-                    <div class="d-flex bd-highlight">
-                        <div class="bd-highlight pr-2 product-name">Nasi Goreng Ubed Special Sambal matah</div>
-                        <div class="bd-highlight  ms-auto">
-                            <img loading="lazy" src="{{ asset('storage/images/product/sXOLmDkUKvr0DVzi5P2n.png') }}"
-                                class="rounded float-start thumbnail-product mini" alt="...">
-                        </div>
-                    </div>
-                    <div class="d-flex bd-highlight mb-2">
-                        <div class="bd-highlight pr-2">Flex item with</div>
-                        <div class="bd-highlight ms-auto">Flex item</div>
-                    </div>
-                    <div class="line-1"></div>
+            <div class="card-body mb-10" id="content-body">
+                {{-- Append content using javascript --}}
+            </div>
+        </div>
+
+        <div class="card card-orders" id="detailPemesan" style="margin-bottom : 100px !important;">
+            <div class="card-header">
+                <h4 class="title-orders">
+                    <div class="child"> Detail Pemesan</div>
+                </h4>
+            </div>
+            <div class="card-body detail-users">
+                <div class="inpout-group mb-3">
+                    <label for="">Nama Pemesan</label>
+                    <p id="alert-user" class="d-none">Wajib Mengisi Nama</p>
+                    <input id="nUser" type="text" class="form-control" placeholder="Nama Pemesan"
+                        aria-label="Nama Pemesan" aria-describedby="basic-addon1" name="name" required>
+                </div>
+                <div class="inpout-group mb-3">
+                    <label for="">Nomor Meja</label>
+                    <p id='alert-table' class="d-none mb-0">Wajib Mengisi Nomor Meja</p>
+                    <p>Ambil Nomor Meja Di Kasir</p>
+                    <input id="nTable" type="number" class="form-control" placeholder="Nomor Meja"
+                        aria-label="Nomor Meja" aria-describedby="basic-addon1" name="table_no" required>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="footer sticky-bottom">
-        <button type="button" class="btn btn-sm btn-primary">
-            Buat Pesanan</button>
+        <button onclick="submitOrders()" id="buttonCheckout" type="button" class="btn btn-sm btn-primary">
+            {{-- Generate Using Javascript --}}
+        </button>
     </div>
 @endsection

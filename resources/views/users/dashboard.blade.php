@@ -76,8 +76,14 @@
                                                 value="{{ $val->active_product_name }}">
                                             <input type="hidden" id="description-{{ $val->uuid }}"
                                                 value="{{ $val->description }}">
+                                            <input type="hidden" name="product_image" id="image-{{ $val->uuid }}"
+                                                value="{{ asset($val->product_image) }}">
                                             <h4>{{ $val->active_product_name }}</h4>
                                             <p>{{ $val->description }}</p>
+                                            <input type="hidden" name="price_promo" id="price-promo-{{ $val->uuid }}"
+                                                value="{{ $val->price_promo }}">
+                                            <input type="hidden" name="price_display"
+                                                id="price-display-{{ $val->uuid }}" value="{{ $val->price_display }}">
                                             @if ($val->is_available == 0)
                                                 <span class="text-danger">Habis</span>
                                             @else
@@ -138,7 +144,8 @@
                                                                     <input class="form-check-input" type="checkbox"
                                                                         value="{{ $q->id }}|{{ $q->topping_name }}|{{ $q->topping_price }}"
                                                                         id="flexCheckDefault">
-                                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                                    <label class="form-check-label"
+                                                                        for="flexCheckDefault">
                                                                         {{ $q->topping_name }} +Rp.
                                                                         {{ number_format($q->topping_price) }}
                                                                     </label>
@@ -352,6 +359,7 @@
         // Add to cart
         function addToCart(uuid) {
             var data = {};
+            var total_price = 0;
             var varians = $(`input[name="varian-${uuid}"]:checked`).val();
             if ($(`#add-form${uuid}`).length) {
                 if (varians == null) {
@@ -362,7 +370,9 @@
                     $(`#requiredvarian${uuid}`).addClass("d-none");
                 }
             }
-
+            data['product_image'] = $(`#image-${uuid}`).val();
+            var price_promo = parseInt($(`#price-promo-${uuid}`).val());
+            var price_display = parseInt($(`#price-display-${uuid}`).val());
             data['uuid'] = $(`#uuid-${uuid}`).val();
             data['product_name'] = $(`#product_name-${uuid}`).val();
             data['description'] = $(`#description-${uuid}`).val();
@@ -373,7 +383,15 @@
                 data['varian_id'] = parseInt(varianArray[0]);
                 data['varian_name'] = varianArray[1];
                 data['varian_price'] = parseInt(varianArray[2]);
+            } else {
+                if (price_display == price_promo) {
+                    data['varian_price'] = price_display;
+                } else {
+                    data['varian_price'] = price_promo;
+                }
             }
+            total_price += data['varian_price'];
+
 
             var searchCheckbox = $(`#toppings-${uuid} input:checkbox:checked`).map(function() {
                 return $(this).val();
@@ -386,8 +404,13 @@
                     "topping_price": parseInt(myArray[2]),
                     "topping_id": parseInt(myArray[0])
                 }
+                total_price += parseInt(myArray[2]);
             }
+            var price = total_price;
+            total_price = total_price * data['qty'];
             data['toppings'] = toppings;
+            data['total_price'] = total_price;
+            data['price'] = price;
             var carts = JSON.parse(localStorage.getItem("carts") || "[]");
             console.log('cart awal :', carts)
             carts.push(data);
