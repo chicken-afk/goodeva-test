@@ -1,4 +1,5 @@
 const content = document.getElementById('content-body');
+var app_url = "127.0.0.1:8000";
 
 console.log(content);
 
@@ -262,8 +263,8 @@ function getTotalPrice() {
         sumPrice += priceTotal;
     }
     var e = document.getElementById('buttonCheckout');
-    sumPrice = number_format(sumPrice);
     e.innerHTML = `Buat Pesanan ( Rp. ${sumPrice},- )`;
+    return sumPrice;
 }
 
 function updateStorageCart(carts) {
@@ -300,6 +301,7 @@ function submitOrders() {
     data = {
         "nama_pemesan": nUser.value,
         "nomor_meja": nTable.value,
+        "invoice_charge": getTotalPrice(),
         "carts": carts
     }
     console.log(data)
@@ -310,10 +312,55 @@ function submitOrders() {
     // End Send Data Using Ajax
 
     Swal.fire({
-        icon: 'success',
-        title: 'Pemesanan Berhasil',
-        text: 'Pelayan Akan Membawa Pesanan Ke Meja Anda',
+        title: 'Pastikan pesanan sudah sesuai?',
+        // showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        denyButtonText: `Don't save`,
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: `http://127.0.0.1:8000/carts`,
+                type: "POST",
+                data: data,
+                success: function (response) {
+
+                    console.log(response)
+                    if (response.status_code == 422) {
+                        Swal.fire({
+                            icon: 'Error',
+                            title: 'Gagal',
+                            text: 'Something went wrong',
+                        })
+                        return false;
+                    }
+
+                    localStorage.removeItem('carts');
+                    localStorage.setItem('invoice', response.invoice);
+                    generateContent();
+                    window.location = "/invoice?invoice=" + response.invoice
+                    // window.location = "/products"
+                },
+                error: function (response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Something went wrong, please contact cashier',
+                    })
+                }
+            });
+
+        } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+        }
     })
+
 }
 
 getTotalPrice();

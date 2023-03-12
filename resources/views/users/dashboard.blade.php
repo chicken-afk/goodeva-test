@@ -4,11 +4,13 @@
     <div class="container fillter-section">
         <div class="row">
             <div class="col-sm-12">
-                <select class="form-select bg-light form-select-sm fillter-category" aria-label="Default select example">
+                <select class="form-select bg-light form-select-sm fillter-category" aria-label="Default select example"
+                    onchange="scrollToId()" id="selectBox">
                     <option>Semua</option>
                     <optgroup label="Warung">
                         @foreach ($row['outlets'] as $key => $value)
-                            <option value="{{ $value->id }}">{{ $value->outlet_name }}</option>
+                            <option value="menu{{ $key }}">
+                                {{ $value->outlet_name }}</option>
                         @endforeach
                     </optgroup>
                     <optgroup label="Kategori">
@@ -26,7 +28,7 @@
     <div class="container">
         @foreach ($row['outlets'] as $key => $value)
             @if ($row['outlets'][$key]->products->count() != 0)
-                <div class="product-wrap">
+                <div class="product-wrap" id="menu{{ $key }}">
                     <h3 class="category-title">{{ $value->outlet_name }}</h3>
                     @foreach ($row['outlets'][$key]->products as $val)
                         <div class="product_list" data-bs-toggle="modal" data-bs-target="#productModal{{ $val->uuid }}">
@@ -426,6 +428,20 @@
                 footer: '<a href="/carts">Lihat Keranjang</a>'
             });
 
+        }
+
+        function scrollToId() {
+            console.log('masuk');
+            var selectBox = document.getElementById("selectBox");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+            console.log(selectedValue)
+            var access = document.getElementById(selectedValue);
+            console.log(access)
+            access.scrollIntoView({
+                behavior: 'smooth',
+                block: "end",
+                inline: "nearest"
+            }, true);
         }
 
         totalCart();

@@ -23,6 +23,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <meta name="description" content="Updates and statistics" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="canonical" href="https://keenthemes.com/metronic" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('media/client-logos/logo.png') }}">
 
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
