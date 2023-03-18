@@ -360,12 +360,16 @@
 
         // Add to cart
         function addToCart(uuid) {
+            var sVarian = document.getElementById(`add-form${uuid}`);
             var data = {};
             var total_price = 0;
             var varians = $(`input[name="varian-${uuid}"]:checked`).val();
             if ($(`#add-form${uuid}`).length) {
                 if (varians == null) {
                     console.log('masuk sini');
+                    sVarian.scrollIntoView({
+                        behavior: 'smooth'
+                    }, true);
                     $(`#requiredvarian${uuid}`).removeClass("d-none");
                     return false
                 } else {
