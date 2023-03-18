@@ -18,7 +18,6 @@ class CreateInvoicesTable extends Migration
             $table->integer('qr_code_id');
             $table->integer('company_id');
             $table->string('invoice_number', 100)->unique();
-            $table->string('invoice_code', 100)->unique();
             $table->string('name', 50);
             $table->dateTime('payment_at')->nullable();
             $table->string('payment_method', 50)->nullable();

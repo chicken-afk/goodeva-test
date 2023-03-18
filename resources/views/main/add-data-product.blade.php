@@ -295,9 +295,9 @@
                                                             <input type="text"
                                                                 class="form-control form-control-solid form-control-lg"
                                                                 placeholder="Example : 28000" name="price_promo"
-                                                                id="productPricePromo">
-                                                            <span class="form-text text-muted">Please enter your Promo
-                                                                Price.</span>
+                                                                id="productPricePromo" disabled>
+                                                            <span class="form-text text-muted">Fitur Harga Promo Belum
+                                                                Tersedia</span>
                                                         </div>
                                                     </div>
                                                 </div>

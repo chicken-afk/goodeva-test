@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="{{ asset('users/css/main.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ asset('media/client-logos/logo.png') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/x-icon" href="{{ asset('media/client-logos/logo.png') }}">
     <!--begin::Global Theme Styles(used by all pages)-->
     {{-- <link href="{{ asset('plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" /> --}}
     {{-- <link href="{{ asset('plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css" /> --}}
@@ -16,13 +16,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <title>Warung Aceh Bang Ari</title>
+    @yield('css')
 </head>
 
 <body>
 
     {{-- Header Navbara --}}
     <div class="headers" id="header">
-        <nav class="navbars container d-flex justify-content-center">
+        <nav class="navbars container d-flex justify-content-center"">
             <div class="brand">
                 <img src="{{ asset('media/client-logos/logo.png') }}" class="logo-brand" />
                 Warung Aceh Bang Ari
@@ -33,7 +34,7 @@
     {{-- End Header Navbar --}}
     {{-- <div class="product-wrap container"> --}}
     {{-- </div> --}}
-    <div class="main">
+    <div class="main-cart">
         @yield('content')
     </div>
 
