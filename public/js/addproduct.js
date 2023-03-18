@@ -290,7 +290,7 @@ function postData() {
         }
     });
     $.ajax({
-        url: `http://127.0.0.1:8000/product-post`,
+        url: `/product-post`,
         type: "POST",
         data: data,
         success: function (response) {
