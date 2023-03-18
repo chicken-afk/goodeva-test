@@ -33,7 +33,7 @@ Route::post('/login', [AdminController::class, 'login'])->name('loginAdmin');
  */
 
 Route::middleware(['login'])->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route Product
     Route::get('/products', [ProductController::class, 'index'])->name('getProduct');
     Route::get('/products-add', [ProductController::class, 'addProductPage'])->name('addProductPage');
@@ -75,7 +75,7 @@ Route::middleware(['login'])->group(function () {
  * Route For Users
  */
 
-Route::get('/user-dashboard', [UserController::class, 'view'])->name('userPage');
+Route::get('/', [UserController::class, 'view'])->name('userPage');
 Route::get('/carts', [UserController::class, 'carts'])->name('cartPage');
 Route::post('/carts', [UserController::class, 'storeCart'])->name('storeCart');
 Route::get('/invoice', [UserController::class, 'invoice'])->name('invoice');
