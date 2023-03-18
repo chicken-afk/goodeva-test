@@ -54,6 +54,11 @@
                         <h5 class="mb-0">{{ $row['invoice']->name }}</h5>
                     </div>
                     <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 20px;">
+                        <h5 class="mb-0" style="width: 7rem">Status Pemesanan</h5>
+                        <h5 class="mb-0" style="width: 0.5rem">:</h5>
+                        <h5 class="mb-0">{{ $row['invoice']->order_status }}</h5>
+                    </div>
+                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 20px;">
                         <h5 class="mb-0" style="width: 7rem">Kode Pemesanan</h5>
                         <h5 class="mb-0" style="width: 0.5rem">:</h5>
                         <h5 class="mb-0">{{ $row['invoice']->invoice_code }}</h5>

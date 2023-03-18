@@ -84,7 +84,7 @@ class UserController extends Controller
         }
 
         /** End Get Total Price */
-        $invoice = "INVC" . time() . $this->company_id . strtoupper(Str::random(1));
+        $invoice = "INVC" . time() . $this->company_id . strtoupper(Str::random(2));
         $invoiceToday = DB::table('invoices')->whereDate('created_at', Carbon::today())->count();
         $invoice_code = $invoiceToday + 1;
         $invoiceId = DB::table('invoices')->insertGetId([

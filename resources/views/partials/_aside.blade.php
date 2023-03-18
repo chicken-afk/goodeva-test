@@ -34,8 +34,8 @@
             <!--begin::Item-->
             <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
                 data-boundary="window" title="Pesanan">
-                <a href="#" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg" data-toggle="tab"
-                    data-target="#kt_aside_tab_3" role="tab">
+                <a href="{{ route('getOrders') }}"
+                    class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('getOrders') }}">
                     <i class="flaticon-cart icon-lg"></i>
                 </a>
             </li>
@@ -68,8 +68,9 @@
             <!--begin::Item-->
             <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
                 data-boundary="window" title="User Management">
-                <a href="#" class="nnav-link btn btn-icon btn-icon-white btn-lg" data-toggle="tab"
-                    data-target="#kt_aside_tab_5" role="tab">
+                <a href="{{ route('userManagement') }}"
+                    class="nav-link btn btn-icon btn-icon-white btn-lg {{ set_active('userManagement') }}"
+                    role="tab">
                     <i class="flaticon2-user-1 icon-lg"></i>
                 </a>
             </li>

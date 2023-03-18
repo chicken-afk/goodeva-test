@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Services\RandomData;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -17,8 +18,12 @@ class ProductController extends Controller
 
     public function __construct()
     {
-        $this->user_id = 1;
-        $this->company_id = 1;
+        $this->middleware(function ($request, $next) {
+            $this->user_id = Auth::id();
+            $this->company_id = Auth::user()->company_id;
+
+            return $next($request);
+        });
     }
 
     public function index(RandomData $random, Request $request)

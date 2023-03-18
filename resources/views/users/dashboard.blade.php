@@ -13,11 +13,11 @@
                                 {{ $value->outlet_name }}</option>
                         @endforeach
                     </optgroup>
-                    <optgroup label="Kategori">
+                    {{-- <optgroup label="Kategori">
                         @foreach ($row['categories'] as $key => $value)
                             <option value="{{ $value->id }}">{{ $value->category_name }}</option>
                         @endforeach
-                    </optgroup>
+                    </optgroup> --}}
                 </select>
             </div>
         </div>
@@ -59,7 +59,7 @@
                         <!-- Modal -->
                         <div class="modal fade" data-easein="flipXIn" id="productModal{{ $val->uuid }}" tabindex="-1"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-fullscreen ">
+                            <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
                                 <div class="modal-content modal-product">
                                     {{-- <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
