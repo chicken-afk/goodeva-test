@@ -326,7 +326,7 @@ function submitOrders() {
                 }
             });
             $.ajax({
-                url: `http://127.0.0.1:8000/carts`,
+                url: `/carts`,
                 type: "POST",
                 data: data,
                 success: function (response) {
