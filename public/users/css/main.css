@@ -232,7 +232,7 @@ main {
     border-top-left-radius: 40px !important;
     border-top-right-radius: 40px !important;
     opacity: 1;
-    min-height: 900px;
+    /* min-height: 900px; */
 }
 
 .close-modal {
@@ -687,4 +687,13 @@ body {
 .card-invoice .card-body h5 {
     font-size: x-small;
     font-weight: 600;
+}
+
+.modal__backdrop {
+    position: fixed;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
 }
