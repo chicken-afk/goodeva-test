@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserManagementController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,3 +80,9 @@ Route::get('/', [UserController::class, 'view'])->name('userPage');
 Route::get('/carts', [UserController::class, 'carts'])->name('cartPage');
 Route::post('/carts', [UserController::class, 'storeCart'])->name('storeCart');
 Route::get('/invoice', [UserController::class, 'invoice'])->name('invoice');
+
+/** Artisan **/
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return 'Application storage Link Added!';
+});
