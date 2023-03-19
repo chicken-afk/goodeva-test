@@ -16,7 +16,7 @@
                         <span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal informaiton</span>
                     </div>
 
-                    <form class="form" action="{{ route('saveSetting') }}" method="POST">
+                    <form class="form" autocomplete="off" action="{{ route('saveSetting') }}" method="POST">
                         <div class="card-toolbar">
                             <button type="submit" class="btn btn-success mr-2">Save Changes</button>
                             {{-- <button type="reset" class="btn btn-secondary">Cancel</button> --}}
