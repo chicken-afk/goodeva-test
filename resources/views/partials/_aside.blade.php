@@ -67,7 +67,7 @@
 
             <!--begin::Item-->
             <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
-                data-boundary="window" title="Setting">
+                data-boundary="window" title="User Management">
                 <a href="{{ route('userManagement') }}"
                     class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('userManagement') }}"
                     role="tab">
