@@ -23,7 +23,7 @@
 
     {{-- Header Navbara --}}
     <div class="headers" id="header">
-        <nav class="navbars container d-flex justify-content-center">
+        <nav class="navbars container d-flex justify-content-center mt-2 mb-2">
             <a href="{{ route('userPage') }}" style="text-decoration: none !important">
                 <div class="brand">
                     <img src="{{ asset('media/client-logos/logo.png') }}" class="logo-brand" />
@@ -48,34 +48,34 @@
                     <p class="mb-0">Pesanan akan langsung dibawa oleh pelayan ke meja anda.</p>
                 </div>
                 <div class="card-body">
-                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 20px;">
+                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
                         <h5 class="mb-0" style="width: 7rem">Nama</h5>
-                        <h5 class="mb-0" style="width: 0.5rem">:</h5>
+                        <h5 class="mb-0" style="width: 0.1rem">:</h5>
                         <h5 class="mb-0">{{ $row['invoice']->name }}</h5>
                     </div>
-                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 20px;">
+                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
                         <h5 class="mb-0" style="width: 7rem">Status Pemesanan</h5>
-                        <h5 class="mb-0" style="width: 0.5rem">:</h5>
+                        <h5 class="mb-0" style="width: 0.1rem">:</h5>
                         <h5 class="mb-0">{{ $row['invoice']->order_status }}</h5>
                     </div>
-                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 20px;">
+                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
                         <h5 class="mb-0" style="width: 7rem">Kode Pemesanan</h5>
-                        <h5 class="mb-0" style="width: 0.5rem">:</h5>
+                        <h5 class="mb-0" style="width: 0.1rem">:</h5>
                         <h5 class="mb-0">{{ $row['invoice']->invoice_code }}</h5>
                     </div>
-                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 20px;">
+                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
                         <h5 class="mb-0" style="width: 7rem">Invoice</h5>
-                        <h5 class="mb-0" style="width: 0.5rem">:</h5>
+                        <h5 class="mb-0" style="width: 0.1rem">:</h5>
                         <h5 class="mb-0">{{ $row['invoice']->invoice_number }}</h5>
                     </div>
-                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 20px;">
+                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
                         <h5 class="mb-1" style="width: 7rem">Nomor Meja</h5>
-                        <h5 class="mb-1" style="width: 0.5rem">:</h5>
+                        <h5 class="mb-1" style="width: 0.1rem">:</h5>
                         <h5 class="mb-1"> {{ $row['invoice']->no_table }}</h5>
                     </div>
-                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 20px;">
+                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
                         <h5 class="mb-1" style="width: 7rem">Harga Total</h5>
-                        <h5 class="mb-1" style="width: 0.5rem">:</h5>
+                        <h5 class="mb-1" style="width: 0.1rem">:</h5>
                         <h5 class="mb-1"> Rp. {{ number_format($row['invoice']->payment_charge) }},-</h5>
                     </div>
                     <h5 class="mb-0">Pesanan :</h5>
@@ -102,14 +102,14 @@
                     @endforeach
                 </div>
                 <div class="card-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" onclick="window.print()">Print
+                    <button type="button" class="btn btn-sm btn-secondary mt-1" onclick="window.print()">Print
                         Invoice</button>
                     <input type="hidden"
                         value="{{ route('invoice', ['invoice' => $row['invoice']->invoice_number]) }}" name=""
                         id="myInput">
-                    <button type="button" class="btn btn-sm btn-secondary" onclick="copyLink()">
+                    <button type="button" class="btn btn-sm btn-secondary mt-1" onclick="copyLink()">
                         Copy Invoice</button>
-                    <a type="button" class="btn btn-sm btn-warning mt-2" href="{{ route('userPage') }}">
+                    <a type="button" class="btn btn-sm btn-warning mt-1" href="{{ route('userPage') }}">
                         Pesan Lagi</a>
                 </div>
             </div>

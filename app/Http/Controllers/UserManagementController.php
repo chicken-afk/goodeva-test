@@ -14,7 +14,7 @@ class UserManagementController extends Controller
         $row['users'] = DB::table('users')->join('roles', 'roles.id', 'users.role_id')
             ->leftJoin('outlets', 'outlets.id', 'users.outlet_id')
             ->select('users.*', 'roles.role_name', 'outlets.outlet_name')
-            ->where('users.deleted_at', null)
+            // ->where('users.deleted_at', null)
             ->where('users.company_id', Auth::user()->company_id)->get();
         $row['roles'] = DB::table('roles')->get();
         $row['outlets'] = DB::table('outlets')->where('company_id', Auth::user()->company_id)->get();
@@ -25,6 +25,11 @@ class UserManagementController extends Controller
     {
         /**Validation Here */
 
+        $eCount = DB::table('users')->where('email', $request->email)->count();
+        if ($eCount != 0) {
+            alert('error', 'Email Sudah Digunakan', 'error');
+            return redirect()->back();
+        }
 
         DB::table('users')->insert([
             'name' => $request->name,
