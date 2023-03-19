@@ -2,6 +2,9 @@
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
+@section('header-name')
+    Tambah Bundle Produk
+@endsection
 @section('script')
     <script src="{{ asset('js/pages/crud/file-upload/dropzonejs.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
@@ -133,226 +136,235 @@
         });
     </script>
 @section('content')
-    <div class="d-flex flex-column-fluid">
-        <!--begin::Container-->
-        <div class="container">
-            @include('partials.masterdata.menu-2')
-            <div class="flex-row-fluid ml-lg-12">
+    @if (Auth::user()->role_id != 1)
+        <div class="alert alert-danger mt-5">Anda Tidak Memiliki Akses ke Halaman ini</div>
+    @else
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container">
+                @include('partials.masterdata.menu-2')
+                <div class="flex-row-fluid ml-lg-12">
 
-                <form action="{{ route('storeBundle') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="card card-custom">
-                        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-                            <div class="card-title">
-                                <h3 class="card-label text-uppercase text-dark-75">Buat Bundel
-                                </h3>
+                    <form action="{{ route('storeBundle') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="card card-custom">
+                            <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                                <div class="card-title">
+                                    <h3 class="card-label text-uppercase text-dark-75">Buat Bundel
+                                    </h3>
+                                </div>
+                                <div class="card-toolbar"> <button type="submit"
+                                        class="btn btn-success font-weight-bolder text-uppercase px-9 py-4">Submit</button>
+                                </div>
                             </div>
-                            <div class="card-toolbar"> <button type="submit"
-                                    class="btn btn-success font-weight-bolder text-uppercase px-9 py-4">Submit</button>
-                            </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="row mg-lg-12">
-                                <div class="col-sm-12 col-md-6 pl-15">
-                                    <div class="card card-custom gutter-b card-stretch">
-                                        <div class="card-header border-0 pt-5">
-                                            <div class="card-title">Bundle Information</div>
+                            <div class="card-body p-0">
+                                <div class="row mg-lg-12">
+                                    <div class="col-sm-12 col-md-6 pl-15">
+                                        <div class="card card-custom gutter-b card-stretch">
+                                            <div class="card-header border-0 pt-5">
+                                                <div class="card-title">Bundle Information</div>
 
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-xl-6">
-                                                    <!--begin::Input-->
-                                                    <div class="form-group fv-plugins-icon-container has-success">
-                                                        <label>Nama Bundle</label>
-                                                        <input id="bundleName" type="text"
-                                                            class="form-control form-control-solid form-control-lg"
-                                                            name="product_name" placeholder="Enter" required>
-                                                        <span class="form-text text-muted">Please enter your product
-                                                            name.</span>
-                                                        <div class="fv-plugins-message-container"></div>
-                                                    </div>
-                                                    <!--end::Input-->
-                                                </div>
-                                                <div class="col-xl-6">
-                                                    <!--begin::Input-->
-                                                    <div class="form-group fv-plugins-icon-container has-success">
-                                                        <label>productSKU</label>
-                                                        <input required style="text-transform:uppercase" type="text"
-                                                            class="form-control form-control-solid form-control-lg"
-                                                            name="sku" placeholder="Enter" id="productSKU">
-                                                        <span class="form-text text-muted">Please enter product
-                                                            SKU.</span>
-                                                        <div class="fv-plugins-message-container"></div>
-                                                    </div>
-                                                    <!--end::Input-->
-                                                </div>
                                             </div>
-                                            <!--begin::Input-->
-                                            <div class="form-group fv-plugins-icon-container has-success">
-                                                <label>Deskripsi</label>
-                                                <input required type="text"
-                                                    class="form-control form-control-solid form-control-lg"
-                                                    name="description" placeholder="Enter Description"
-                                                    id="productDescription">
-                                                <span class="form-text text-muted">Deskripsi tentang produk.</span>
-                                                <div class="fv-plugins-message-container"></div>
-                                            </div>
-                                            <!--end::Input-->
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <!--begin::Input-->
+                                                        <div class="form-group fv-plugins-icon-container has-success">
+                                                            <label>Nama Bundle</label>
+                                                            <input id="bundleName" type="text"
+                                                                class="form-control form-control-solid form-control-lg"
+                                                                name="product_name" placeholder="Enter" required>
+                                                            <span class="form-text text-muted">Please enter your product
+                                                                name.</span>
+                                                            <div class="fv-plugins-message-container"></div>
+                                                        </div>
+                                                        <!--end::Input-->
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <!--begin::Input-->
+                                                        <div class="form-group fv-plugins-icon-container has-success">
+                                                            <label>productSKU</label>
+                                                            <input required style="text-transform:uppercase" type="text"
+                                                                class="form-control form-control-solid form-control-lg"
+                                                                name="sku" placeholder="Enter" id="productSKU">
+                                                            <span class="form-text text-muted">Please enter product
+                                                                SKU.</span>
+                                                            <div class="fv-plugins-message-container"></div>
+                                                        </div>
+                                                        <!--end::Input-->
+                                                    </div>
+                                                </div>
+                                                <!--begin::Input-->
+                                                <div class="form-group fv-plugins-icon-container has-success">
+                                                    <label>Deskripsi</label>
+                                                    <input required type="text"
+                                                        class="form-control form-control-solid form-control-lg"
+                                                        name="description" placeholder="Enter Description"
+                                                        id="productDescription">
+                                                    <span class="form-text text-muted">Deskripsi tentang produk.</span>
+                                                    <div class="fv-plugins-message-container"></div>
+                                                </div>
+                                                <!--end::Input-->
 
-                                            <div class="row">
-                                                <div class="col-xl-6">
-                                                    <!--begin::Input-->
-                                                    <div class="form-group fv-plugins-icon-container has-success">
-                                                        <label>Outlet</label>
-                                                        <select required name="outlet"
-                                                            class="form-control form-control-solid form-control-lg"
-                                                            id="productOutlet">
-                                                            <option selected="selected" value="0" selected="selected">
-                                                                Pilih
-                                                                Outlet</option>
-                                                            @foreach ($row['outlets'] as $key => $value)
-                                                                <option value="{{ $value->id }}">
-                                                                    {{ $value->outlet_name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <div class="fv-plugins-message-container"></div>
+                                                <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <!--begin::Input-->
+                                                        <div class="form-group fv-plugins-icon-container has-success">
+                                                            <label>Outlet</label>
+                                                            <select required name="outlet"
+                                                                class="form-control form-control-solid form-control-lg"
+                                                                id="productOutlet">
+                                                                <option selected="selected" value="0"
+                                                                    selected="selected">
+                                                                    Pilih
+                                                                    Outlet</option>
+                                                                @foreach ($row['outlets'] as $key => $value)
+                                                                    <option value="{{ $value->id }}">
+                                                                        {{ $value->outlet_name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            <div class="fv-plugins-message-container"></div>
+                                                        </div>
+                                                        <!--end::Input-->
                                                     </div>
-                                                    <!--end::Input-->
+                                                    <div class="col-xl-6">
+                                                        <!--begin::Select-->
+                                                        <div class="form-group fv-plugins-icon-container has-success">
+                                                            <label>Kategori</label>
+                                                            <select required name="category"
+                                                                class="form-control form-control-solid form-control-lg"
+                                                                id="productCategory">
+                                                                <option selected="selected"value="0"
+                                                                    selected="selected">
+                                                                    Pilih
+                                                                    Kategori</option>
+                                                                @foreach ($row['categories'] as $key => $value)
+                                                                    <option value="{{ $value->id }}">
+                                                                        {{ $value->category_name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            <div class="fv-plugins-message-container"></div>
+                                                        </div>
+                                                        <!--end::Select-->
+                                                    </div>
                                                 </div>
-                                                <div class="col-xl-6">
-                                                    <!--begin::Select-->
-                                                    <div class="form-group fv-plugins-icon-container has-success">
-                                                        <label>Kategori</label>
-                                                        <select required name="category"
-                                                            class="form-control form-control-solid form-control-lg"
-                                                            id="productCategory">
-                                                            <option selected="selected"value="0" selected="selected">
-                                                                Pilih
-                                                                Kategori</option>
-                                                            @foreach ($row['categories'] as $key => $value)
-                                                                <option value="{{ $value->id }}">
-                                                                    {{ $value->category_name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <div class="fv-plugins-message-container"></div>
-                                                    </div>
-                                                    <!--end::Select-->
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xl-6">
-                                                    <!--begin::Input-->
-                                                    <div class="form-group">
-                                                        <label>Harga</label>
-                                                        <input required type="text"
-                                                            class="form-control form-control-solid form-control-lg"
-                                                            placeholder="Example : 30000" name="price_display"
-                                                            id="bundlePrice">
-                                                        <span class="form-text text-muted">Please enter your
-                                                            Price.</span>
-                                                    </div>
+                                                <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <!--begin::Input-->
+                                                        <div class="form-group">
+                                                            <label>Harga</label>
+                                                            <input required type="text"
+                                                                class="form-control form-control-solid form-control-lg"
+                                                                placeholder="Example : 30000" name="price_display"
+                                                                id="bundlePrice">
+                                                            <span class="form-text text-muted">Please enter your
+                                                                Price.</span>
+                                                        </div>
 
-                                                    <!--end::Input-->
-                                                </div>
-                                                <div class="col-xl-6">
-                                                    <div class="form-group">
-                                                        <label>Harga Promo</label>
-                                                        <input required type="text"
-                                                            class="form-control form-control-solid form-control-lg"
-                                                            placeholder="Example : 28000" name="price_promo"
-                                                            id="bundlePricePromo">
-                                                        <span class="form-text text-muted">Please enter your Promo
-                                                            Price.</span>
+                                                        <!--end::Input-->
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <div class="form-group">
+                                                            <label>Harga Promo</label>
+                                                            <input required type="text"
+                                                                class="form-control form-control-solid form-control-lg"
+                                                                placeholder="Example : 28000" name="price_promo"
+                                                                id="bundlePricePromo">
+                                                            <span class="form-text text-muted">Please enter your Promo
+                                                                Price.</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            {{-- Gambar --}}
-                                            <div class="form-group">
-                                                <label for="">Gambar Produk</label><br>
-                                                <div class="image-input image-input-empty image-input-outline"
-                                                    id="kt_image_5" {{-- style="background-image: url(assets/media/users/blank.png)" --}}>
-                                                    <div class="image-input-wrapper"
-                                                        style="width: 400px; height:400px
+                                                {{-- Gambar --}}
+                                                <div class="form-group">
+                                                    <label for="">Gambar Produk</label><br>
+                                                    <div class="image-input image-input-empty image-input-outline"
+                                                        id="kt_image_5" {{-- style="background-image: url(assets/media/users/blank.png)" --}}>
+                                                        <div class="image-input-wrapper"
+                                                            style="width: 400px; height:400px
                                                     ">
+                                                        </div>
+
+                                                        <label
+                                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                            data-action="change" data-toggle="tooltip" title=""
+                                                            data-original-title="Change avatar">
+                                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                                            <input type="file" id="product_image" name="product_image"
+                                                                accept=".png, .jpg, .jpeg" required />
+                                                            <input type="hidden" name="base64_image" id="base64_image"
+                                                                value="">
+                                                            <input type="hidden" name="profile_avatar_remove" />
+                                                        </label>
+
+                                                        <span
+                                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                            data-action="cancel" data-toggle="tooltip"
+                                                            title="Cancel avatar">
+                                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                        </span>
+
+                                                        <span
+                                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                            data-action="remove" data-toggle="tooltip"
+                                                            title="Remove avatar">
+                                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                        </span>
                                                     </div>
-
-                                                    <label
-                                                        class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                        data-action="change" data-toggle="tooltip" title=""
-                                                        data-original-title="Change avatar">
-                                                        <i class="fa fa-pen icon-sm text-muted"></i>
-                                                        <input type="file" id="product_image" name="product_image"
-                                                            accept=".png, .jpg, .jpeg" required />
-                                                        <input type="hidden" name="base64_image" id="base64_image"
-                                                            value="">
-                                                        <input type="hidden" name="profile_avatar_remove" />
-                                                    </label>
-
-                                                    <span
-                                                        class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                        data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
-                                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                    </span>
-
-                                                    <span
-                                                        class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                        data-action="remove" data-toggle="tooltip" title="Remove avatar">
-                                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                </div>
-                                <div class="col-sm-12 col-md-6 pl-15">
-                                    <div class="card card-custom gutter-b card-stretch">
-                                        <div class="card-header border-0 pt-5">
-                                            <div class="card-title">Bundle Items</div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-lg-12 col-sm-12" data-select2-id="38">
-                                                    <select class="form-control select2 select2-hidden-accessible"
-                                                        id="kt_select2_4" name="product_id"
-                                                        data-select2-id="kt_select2_4" tabindex="-1" aria-hidden="true">
-                                                        <option value="0">
-                                                            Pilih Items
-                                                        </option>
-                                                        @foreach ($row['products'] as $key => $value)
-                                                            <option value="{{ $value->id }}">
-                                                                {{ $value->product_name }}
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 pl-15">
+                                        <div class="card card-custom gutter-b card-stretch">
+                                            <div class="card-header border-0 pt-5">
+                                                <div class="card-title">Bundle Items</div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12" data-select2-id="38">
+                                                        <select class="form-control select2 select2-hidden-accessible"
+                                                            id="kt_select2_4" name="product_id"
+                                                            data-select2-id="kt_select2_4" tabindex="-1"
+                                                            aria-hidden="true">
+                                                            <option value="0">
+                                                                Pilih Items
                                                             </option>
-                                                        @endforeach
-                                                    </select>
+                                                            @foreach ($row['products'] as $key => $value)
+                                                                <option value="{{ $value->id }}">
+                                                                    {{ $value->product_name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="row mt-6 mb-0">
-                                                <div class="col-lg-6 mb-0">
-                                                    <label for="Nama Items">Items</label>
+                                                <div class="row mt-6 mb-0">
+                                                    <div class="col-lg-6 mb-0">
+                                                        <label for="Nama Items">Items</label>
+                                                    </div>
+                                                    <div class="col-lg-4 mb-0">
+                                                        <label for="Qty">Qty</label>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-4 mb-0">
-                                                    <label for="Qty">Qty</label>
-                                                </div>
-                                            </div>
 
-                                            <div id="itemLists">
-                                                <input type="hidden" name="product_id" required>
+                                                <div id="itemLists">
+                                                    <input type="hidden" name="product_id" required>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <code class="language-js">
+        <code class="language-js">
 
-    </code>
+        </code>
+    @endif
 @endsection

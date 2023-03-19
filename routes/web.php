@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Artisan;
  */
 Route::get('/login', [AdminController::class, 'loginPage'])->name('loginPageAdmin');
 Route::post('/login', [AdminController::class, 'login'])->name('loginAdmin');
+Route::get('/logout', [AdminController::class, 'logout'])->name('logoutAdmin');
 
 
 /**
@@ -68,6 +69,8 @@ Route::middleware(['login'])->group(function () {
 
     Route::get('/user-management', [UserManagementController::class, 'index'])->name('userManagement');
     Route::post('/user', [UserManagementController::class, 'store'])->name('postUser');
+    Route::get('/delete-user/{uuid}', [UserManagementController::class, 'deleteUser'])->name('deleteUser');
+    Route::post('/update-user', [UserManagementController::class, 'updateUser'])->name('updateUsers');
 });
 
 

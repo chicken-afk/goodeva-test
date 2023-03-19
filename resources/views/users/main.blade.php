@@ -22,7 +22,7 @@
 
     {{-- Header Navbara --}}
     <div class="headers" id="header">
-        <nav class="navbars container d-flex justify-content-center">
+        <nav class="navbars container d-flex justify-content-center  mt-2 mb-2">
             <div class="brand">
                 <img src="{{ asset('media/client-logos/logo.png') }}" class="logo-brand" />
                 Warung Aceh Bang Ari

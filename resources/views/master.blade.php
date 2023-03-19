@@ -82,9 +82,9 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!--[html-partial:include:{"file":"partials/_header.html"}]/-->
 
                 <!--begin::Content-->
-                <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+                <div class="content  d-flex flex-column flex-column-fluid mt-10" id="kt_content">
 
-                    @include('partials._subheader.subheader-v4')
+                    {{-- @include('partials._subheader.subheader-v4') --}}
                     @yield('content')
 
                     <!--Content area here-->
