@@ -24,7 +24,7 @@
 @endsection
 
 @section('content')
-    @if (Auth::user()->role_id == 2)
+    @if (Auth::user()->role_id == 3)
         <div class="alert alert-danger mt-5">Anda Tidak Memiliki Akses ke Halaman ini</div>
     @else
         <div class="container">

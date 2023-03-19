@@ -261,8 +261,7 @@
                                                                                         <div class="form-group mb-2">
                                                                                             <select
                                                                                                 class="form-select form-select-sm custom-select"
-                                                                                                name="role_id"
-                                                                                                id="roleName" required>
+                                                                                                name="role_id" required>
                                                                                                 <option selected>Pilih Role
                                                                                                 </option>
                                                                                                 @foreach ($row['roles'] as $k => $v)
@@ -273,8 +272,8 @@
                                                                                                 @endforeach
                                                                                             </select>
                                                                                         </div>
-                                                                                        <div class="form-group mb-2 d-none"
-                                                                                            id="outletName">
+                                                                                        <div
+                                                                                            class="form-group mb-2 d-none">
                                                                                             <select
                                                                                                 class="form-select form-select-sm custom-select"
                                                                                                 name="outlet_id">

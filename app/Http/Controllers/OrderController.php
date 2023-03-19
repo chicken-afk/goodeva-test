@@ -136,7 +136,7 @@ class OrderController extends Controller
             $row['products'] = DB::table('invoice_products')
                 ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
                 ->join('outlets', 'outlets.id', 'active_products.outlet_id')
-                ->select('outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
+                ->select('outlets.id as outlet_id', 'outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
                 ->where('invoice_products.invoice_id', $invoice->id)
                 ->get();
 
@@ -160,6 +160,23 @@ class OrderController extends Controller
             }
             $datas[$p]->products = $row['products'];
         }
+        if (Auth::user()->role_id == 3) {
+            $newData = array();
+            $i = 0;
+            foreach ($datas as $k => $v) {
+                $isProduct = false;
+                foreach ($v->products as $key => $value) {
+                    if ($value->outlet_id == Auth::user()->outlet_id) {
+                        $isProduct = true;
+                    }
+                }
+                if ($isProduct == true) {
+                    $newData[$i] = $datas[$k];
+                    $i++;
+                }
+            }
+            $datas = collect($newData);
+        }
 
         return view('main.live-order', compact('datas'));
     }
@@ -174,7 +191,7 @@ class OrderController extends Controller
             $row['products'] = DB::table('invoice_products')
                 ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
                 ->join('outlets', 'outlets.id', 'active_products.outlet_id')
-                ->select('outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
+                ->select('outlets.id as outlet_id', 'outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
                 ->where('invoice_products.invoice_id', $invoice->id)
                 ->get();
 
@@ -197,6 +214,24 @@ class OrderController extends Controller
                 $row['products'][$key]->topping_text = $topping_text;
             }
             $datas[$k]->products = $row['products'];
+        }
+
+        if (Auth::user()->role_id == 3) {
+            $newData = array();
+            $i = 0;
+            foreach ($datas as $k => $v) {
+                $isProduct = false;
+                foreach ($v->products as $key => $value) {
+                    if ($value->outlet_id == Auth::user()->outlet_id) {
+                        $isProduct = true;
+                    }
+                }
+                if ($isProduct == true) {
+                    $newData[$i] = $datas[$k];
+                    $i++;
+                }
+            }
+            $datas = collect($newData);
         }
 
 

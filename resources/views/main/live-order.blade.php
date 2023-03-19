@@ -41,7 +41,7 @@
         <!-- Navbar content -->
         <div class="running-container">
             <h3 class="running-text">
-                Live Order | Warung Aceh Bang Ari
+                Live Order | Warung Aceh Bang Ari || {{ Auth::user()->name }}
             </h3>
         </div>
     </nav>
@@ -60,7 +60,8 @@
                         </g>
                     </svg>Live Order
                     <!--end::Svg Icon-->
-                </span> || Invoice Aktif : {{ $datas->count() }}
+                </span>
+                {{-- || Invoice Aktif : {{ $datas->count() }} --}}
         </div>
         {{-- Invoice --}}
         <div class="invoice mt-1 accordion" id="exampleAccordion">

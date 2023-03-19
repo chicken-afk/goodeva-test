@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Artisan;
  */
 Route::get('/login', [AdminController::class, 'loginPage'])->name('loginPageAdmin');
 Route::post('/login', [AdminController::class, 'login'])->name('loginAdmin');
+Route::get('/logout', [AdminController::class, 'logout'])->name('logoutAdmin');
 
 
 /**
