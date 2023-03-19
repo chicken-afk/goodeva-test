@@ -52,11 +52,12 @@ License: You must have a valid license purchased only from themeforest(the above
 <!--end::Head-->
 
 <!--begin::Body-->
+{{-- Sweetalert --}}
 
 <body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled page-loading">
-
-    {{-- Sweetalert --}}
     @include('sweetalert::alert')
+
+
 
     <!--[html-partial:include:{"file":"partials/_page-loader.html"}]/-->
     @include('partials._page-loader')

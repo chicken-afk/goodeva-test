@@ -71,7 +71,7 @@
                                     </span>
                                 </div>
                                 <input type="password" class="form-control form-control-lg form-control-solid"
-                                    name="new_password" placeholder="Password">
+                                    name="new_password" placeholder="Password" autocomplete="off">
                             </div>
                             <span class="form-text text-muted">Insert Your New Password.</span>
                         </div>
@@ -86,7 +86,7 @@
                                     </span>
                                 </div>
                                 <input type="text" class="form-control form-control-lg form-control-solid"
-                                    name="new_password_confirmation" placeholder="Password Confirmation">
+                                    name="new_password_confirmation" placeholder="Password Confirmation" autocomplete="off">
                             </div>
                             <span class="form-text text-muted">Insert Your New Password.</span>
                         </div>
