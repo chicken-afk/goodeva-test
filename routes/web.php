@@ -71,6 +71,10 @@ Route::middleware(['login'])->group(function () {
     Route::post('/user', [UserManagementController::class, 'store'])->name('postUser');
     Route::get('/delete-user/{uuid}', [UserManagementController::class, 'deleteUser'])->name('deleteUser');
     Route::post('/update-user', [UserManagementController::class, 'updateUser'])->name('updateUsers');
+
+    /**Setting */
+    Route::get('/setting', [AdminController::class, 'setting'])->name('settingPage');
+    Route::post('/setting-save', [AdminController::class, 'saveSetting'])->name('saveSetting');
 });
 
 
