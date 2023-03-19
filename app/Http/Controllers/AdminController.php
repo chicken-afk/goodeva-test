@@ -17,7 +17,13 @@ class AdminController extends Controller
         // dd($request);
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->route('dashboard');
+            if (Auth::user()->role_id == 1) {
+                return redirect()->route('dashboard');
+            } elseif (Auth::user()->role_id == 2) {
+                return redirect()->route('getOrders');
+            } elseif (Auth::user()->role_id == 3) {
+                return redirect()->route('liveOrder');
+            }
         } else {
             alert('Gagal', 'Kombinasi Email Dan Password Salah', 'error');
             return redirect()->back();

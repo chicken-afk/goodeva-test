@@ -14,6 +14,7 @@ class UserManagementController extends Controller
         $row['users'] = DB::table('users')->join('roles', 'roles.id', 'users.role_id')
             ->leftJoin('outlets', 'outlets.id', 'users.outlet_id')
             ->select('users.*', 'roles.role_name', 'outlets.outlet_name')
+            ->where('users.deleted_at', null)
             ->where('users.company_id', Auth::user()->company_id)->get();
         $row['roles'] = DB::table('roles')->get();
         $row['outlets'] = DB::table('outlets')->where('company_id', Auth::user()->company_id)->get();
@@ -36,6 +37,31 @@ class UserManagementController extends Controller
             'email' => $request->email
         ]);
         alert('success', 'berhasil menambah user', 'success');
+        return redirect()->back();
+    }
+
+    public function deleteUser($uuid)
+    {
+        DB::table('users')->where('id', $uuid)->update([
+            'is_active' => 0,
+            'deleted_at' => now()
+        ]);
+        alert('success', 'berhasil menghapus user', 'success');
+        return redirect()->back();
+    }
+
+    public function updateUser(Request $request)
+    {
+        // dd($request);
+        DB::table('users')->where('id', $request->id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_id' => $request->role_id,
+            'outlet_id' => $request->outlet_id == 'false' ? null : $request->outlet_id,
+            'updated_at' => now()
+        ]);
+        alert('success', 'berhasil mengubah data user', 'success');
         return redirect()->back();
     }
 }

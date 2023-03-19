@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row mt-2">
     <div class="col-xl-12">
         <!--begin::Nav Panel Widget 1-->
         <div class="card card-custom gutter-b">
