@@ -25,6 +25,11 @@ class UserManagementController extends Controller
     {
         /**Validation Here */
 
+        $eCount = DB::table('users')->where('email', $request->email)->count();
+        if ($eCount != 0) {
+            alert('error', 'Email Sudah Digunakan', 'error');
+            return redirect()->back();
+        }
 
         DB::table('users')->insert([
             'name' => $request->name,
