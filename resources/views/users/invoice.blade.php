@@ -40,7 +40,7 @@
         <div class="container">
             <div class="card card-invoice">
                 <div class="card-header">
-                    <div class="brand justify-content-center mb-2">
+                    <div class="brand d-flex justify-content-center" style="margin: auto !important;">
                         <img src="{{ asset('media/client-logos/logo.png') }}" class="logo-brand" />
                         Warung Aceh Bang Ari
                     </div>
