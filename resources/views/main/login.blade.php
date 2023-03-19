@@ -204,21 +204,28 @@ License: You must have a valid license purchased only from themeforest(the above
             </div>
             <!--begin::Aside-->
             <!--begin::Content-->
-            <div class="content order-1 order-lg-2 d-flex flex-column w-100 pb-0" style="background-color: #edc7b1;">
+            <div class="content order-1 order-lg-2 d-flex flex-column w-100 pb-0" style="background-color: #ebe2dd;">
                 <!--begin::Title-->
                 <div
                     class="d-flex flex-column justify-content-center text-center pt-lg-40 pt-md-5 pt-sm-5 px-lg-0 pt-5 px-7">
-                    <h3 class="display4 font-weight-bolder my-7 text-dark" style="color: #986923;">Amazing Wireframes
+                    <div style="text-align: center !important;">
+                        <img src="{{ asset('media/client-logos/logo.png') }}" width="150" height="150"
+                            alt="">
+                    </div>
+                    <h3 class="display4 font-weight-bolder my-7 text-dark">
+                        Warung Aceh Bang Ari
                     </h3>
-                    <p class="font-weight-bolder font-size-h2-md font-size-lg text-dark opacity-70">User Experience
-                        &amp; Interface Design, Product Strategy
-                        <br />Web Application SaaS Solutions
+                    <p class="font-weight-bolder font-size-h2-md font-size-lg text-dark opacity-70">POS
+                        &amp; Order Management System
+                        <br />Web Application
                     </p>
                 </div>
                 <!--end::Title-->
                 <!--begin::Image-->
                 <div class="content-img d-flex flex-row-fluid bgi-no-repeat bgi-position-y-bottom bgi-position-x-center"
-                    style="background-image: url(assets/media/svg/illustrations/login-visual-2.svg);"></div>
+                    style="background-image: url(/media/svg/illustrations/login-visual-2.svg);"></div>
+                {{-- <div class="content-img d-flex flex-row-fluid bgi-no-repeat bgi-position-y-bottom bgi-position-x-center"
+                    style="background-image: url(/media/login-bg.png);"></div> --}}
                 <!--end::Image-->
             </div>
             <!--end::Content-->
