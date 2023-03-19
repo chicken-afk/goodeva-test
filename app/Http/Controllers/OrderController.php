@@ -44,32 +44,8 @@ class OrderController extends Controller
                 'data' => $row
             ]);
         }
-        $invoice = DB::table('invoices')->where('invoice_number', "INVC16786188091U")->first();
-        $row['invoice'] = $invoice;
-        $row['products'] = DB::table('invoice_products')->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
-            ->select('invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
-            ->where('invoice_products.invoice_id', $invoice->id)
-            ->get();
 
-        foreach ($row['products'] as $key => $value) {
-            $variant = DB::table('invoice_product_variants')
-                ->join('variants', 'variants.id', 'invoice_product_variants.variant_id')
-                ->where('invoice_product_variants.invoice_product_variants', $value->id)
-                ->select('variants.varian_name')
-                ->first();
-            $row['products'][$key]->varian_name = $variant ? $variant->varian_name : '';
-            $toppings = DB::table('invoice_product_toppings')
-                ->join('toppings', 'toppings.id', 'invoice_product_toppings.topping_id')
-                ->where('invoice_product_toppings.invoice_product_id', $value->id)
-                ->select('toppings.topping_name')
-                ->get();
-            $topping_text = "";
-            foreach ($toppings as $k => $v) {
-                $topping_text = $topping_text . $v->topping_name . ", ";
-            }
-            $row['products'][$key]->topping_text = $topping_text;
-        }
-        return view('main.order', compact('row'));
+        return view('main.order');
     }
 
     public function orderData(Request $request)
