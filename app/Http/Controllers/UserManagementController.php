@@ -62,8 +62,6 @@ class UserManagementController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id' => $request->role_id,
-            'outlet_id' => $request->outlet_id == 'false' ? null : $request->outlet_id,
             'updated_at' => now()
         ]);
         alert('success', 'berhasil mengubah data user', 'success');
