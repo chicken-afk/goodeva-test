@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         // dd('asdfs');
         $row['categories'] = DB::table('categories')->where('company_id', $this->company_id)->where('is_active', 1)->get();
-        $row['outlets'] = DB::table('outlets')->where('company_id', $this->company_id)->where('is_active', 1)->get();
+        $row['outlets'] = DB::table('outlets')->join('active_products', 'active_products.outlet_id', 'outlets.id')->where('outlets.company_id', $this->company_id)->where('outlets.is_active', 1)->groupBy('outlets.id')->select('outlets.*')->get();
         foreach ($row['outlets'] as $key => $value) {
             $row['outlets'][$key]->products = DB::table('active_products')
                 ->where('active_products.deleted_at', null)
