@@ -46,7 +46,7 @@
                 <div class="inpout-group mb-3">
                     <label for="">Nomor Meja</label>
                     <p id='alert-table' class="d-none mb-0">Wajib Mengisi Nomor Meja</p>
-                    <p>Ambil Nomor Meja Di Kasir</p>
+                    <p>Input nomor yang ada di meja atau ambil nomor meja di kasir</p>
                     <input id="nTable" type="number" class="form-control" placeholder="Nomor Meja"
                         aria-label="Nomor Meja" aria-describedby="basic-addon1" name="table_no" required>
                 </div>
