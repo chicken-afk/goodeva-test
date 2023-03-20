@@ -15,9 +15,9 @@
     <script src="{{ asset('js/pages/custom/wizard/wizard-1.js') }}"></script>
     <script src="{{ asset('js/pages/crud/file-upload/dropzonejs.js') }}"></script>
     <script src="{{ asset('js/addproduct.js') }}"></script>
-    <script>
-        let token = `<?php echo csrf_token(); ?>`,
-            data['_token'] = token;
+    {{-- <script>
+        let token = `<?php echo csrf_token(); ?>`;
+        var data['_token'] = token;
         $(document).ready(function() {
             $("#submitButton").click(function() {
                 console.log('masuk sini');
@@ -48,7 +48,7 @@
             });
 
         });
-    </script>
+    </script> --}}
 @endsection
 @section('content')
     @if (Auth::user()->role_id != 1)
