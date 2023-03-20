@@ -14,7 +14,7 @@
     {{-- <script src="sweetalert2.min.js"></script> --}}
     <script src="{{ asset('js/pages/custom/wizard/wizard-1.js') }}"></script>
     <script src="{{ asset('js/pages/crud/file-upload/dropzonejs.js') }}"></script>
-    <script src="{{ asset('js/addproduct.js') }}"></script>
+    <script src="{{ asset('js/addproduct.js') . '?v=' . time() }}"></script>
     {{-- <script>
         let token = `<?php echo csrf_token(); ?>`;
         var data['_token'] = token;

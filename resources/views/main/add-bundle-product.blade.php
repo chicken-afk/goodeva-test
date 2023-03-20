@@ -9,10 +9,10 @@
     Menu Mengelola dan Menambahkan Bundle
 @endsection
 @section('script')
-    <script src="{{ asset('js/pages/crud/file-upload/dropzonejs.js') }}"></script>
+    <script src="{{ asset('js/pages/crud/file-upload/dropzonejs.js') . '?v=' . time() }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/pages/crud/forms/widgets/select2.js') }}"></script>
-    <script src="{{ asset('js/addbundle.js') }}"></script>
+    <script src="{{ asset('js/addbundle.js') . '?v=' . time() }}"></script>
     <script>
         // In your Javascript (external .js resource or <script> tag)
         function deleteFormListItems(id) {

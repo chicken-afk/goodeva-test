@@ -21,7 +21,7 @@
 
                     <form class="form" autocomplete="off" action="{{ route('saveSetting') }}" method="POST">
                         <div class="card-toolbar">
-                            <button type="submit" class="btn btn-success mr-2">Save Changes</button>
+                            <button type="submit" class="btn btn-primary mr-2">Save Changes</button>
                             {{-- <button type="reset" class="btn btn-secondary">Cancel</button> --}}
                         </div>
                 </div>

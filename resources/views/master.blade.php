@@ -31,15 +31,18 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--end::Fonts-->
 
     <!--begin::Page Vendors Styles(used by this page)-->
-    <link href="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('plugins/custom/leaflet/leaflet.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.css') . '?v=' . time() }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('plugins/custom/leaflet/leaflet.bundle.css') . '?v=' . time() }}" rel="stylesheet"
+        type="text/css" />
 
     <!--end::Page Vendors Styles-->
 
     <!--begin::Global Theme Styles(used by all pages)-->
-    <link href="{{ asset('plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/global/plugins.bundle.css') . '?v=' . time() }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('plugins/custom/prismjs/prismjs.bundle.css') . '?v=' . time() }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('css/style.bundle.css') . '?v=' . time() }}" rel="stylesheet" type="text/css" />
     @yield('css')
     <!--end::Global Theme Styles-->
 
@@ -219,20 +222,20 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <!--end::Global Config-->
     <!--begin::Global Theme Bundle(used by all pages)-->
-    <script src="{{ asset('plugins/global/plugins.bundle.js') }}"></script>
-    <script src="{{ asset('plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
-    <script src="{{ asset('js/scripts.bundle.js') }}"></script>
+    <script src="{{ asset('plugins/global/plugins.bundle.js') . '?v=' . time() }}"></script>
+    <script src="{{ asset('plugins/custom/prismjs/prismjs.bundle.js') . '?v=' . time() }}"></script>
+    <script src="{{ asset('js/scripts.bundle.js') . '?v=' . time() }}"></script>
 
     <!--end::Global Theme Bundle-->
 
     <!--begin::Page Vendors(used by this page)-->
-    <script src="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
-    <script src="{{ asset('plugins/custom/leaflet/leaflet.bundle.js') }}"></script>
+    <script src="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.js') . '?v=' . time() }}"></script>
+    <script src="{{ asset('plugins/custom/leaflet/leaflet.bundle.js') . '?v=' . time() }}"></script>
 
     <!--end::Page Vendors-->
 
     <!--begin::Page Scripts(used by this page)-->
-    <script src="{{ asset('js/pages/widgets.js') }}"></script>
+    <script src="{{ asset('js/pages/widgets.js') . '?v=' . time() }}"></script>
 
     @yield('script')
 
