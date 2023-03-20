@@ -26,24 +26,24 @@
                                 <!--begin::Body-->
                                 <div class="card-body pt-2">
                                     <!--begin::Item-->
-                                    @for ($i = 0; $i < 5; $i++)
+                                    @foreach ($row['invoices'] as $key => $value)
                                         <div class="d-flex flex-wrap align-items-center pb-10">
                                             <!--begin::Symbol-->
                                             <div class="symbol symbol-50 symbol-2by3 flex-shrink-0 mr-4">
                                                 <div class="symbol-label"
-                                                    style="background-image: url('assets/media/stock-600x400/img-17.jpg')">
+                                                    style="background-image: url('{{ $value->product_image }}')">
                                                 </div>
                                             </div>
                                             <!--end::Symbol-->
                                             <!--begin::Title-->
                                             <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
-                                                <a href="#"
-                                                    class="text-dark font-weight-bold text-hover-primary mb-1 font-size-lg">INVC2918FD</a>
-                                                <span class="text-muted font-weight-bold">2 bed, 1 bath, 1 carpark</span>
+                                                <a href="{{ route('getOrders') }}"
+                                                    class="text-dark font-weight-bold text-hover-primary mb-1 font-size-lg">{{ $value->invoice_number }}</a>
+                                                <span class="text-muted font-weight-bold">{{ $value->name }}</span>
                                             </div>
                                             <!--end::Title-->
                                             <!--begin::Btn-->
-                                            <a href="#" class="btn btn-icon btn-light btn-sm">
+                                            <a href="{{ route('getOrders') }}" class="btn btn-icon btn-light btn-sm">
                                                 <span class="svg-icon svg-icon-success">
                                                     <span class="svg-icon svg-icon-md">
                                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
@@ -70,14 +70,14 @@
                                             </a>
                                             <!--end::Btn-->
                                         </div>
-                                    @endfor
+                                    @endforeach
                                     <!--end::Item-->
                                 </div>
                                 <!--end::Body-->
                             </div>
                             <!--end::List Widget 13-->
                         </div>
-                        <div class="col-xl-4">
+                        <div class="col-xl-8">
                             <!--begin::Mixed Widget 5-->
                             <div class="card card-custom bg-radial-gradient-primary gutter-b card-stretch">
                                 <!--begin::Header-->
@@ -425,14 +425,16 @@
                                             <div class="col px-8 py-6 mr-8"
                                                 style="background-color: rgb(201, 158, 133) ; border-radius : 15px;">
                                                 <div class="font-size-sm font-weight-bold">Total Omset</div>
-                                                <div class="font-size-h4 font-weight-bolder">Rp. 30.000.000,-</div>
+                                                <div class="font-size-h4 font-weight-bolder">Rp.
+                                                    {{ number_format($row['omset']) }},-</div>
                                             </div>
                                             <div class="col px-8 py-6"
                                                 style="background-color: rgb(203, 221, 153) ; border-radius : 15px;">
                                                 <div class="font-size-sm font-weight-bold">
                                                     Penjualan Produk
                                                 </div>
-                                                <div class="font-size-h4 font-weight-bolder">50</div>
+                                                <div class="font-size-h4 font-weight-bolder">
+                                                    {{ $row['total_produk_terjual'] }}</div>
                                             </div>
                                         </div>
                                         <!--end::Row-->
@@ -441,12 +443,17 @@
                                             <div class="col px-8 py-6 mr-8"
                                                 style="background-color: rgb(221, 153, 215) ; border-radius : 15px;">
                                                 <div class="font-size-sm font-weight-bold">Produk Terlaris</div>
-                                                <div class="font-size-h4 font-weight-bolder">Mie Aceh Ubed</div>
+                                                <div class="font-size-h4 font-weight-bolder">
+                                                    @if (count($row['produk_terlaris']) > 0)
+                                                        {{ $row['produk_terlaris'][0]->active_product_name }}
+                                                    @endif
+                                                </div>
                                             </div>
                                             <div class="col px-8 py-6"
                                                 style="background-color: rgb(153, 169, 221) ; border-radius : 15px;">
                                                 <div class="font-size-sm font-weight-bold">Total invoice</div>
-                                                <div class="font-size-h4 font-weight-bolder">10</div>
+                                                <div class="font-size-h4 font-weight-bolder">{{ $row['total_invoice'] }}
+                                                </div>
                                             </div>
                                         </div>
                                         <!--end::Row-->
@@ -463,123 +470,6 @@
                             </div>
                             <!--end::Mixed Widget 5-->
                         </div>
-                        <div class="col-xl-4">
-                            <!--begin::Tiles Widget 15-->
-                            <div class="card card-custom gutter-b card-stretch">
-                                <!--begin::Header-->
-                                <div class="card-header border-0 pt-5">
-                                    <div class="card-title">
-                                        <div class="card-label">
-                                            <div class="font-weight-bolder">Weekly Sales Stats</div>
-                                            <div class="font-size-sm text-muted mt-2">890,344 Sales</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--end::Header-->
-                                <!--begin::Body-->
-                                <div class="card-body d-flex flex-column">
-                                    <!--begin::Items-->
-                                    <div class="flex-grow-1">
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center justify-content-between mb-10">
-                                            <div class="d-flex align-items-center mr-2">
-                                                <div class="symbol symbol-50 symbol-light mr-3 flex-shrink-0">
-                                                    <div class="symbol-label">
-                                                        <img src="assets/media/svg/misc/006-plurk.svg" alt=""
-                                                            class="h-50">
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <a href="#"
-                                                        class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">Top
-                                                        Authors</a>
-                                                    <div class="font-size-sm text-muted font-weight-bold mt-1">Ricky Hunt,
-                                                        Sandra Trepp</div>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="label label-light label-inline font-weight-bold text-dark-50 py-4 px-3 font-size-base">
-                                                +105$</div>
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center justify-content-between mb-10">
-                                            <div class="d-flex align-items-center mr-2">
-                                                <div class="symbol symbol-50 symbol-light mr-3 flex-shrink-0">
-                                                    <div class="symbol-label">
-                                                        <img src="assets/media/svg/misc/015-telegram.svg" alt=""
-                                                            class="h-50">
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <a href="#"
-                                                        class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">Top
-                                                        Sales</a>
-                                                    <div class="font-size-sm text-muted font-weight-bold mt-1">PitStop
-                                                        Emails</div>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="label label-light label-inline font-weight-bold text-dark-50 py-4 px-3 font-size-base">
-                                                +60$</div>
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center justify-content-between mb-10">
-                                            <div class="d-flex align-items-center mr-2">
-                                                <div class="symbol symbol-50 symbol-light mr-3 flex-shrink-0">
-                                                    <div class="symbol-label">
-                                                        <img src="assets/media/svg/misc/003-puzzle.svg" alt=""
-                                                            class="h-50">
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <a href="#"
-                                                        class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">Bestsellers</a>
-                                                    <div class="font-size-sm text-muted font-weight-bold mt-1">Pitstop
-                                                        Email Marketing</div>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="label label-light label-inline font-weight-bold text-dark-50 py-4 px-3 font-size-base">
-                                                +75$</div>
-                                        </div>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div class="d-flex align-items-center mr-2">
-                                                <div class="symbol symbol-50 symbol-light mr-3 flex-shrink-0">
-                                                    <div class="symbol-label">
-                                                        <img src="assets/media/svg/misc/009-hot-air-balloon.svg"
-                                                            alt="" class="h-50">
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <a href="#"
-                                                        class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">Top
-                                                        Engagement</a>
-                                                    <div class="font-size-sm text-muted font-weight-bold mt-1">KT.com
-                                                        solutions</div>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="label label-light label-inline font-weight-bold text-dark-50 py-4 px-3 font-size-base">
-                                                +75$</div>
-                                        </div>
-                                        <!--end::Item-->
-                                    </div>
-                                    <!--end::Items-->
-                                    <!--begin::Action-->
-                                    {{-- <div class="pt-10 pb-5 text-center">
-                                        <a href="#" class="btn btn-primary font-weight-bold px-5 py-3">Create
-                                            Report</a>
-                                    </div> --}}
-                                    <!--end::Action-->
-                                </div>
-                                <!--end::Body-->
-                            </div>
-                            <!--end::Tiles Widget 15-->
-                        </div>
                     </div>
                     <!--end::Row-->
                     <div class="row">
@@ -593,599 +483,12 @@
                                         {{-- <span class="text-muted mt-3 font-weight-bold font-size-sm">More than 400+
                                             Products</span> --}}
                                     </h3>
-                                    {{-- <div class="card-toolbar">
-                                        <ul class="nav nav-pills nav-pills-sm nav-dark-75">
-                                            <li class="nav-item">
-                                                <a class="nav-link py-2 px-4" data-toggle="tab"
-                                                    href="#kt_tab_pane_2_1">Month</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link py-2 px-4" data-toggle="tab"
-                                                    href="#kt_tab_pane_2_2">Week</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link py-2 px-4 active" data-toggle="tab"
-                                                    href="#kt_tab_pane_2_3">Day</a>
-                                            </li>
-                                        </ul>
-                                    </div> --}}
                                 </div>
                                 <!--end::Header-->
                                 <!--begin::Body-->
                                 <div class="card-body pt-2 pb-0 mt-n3">
                                     <div class="tab-content mt-5" id="myTabTables2">
                                         <!--begin::Tap pane-->
-                                        <div class="tab-pane fade" id="kt_tab_pane_2_1" role="tabpanel"
-                                            aria-labelledby="kt_tab_pane_2_1">
-                                            <!--begin::Table-->
-                                            <div class="table-responsive">
-                                                <table class="table table-borderless table-vertical-center">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="p-0 w-50px"></th>
-                                                            <th class="p-0 min-w-150px"></th>
-                                                            <th class="p-0 min-w-140px"></th>
-                                                            <th class="p-0 min-w-120px"></th>
-                                                            <th class="p-0 min-w-40px"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/006-plurk.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">Top
-                                                                    Authors</a>
-                                                                <span
-                                                                    class="text-muted font-weight-bold d-block">Successful
-                                                                    Fellas</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">ReactJs,
-                                                                    HTML</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">4600
-                                                                    Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/014-kickstarter.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">Bestseller
-                                                                    Theme</a>
-                                                                <span class="text-muted font-weight-bold d-block">Amazing
-                                                                    Templates</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">ReactJS,
-                                                                    Ruby</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">354 Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/015-telegram.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">Popular
-                                                                    Authors</a>
-                                                                <span class="text-muted font-weight-bold d-block">Most
-                                                                    Successful</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">Python,
-                                                                    MySQL</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">7200
-                                                                    Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/003-puzzle.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">New
-                                                                    Users</a>
-                                                                <span class="text-muted font-weight-bold d-block">Awesome
-                                                                    Users</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">Laravel,
-                                                                    Metronic</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">890 Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/005-bebo.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">Active
-                                                                    Customers</a>
-                                                                <span class="text-muted font-weight-bold d-block">Best
-                                                                    Customers</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">AngularJS,
-                                                                    C#</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">6370
-                                                                    Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <!--end::Table-->
-                                        </div>
-                                        <!--end::Tap pane-->
-                                        <!--begin::Tap pane-->
-                                        <div class="tab-pane fade" id="kt_tab_pane_2_2" role="tabpanel"
-                                            aria-labelledby="kt_tab_pane_2_2">
-                                            <!--begin::Table-->
-                                            <div class="table-responsive">
-                                                <table class="table table-borderless table-vertical-center">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="p-0" style="width: 50px"></th>
-                                                            <th class="p-0" style="min-width: 150px"></th>
-                                                            <th class="p-0" style="min-width: 140px"></th>
-                                                            <th class="p-0" style="min-width: 120px"></th>
-                                                            <th class="p-0" style="min-width: 40px"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/015-telegram.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">Popular
-                                                                    Authors</a>
-                                                                <span class="text-muted font-weight-bold d-block">Most
-                                                                    Successful</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">Python,
-                                                                    MySQL</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">7200
-                                                                    Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/003-puzzle.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">New
-                                                                    Users</a>
-                                                                <span class="text-muted font-weight-bold d-block">Awesome
-                                                                    Users</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">Laravel,
-                                                                    Metronic</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">890 Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/005-bebo.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">Active
-                                                                    Customers</a>
-                                                                <span class="text-muted font-weight-bold d-block">Best
-                                                                    Customers</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">AngularJS,
-                                                                    C#</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">6370
-                                                                    Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/006-plurk.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">Top
-                                                                    Authors</a>
-                                                                <span
-                                                                    class="text-muted font-weight-bold d-block">Successful
-                                                                    Fellas</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">ReactJs,
-                                                                    HTML</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">4600
-                                                                    Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/014-kickstarter.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">Bestseller
-                                                                    Theme</a>
-                                                                <span class="text-muted font-weight-bold d-block">Amazing
-                                                                    Templates</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">ReactJS,
-                                                                    Ruby</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">354 Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <!--end::Table-->
-                                        </div>
-                                        <!--end::Tap pane-->
                                         <!--begin::Tap pane-->
                                         <div class="tab-pane fade show active" id="kt_tab_pane_2_3" role="tabpanel"
                                             aria-labelledby="kt_tab_pane_2_3">
@@ -1202,270 +505,64 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/006-plurk.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">Top
-                                                                    Authors</a>
-                                                                <span
-                                                                    class="text-muted font-weight-bold d-block">Successful
-                                                                    Fellas</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">ReactJs,
-                                                                    HTML</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">4600
-                                                                    Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/015-telegram.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">Popular
-                                                                    Authors</a>
-                                                                <span class="text-muted font-weight-bold d-block">Most
-                                                                    Successful</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">Python,
-                                                                    MySQL</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">7200
-                                                                    Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/003-puzzle.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">New
-                                                                    Users</a>
-                                                                <span class="text-muted font-weight-bold d-block">Awesome
-                                                                    Users</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">Laravel,
-                                                                    Metronic</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">890 Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/005-bebo.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">Active
-                                                                    Customers</a>
-                                                                <span class="text-muted font-weight-bold d-block">Best
-                                                                    Customers</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">AngularJS,
-                                                                    C#</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">6370
-                                                                    Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="pl-0 py-5">
-                                                                <div class="symbol symbol-50 symbol-light mr-2">
-                                                                    <span class="symbol-label">
-                                                                        <img src="assets/media/svg/misc/014-kickstarter.svg"
-                                                                            class="h-50 align-self-center" alt="">
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <a href="#"
-                                                                    class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">Bestseller
-                                                                    Theme</a>
-                                                                <span class="text-muted font-weight-bold d-block">Amazing
-                                                                    Templates</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">ReactJS,
-                                                                    Ruby</span>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <span class="text-muted font-weight-bold">354 Users</span>
-                                                            </td>
-                                                            <td class="text-right pr-0">
-                                                                <a href="#" class="btn btn-icon btn-light btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-success">
-                                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                            width="24px" height="24px"
-                                                                            viewBox="0 0 24 24" version="1.1">
-                                                                            <g stroke="none" stroke-width="1"
-                                                                                fill="none" fill-rule="evenodd">
-                                                                                <polygon points="0 0 24 0 24 24 0 24">
-                                                                                </polygon>
-                                                                                <rect fill="#000000" opacity="0.3"
-                                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
-                                                                                    x="11" y="5"
-                                                                                    width="2" height="14"
-                                                                                    rx="1"></rect>
-                                                                                <path
-                                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                                    fill="#000000" fill-rule="nonzero"
-                                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <!--end::Svg Icon-->
-                                                                    </span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
+                                                        @foreach ($row['produk_terlaris'] as $key => $value)
+                                                            <tr>
+                                                                <td class="pl-0 py-5">
+                                                                    <div class="symbol symbol-50 symbol-light mr-2">
+                                                                        <span class="symbol-label">
+                                                                            <img src="{{ $value->product_image }}"
+                                                                                class="h-50 align-self-center"
+                                                                                alt="">
+                                                                        </span>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="pl-0">
+                                                                    <a href="#"
+                                                                        class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">{{ $value->active_product_name }}</a>
+                                                                    <span
+                                                                        class="text-muted font-weight-bold d-block">{{ $value->sku }}</span>
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    <span
+                                                                        class="text-muted font-weight-bold">{{ $value->description }}</span>
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    <span
+                                                                        class="text-muted font-weight-bold">{{ $value->count }}
+                                                                        Terjual</span>
+                                                                </td>
+                                                                <td class="text-right pr-0">
+                                                                    <a href="{{ route('getProduct') }}"
+                                                                        class="btn btn-icon btn-light btn-sm">
+                                                                        <span
+                                                                            class="svg-icon svg-icon-md svg-icon-success">
+                                                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                                width="24px" height="24px"
+                                                                                viewBox="0 0 24 24" version="1.1">
+                                                                                <g stroke="none" stroke-width="1"
+                                                                                    fill="none" fill-rule="evenodd">
+                                                                                    <polygon points="0 0 24 0 24 24 0 24">
+                                                                                    </polygon>
+                                                                                    <rect fill="#000000" opacity="0.3"
+                                                                                        transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)"
+                                                                                        x="11" y="5"
+                                                                                        width="2" height="14"
+                                                                                        rx="1"></rect>
+                                                                                    <path
+                                                                                        d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                                                                        fill="#000000" fill-rule="nonzero"
+                                                                                        transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)">
+                                                                                    </path>
+                                                                                </g>
+                                                                            </svg>
+                                                                            <!--end::Svg Icon-->
+                                                                        </span>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
