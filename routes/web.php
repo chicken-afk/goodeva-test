@@ -97,3 +97,13 @@ Route::get('/storage-link', function () {
     Artisan::call('storage:link');
     return 'Application storage Link Added!';
 });
+
+Route::get('/cache-clear', function () {
+    Artisan::call('cache:clear');
+    return 'Application cache cleared!';
+});
+
+Route::get('/config-clear', function () {
+    Artisan::call('config:clear');
+    return 'Application config cleared!';
+});
