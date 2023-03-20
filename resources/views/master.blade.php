@@ -222,20 +222,20 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <!--end::Global Config-->
     <!--begin::Global Theme Bundle(used by all pages)-->
-    <script src="{{ asset('plugins/global/plugins.bundle.js') . '?v=' . time() }}"></script>
-    <script src="{{ asset('plugins/custom/prismjs/prismjs.bundle.js') . '?v=' . time() }}"></script>
-    <script src="{{ asset('js/scripts.bundle.js') . '?v=' . time() }}"></script>
+    <script src="{{ asset('plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
+    <script src="{{ asset('js/scripts.bundle.js') }}"></script>
 
     <!--end::Global Theme Bundle-->
 
     <!--begin::Page Vendors(used by this page)-->
-    <script src="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.js') . '?v=' . time() }}"></script>
-    <script src="{{ asset('plugins/custom/leaflet/leaflet.bundle.js') . '?v=' . time() }}"></script>
+    <script src="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
+    <script src="{{ asset('plugins/custom/leaflet/leaflet.bundle.js') }}"></script>
 
     <!--end::Page Vendors-->
 
     <!--begin::Page Scripts(used by this page)-->
-    <script src="{{ asset('js/pages/widgets.js') . '?v=' . time() }}"></script>
+    <script src="{{ asset('js/pages/widgets.js') }}"></script>
 
     @yield('script')
 
