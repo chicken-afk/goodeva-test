@@ -44,9 +44,9 @@
 
             <!--begin::Item-->
             <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
-                data-boundary="window" title="Laporan">
-                <a href="#" class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg" data-toggle="tab"
-                    data-target="#kt_aside_tab_2" role="tab">
+                data-boundary="window" title="Statistik">
+                <a href="{{ route('getStatistic') }}"
+                    class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('getStatistic') }}">
                     <i class="flaticon2-list-3 icon-lg"></i>
                 </a>
             </li>

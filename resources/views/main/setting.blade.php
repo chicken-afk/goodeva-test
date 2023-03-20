@@ -3,10 +3,13 @@
 @section('header-name')
     Profile Setting
 @endsection
+@section('menu-detail')
+    Menu Mengelola Profile Information
+@endsection
 
 @section('content')
     <div class="container">
-        <div class="flex-row-fluid ml-lg-12">
+        <div class="flex-row-fluid">
             <!--begin::Card-->
             <div class="card card-custom card-stretch">
                 <!--begin::Header-->

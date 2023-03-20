@@ -55,7 +55,7 @@
                     <div class="d-flex flex-row">
 
                         <!--begin::Content-->
-                        <div class="flex-row-fluid ml-lg-12">
+                        <div class="flex-row-fluid">
                             <!--end::Row-->
                             <!--begin::Advance Table: Widget 7-->
                             <div class="card card-custom gutter-b">
@@ -374,4 +374,8 @@
                 </div>
             </div>
     @endif
+@endsection
+
+@section('menu-detail')
+    Menu Mengelola Akun User
 @endsection

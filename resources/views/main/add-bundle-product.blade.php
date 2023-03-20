@@ -5,6 +5,9 @@
 @section('header-name')
     Tambah Bundle Produk
 @endsection
+@section('menu-detail')
+    Menu Mengelola dan Menambahkan Bundle
+@endsection
 @section('script')
     <script src="{{ asset('js/pages/crud/file-upload/dropzonejs.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>

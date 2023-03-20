@@ -390,3 +390,7 @@
             </div>
     @endif
 @endsection
+
+@section('menu-detail')
+    Menu Mengelola Kategori Produk
+@endsection

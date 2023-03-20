@@ -19,6 +19,9 @@
 @section('header-name')
     Pesanan
 @endsection
+@section('menu-detail')
+    Menu Mengelola Pesanan dan Pembayaran Pesanan
+@endsection
 @section('script')
     <script src="{{ asset('js/pages/custom/ecommerce/my-orders.js') }}"></script>
 @endsection
@@ -31,7 +34,7 @@
             <!--begin::Teachers-->
             <div class="d-flex flex-row">
                 <!--begin::Content-->
-                <div class="flex-row-fluid ml-lg-12">
+                <div class="flex-row-fluid">
                     <!--begin::Card-->
                     <div class="card card-custom">
                         <!--begin::Header-->
