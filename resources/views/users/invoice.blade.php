@@ -93,8 +93,8 @@
                         <h5 class="mb-1"> Rp. {{ number_format($row['invoice']->payment_charge) }},-</h5>
                     </div>
                     <h5 class="mb-0">Pesanan :</h5>
-                    <div class="line-1"></div>
                     @foreach ($row['products'] as $key => $value)
+                        <div class="line-1"></div>
                         <div class="order-list">
                             <div class="d-flex bd-highlight">
                                 <div class="bd-highlight pr-2 product-name">
