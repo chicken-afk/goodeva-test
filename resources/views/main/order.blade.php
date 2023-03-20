@@ -23,7 +23,7 @@
     Menu Mengelola Pesanan dan Pembayaran Pesanan
 @endsection
 @section('script')
-    <script src="{{ asset('js/pages/custom/ecommerce/my-orders.js') }}"></script>
+    <script src="{{ asset('js/pages/custom/ecommerce/my-orders.js') . '?v=' . time() }}"></script>
 @endsection
 
 @section('content')
