@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Artisan;
 
@@ -75,6 +76,9 @@ Route::middleware(['login'])->group(function () {
     /**Setting */
     Route::get('/setting', [AdminController::class, 'setting'])->name('settingPage');
     Route::post('/setting-save', [AdminController::class, 'saveSetting'])->name('saveSetting');
+
+    /**Statistic Route */
+    Route::get('/statistic', [StatisticController::class, 'view'])->name('getStatistic');
 });
 
 

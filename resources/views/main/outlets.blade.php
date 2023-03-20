@@ -1,5 +1,7 @@
 @extends('master')
-
+@section('menu-detail')
+    Menu Mengelola dan Menambahkan Outlet
+@endsection
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 

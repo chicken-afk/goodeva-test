@@ -7,6 +7,9 @@
 @section('header-name')
     Tambah Produk
 @endsection
+@section('menu-detail')
+    Menu Menambah Produk
+@endsection
 @section('script')
     {{-- <script src="sweetalert2.min.js"></script> --}}
     <script src="{{ asset('js/pages/custom/wizard/wizard-1.js') }}"></script>

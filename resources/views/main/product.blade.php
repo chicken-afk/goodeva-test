@@ -10,6 +10,9 @@
 @section('header-name')
     Master Data Produk
 @endsection
+@section('menu-detail')
+    Menu Mengelola Produk
+@endsection
 @section('css')
     <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 @endsection

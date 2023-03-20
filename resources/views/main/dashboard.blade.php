@@ -584,3 +584,7 @@
         @endif
     </div>
 @endsection
+
+@section('menu-detail')
+    Menu Dashboard
+@endsection
