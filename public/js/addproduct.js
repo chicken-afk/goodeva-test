@@ -114,8 +114,8 @@ function addForm() {
                                                     <!--begin::Input-->
                                                     <div class="form-group fv-plugins-icon-container has-success">
                                                         <label>SKU</label>
-
-                                                        <span class="form-text text-muted">Auto Generate SKU.</span>
+                                                        <input style="text-transform:uppercase" type="text" class="form-control form-control-solid form-control-lg" name="varian_sku[]">
+                                                        <span class="form-text text-muted">Auto generate SKU</span>
                                                     <div class="fv-plugins-message-container"></div></div>
                                                     <!--end::Input-->
                                                 </div>
