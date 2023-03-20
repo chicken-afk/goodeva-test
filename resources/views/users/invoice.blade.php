@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="{{ asset('users/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('users/css/main.css') . '?v=' . time() }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="icon" type="image/x-icon" href="{{ asset('media/client-logos/logo.png') }}">
     <!--begin::Global Theme Styles(used by all pages)-->
@@ -93,8 +93,8 @@
                         <h5 class="mb-1"> Rp. {{ number_format($row['invoice']->payment_charge) }},-</h5>
                     </div>
                     <h5 class="mb-0">Pesanan :</h5>
-                    <div class="line-1"></div>
                     @foreach ($row['products'] as $key => $value)
+                        <div class="line-1"></div>
                         <div class="order-list">
                             <div class="d-flex bd-highlight">
                                 <div class="bd-highlight pr-2 product-name">
