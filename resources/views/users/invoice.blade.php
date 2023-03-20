@@ -15,6 +15,8 @@
     {{-- <link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet" type="text/css" /> --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- Bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
     <title>Warung Aceh Bang Ari</title>
     @yield('css')
 </head>
@@ -40,12 +42,22 @@
         <div class="container">
             <div class="card card-invoice">
                 <div class="card-header">
-                    <div class="brand d-flex justify-content-center" style="margin: auto !important;">
+                    <div class="brand d-flex justify-content-center text-center" style="margin: auto !important;">
                         <img src="{{ asset('media/client-logos/logo.png') }}" class="logo-brand" />
-                        Warung Aceh Bang Ari
+                        <span> Warung Aceh Bang Ari </span>
                     </div>
-                    <h3>Pesanan Berhasil</h3>
-                    <p class="mb-0">Pesanan akan langsung dibawa oleh pelayan ke meja anda.</p>
+                    {{-- <h3 class="mt-3" style="font-size : large;">Pesanan Berhasil</h3> --}}
+                    @php
+                        $text_status = $row['invoice']->order_status == 'diterima' ? 'Pesanan sudah ' : 'Pesanan sedang ';
+                    @endphp
+                    <h4 class="mb-0 mt-3" style="font-size : medium;">{{ $text_status . $row['invoice']->order_status }}
+
+                        <span class="text-primary" style="font-size : x-small ; text-decoration : none;"
+                            onclick="location.reload();">(Check Status)</span>
+                    </h4>
+                    <p class="mb-0" style="font-size : smaller !important;">Pesanan akan langsung dibawa oleh pelayan
+                        ke meja anda.
+                    </p>
                 </div>
                 <div class="card-body">
                     <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
@@ -54,9 +66,11 @@
                         <h5 class="mb-0">{{ $row['invoice']->name }}</h5>
                     </div>
                     <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
-                        <h5 class="mb-0" style="width: 7rem">Status Pemesanan</h5>
+                        <h5 class="mb-0" style="width: 7rem">Status Pembayaran</h5>
                         <h5 class="mb-0" style="width: 0.1rem">:</h5>
-                        <h5 class="mb-0">{{ $row['invoice']->order_status }}</h5>
+                        <h5 class="mb-0 text-danger">
+                            {{ $row['invoice']->payment_status == 0 ? 'Belum dibayar' : 'Sudah dibayar' }}
+                        </h5>
                     </div>
                     <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
                         <h5 class="mb-0" style="width: 7rem">Kode Pemesanan</h5>
@@ -69,9 +83,9 @@
                         <h5 class="mb-0">{{ $row['invoice']->invoice_number }}</h5>
                     </div>
                     <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
-                        <h5 class="mb-1" style="width: 7rem">Nomor Meja</h5>
-                        <h5 class="mb-1" style="width: 0.1rem">:</h5>
-                        <h5 class="mb-1"> {{ $row['invoice']->no_table }}</h5>
+                        <h5 class="mb-0" style="width: 7rem">Nomor Meja</h5>
+                        <h5 class="mb-0" style="width: 0.1rem">:</h5>
+                        <h5 class="mb-0"> {{ $row['invoice']->no_table }}</h5>
                     </div>
                     <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
                         <h5 class="mb-1" style="width: 7rem">Harga Total</h5>
@@ -89,7 +103,7 @@
                                     <p>Topping : {{ $value->topping_text }}</p>
                                 </div>
                                 <div class="bd-highlight  ms-auto" style="font-weight:500;font-size:1rem">
-                                    <p style="font-size: 1rem">Qty : {{ $value->qty }}</p>
+                                    <p style="font-size: 0.8rem">Qty : {{ $value->qty }}</p>
                                 </div>
                             </div>
                             <div class="d-flex bd-highlight mb-2">
@@ -102,13 +116,13 @@
                     @endforeach
                 </div>
                 <div class="card-footer">
-                    <button type="button" class="btn btn-sm btn-secondary mt-1" onclick="window.print()">Print
+                    <button type="button" class="btn btn-sm btn-danger mt-1" onclick="window.print()">Print
                         Invoice</button>
                     <input type="hidden"
                         value="{{ route('invoice', ['invoice' => $row['invoice']->invoice_number]) }}" name=""
                         id="myInput">
-                    <button type="button" class="btn btn-sm btn-secondary mt-1" onclick="copyLink()">
-                        Copy Invoice</button>
+                    <button type="button" class="btn btn-sm btn-primary mt-1" onclick="copyLink()">
+                        Share Invoice</button>
                     <a type="button" class="btn btn-sm btn-warning mt-1" href="{{ route('userPage') }}">
                         Pesan Lagi</a>
                 </div>
