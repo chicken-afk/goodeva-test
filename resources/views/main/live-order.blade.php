@@ -40,7 +40,7 @@
     <nav class="navbar navbar-light text-center p-2 sticky-top" style="background-color: #663259;">
         <!-- Navbar content -->
         <div class="running-container">
-            <h3 class="running-text">
+            <h3 class="running-text" style="color : white !important;">
                 Live Order | Warung Aceh Bang Ari || {{ Auth::user()->name }}
             </h3>
         </div>
