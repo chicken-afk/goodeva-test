@@ -102,6 +102,19 @@ class UserController extends Controller
         foreach ($request->carts as $p => $q) {
             $q = collect($q);
             $product = DB::table('active_products')->where('uuid', $q['uuid'])->first();
+
+            /**Insert invoice outlets */
+            $inserted = DB::table('invoice_outlets')->where('invoice_id', $invoiceId)->where('outlet_id', $product->outlet_id)->count();
+            if ($inserted == 0) {
+                DB::table('invoice_outlets')->insert([
+                    'invoice_id' => $invoiceId,
+                    'outlet_id' => $product->outlet_id,
+                    'created_at' => now()
+                ]);
+            }
+
+            /**End insert invoice Outlets */
+
             $invoiceProductid = DB::table('invoice_products')->insertGetId([
                 'invoice_id' => $invoiceId,
                 'active_product_id' => $product->id,

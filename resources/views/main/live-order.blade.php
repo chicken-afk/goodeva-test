@@ -66,7 +66,7 @@
         {{-- Invoice --}}
         <div class="invoice mt-1 accordion" id="exampleAccordion">
             @foreach ($datas as $key => $value)
-                <div class="accordion {{ $value->order_status == 'selesai' ? 'd-none' : '' }}"
+                <div class="accordion {{ $value->status_pemesanan == 'selesai' ? 'd-none' : '' }}"
                     id="accordion{{ $value->invoice_number }}">
                     <div class="accordion-item mb-2">
                         <h2 class="accordion-header" id="heading-{{ $key }}">
@@ -84,14 +84,15 @@
                                     <h3>Daftar Pesanan :</h3>
                                 </div>
                                 <div class="ms-auto" id="button{{ $value->invoice_number }}">
-                                    @if ($value->order_status == 'diterima')
-                                        <button class="btn btn-primary btn-md" id="bProses{{ $key }}"
-                                            onclick="changeStatus(`{{ $value->invoice_number }}`, 'diproses'
-                                            )">Proses</button>
-                                    @else
-                                        <button class="btn btn-warning btn-md"
-                                            onclick="changeStatus(`{{ $value->invoice_number }}`, 'selesai' )"
-                                            id="bFinish{{ $key }}">Selesai</button>
+                                    @if (Auth::user()->role_id != 1)
+                                        @if ($value->status_pemesanan == 'diterima')
+                                            <button class="btn btn-primary btn-md" id="bProses{{ $key }}"
+                                                onclick="changeStatus(`{{ $value->invoice_number }}`, 'diproses', `{{ Auth::user()->id }}`)">Proses</button>
+                                        @else
+                                            <button class="btn btn-warning btn-md"
+                                                onclick="changeStatus(`{{ $value->invoice_number }}`, 'selesai', `{{ Auth::user()->id }}` )"
+                                                id="bFinish{{ $key }}">Selesai</button>
+                                        @endif
                                     @endif
                                 </div>
                             </div>

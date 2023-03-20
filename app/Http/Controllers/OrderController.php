@@ -105,16 +105,36 @@ class OrderController extends Controller
 
     public function liveOrder()
     {
-        $datas = DB::table('invoices')->where('order_status', '!=', 'selesai')->orderBy('order_at', 'asc')->get();
+        if (Auth::user()->role_id != 1) {
+            $datas = DB::table('invoices')
+                ->join('invoice_outlets', 'invoice_outlets.invoice_id', 'invoices.id')
+                ->where('invoices.order_status', '!=', 'selesai')
+                ->where('invoice_outlets.order_status', '!=', 'selesai')
+                ->orderBy('invoices.id', 'asc')
+                ->where('invoice_outlets.outlet_id', Auth::user()->outlet_id)
+                ->select('invoices.*', 'invoice_outlets.order_status as status_pemesanan')->get();
+        } else {
+            $datas = DB::table('invoices')->where('order_status', '!=', 'selesai')->select('invoices.*', 'invoices.order_status as status_pemesanan')->orderBy('id', 'asc')->get();
+        }
 
         foreach ($datas as $p => $q) {
             $invoice = $q;
-            $row['products'] = DB::table('invoice_products')
-                ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
-                ->join('outlets', 'outlets.id', 'active_products.outlet_id')
-                ->select('outlets.id as outlet_id', 'outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
-                ->where('invoice_products.invoice_id', $invoice->id)
-                ->get();
+            if (Auth::user()->role_id != 1) {
+                $row['products'] = DB::table('invoice_products')
+                    ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
+                    ->join('outlets', 'outlets.id', 'active_products.outlet_id')
+                    ->where('invoice_products.invoice_id', $invoice->id)
+                    ->where('active_products.outlet_id', Auth::user()->outlet_id)
+                    ->select('outlets.id as outlet_id', 'outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
+                    ->get();
+            } else {
+                $row['products'] = DB::table('invoice_products')
+                    ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
+                    ->join('outlets', 'outlets.id', 'active_products.outlet_id')
+                    ->select('outlets.id as outlet_id', 'outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
+                    ->where('invoice_products.invoice_id', $invoice->id)
+                    ->get();
+            }
 
             foreach ($row['products'] as $key => $value) {
                 $variant = DB::table('invoice_product_variants')
@@ -136,23 +156,6 @@ class OrderController extends Controller
             }
             $datas[$p]->products = $row['products'];
         }
-        if (Auth::user()->role_id == 3) {
-            $newData = array();
-            $i = 0;
-            foreach ($datas as $k => $v) {
-                $isProduct = false;
-                foreach ($v->products as $key => $value) {
-                    if ($value->outlet_id == Auth::user()->outlet_id) {
-                        $isProduct = true;
-                    }
-                }
-                if ($isProduct == true) {
-                    $newData[$i] = $datas[$k];
-                    $i++;
-                }
-            }
-            $datas = collect($newData);
-        }
 
         return view('main.live-order', compact('datas'));
     }
@@ -160,16 +163,36 @@ class OrderController extends Controller
     public function liveOrderData()
     {
 
-        $datas = DB::table('invoices')->where('order_status', '!=', 'selesai')->get();
+        if (Auth::user()->role_id != 1) {
+            $datas = DB::table('invoices')
+                ->join('invoice_outlets', 'invoice_outlets.invoice_id', 'invoices.id')
+                ->where('invoices.order_status', '!=', 'selesai')
+                ->where('invoice_outlets.order_status', '!=', 'selesai')
+                ->orderBy('invoices.id', 'asc')
+                ->where('invoice_outlets.outlet_id', Auth::user()->outlet_id)
+                ->select('invoices.*', 'invoice_outlets.order_status as status_pemesanan')->get();
+        } else {
+            $datas = DB::table('invoices')->where('order_status', '!=', 'selesai')->select('invoices.*', 'invoices.order_status as status_pemesanan')->orderBy('id', 'asc')->get();
+        }
 
         foreach ($datas as $k => $v) {
             $invoice = $v;
-            $row['products'] = DB::table('invoice_products')
-                ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
-                ->join('outlets', 'outlets.id', 'active_products.outlet_id')
-                ->select('outlets.id as outlet_id', 'outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
-                ->where('invoice_products.invoice_id', $invoice->id)
-                ->get();
+            if (Auth::user()->role_id != 1) {
+                $row['products'] = DB::table('invoice_products')
+                    ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
+                    ->join('outlets', 'outlets.id', 'active_products.outlet_id')
+                    ->select('outlets.id as outlet_id', 'outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
+                    ->where('invoice_products.invoice_id', $invoice->id)
+                    ->where('active_products.outlet_id', Auth::user()->outlet_id)
+                    ->get();
+            } else {
+                $row['products'] = DB::table('invoice_products')
+                    ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
+                    ->join('outlets', 'outlets.id', 'active_products.outlet_id')
+                    ->select('outlets.id as outlet_id', 'outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
+                    ->where('invoice_products.invoice_id', $invoice->id)
+                    ->get();
+            }
 
             foreach ($row['products'] as $key => $value) {
                 $variant = DB::table('invoice_product_variants')
@@ -192,39 +215,54 @@ class OrderController extends Controller
             $datas[$k]->products = $row['products'];
         }
 
-        if (Auth::user()->role_id == 3) {
-            $newData = array();
-            $i = 0;
-            foreach ($datas as $k => $v) {
-                $isProduct = false;
-                foreach ($v->products as $key => $value) {
-                    if ($value->outlet_id == Auth::user()->outlet_id) {
-                        $isProduct = true;
-                    }
-                }
-                if ($isProduct == true) {
-                    $newData[$i] = $datas[$k];
-                    $i++;
-                }
-            }
-            $datas = collect($newData);
-        }
-
 
 
         return response()->json([
             'status_code' => 200,
             'datas' =>  $datas,
-            'total_data' => $datas->count()
+            'total_data' => $datas->count(),
+            'user_id' => Auth::user()->id
         ]);
     }
 
     public function editStatus(Request $request)
     {
+        $invoice = DB::table('invoices')->where('invoice_number', $request->invoice)->first();
+        $user = DB::table('users')->where('id', $request->user_id)->first();
+        // Check if user role is outlet
+        if ($user->role_id != 1) {
+            DB::table('invoice_outlets')->where('invoice_id', $invoice->id)->where('outlet_id', $user->outlet_id)->update([
+                'order_status' => $request->order_status,
+                'updated_at' => now()
+            ]);
+            /**Check if all outlet finish order */
+            $cStatus = DB::table('invoice_outlets')->where('invoice_id', $invoice->id)->where(function ($query) {
+                $query->where('order_status', '=', 'diterima')->orWhere('order_status', '=', 'diproses');
+            })->count();
+            if ($cStatus == 0) {
+                DB::table('invoices')->where('invoice_number', $request->invoice)->update([
+                    'order_status' => 'selesai',
+                    'updated_at' => now()
+                ]);
+            }
+
+            return response()->json([
+                'status_code' => 200,
+                'message' => 'berhasil merubah status',
+                'order_status' => $request->order_status,
+                'invoice' => $request->invoice
+            ]);
+        }
         DB::table('invoices')->where('invoice_number', $request->invoice)->update([
             'order_status' => $request->order_status,
             'updated_at' => now()
         ]);
+        if ($request->order_status == 'selesai') {
+            DB::table('invoice_outlets')->where('invoice_id', $invoice->id)->update([
+                'order_status' => $request->order_status,
+                'updated_at' => now()
+            ]);
+        }
 
         return response()->json([
             'status_code' => 200,

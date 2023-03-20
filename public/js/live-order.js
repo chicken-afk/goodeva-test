@@ -20,16 +20,15 @@ function reloadData() {
                 var buttonHtml = "";
                 var invoice = response.datas[i];
 
-                if (invoice.order_status == 'diterima') {
+                if (invoice.status_pemesanan == 'diterima') {
                     buttonHtml = `
                     <button class="btn btn-primary btn-md" id="bProses{{ $key }}"
-                    onclick="changeStatus('${invoice.invoice_number}', 'diproses'
-                    )">Proses</button>
+                    onclick="changeStatus('${invoice.invoice_number}', 'diproses', '${response.user_id}')">Proses</button>
                     `;
                 } else {
                     buttonHtml = `
                     <button class="btn btn-warning btn-md"
-                    onclick="changeStatus('${invoice.invoice_number}', 'selesai' )"
+                    onclick="changeStatus('${invoice.invoice_number}', 'selesai', '${response.user_id}' )"
                     id="bFinish{{ $key }}">Selesai</button>
                     `;
                 }
@@ -114,10 +113,11 @@ function reloadData() {
     });
 }
 
-function changeStatus(invoice, order_status) {
+function changeStatus(invoice, order_status, user_id) {
     var data = {
         "invoice": invoice,
-        "order_status": order_status
+        "order_status": order_status,
+        "user_id": user_id,
     };
     console.log(data)
     $.ajaxSetup({
@@ -138,12 +138,13 @@ function changeStatus(invoice, order_status) {
                 })
                 return false;
             }
-            if (response.order_status == 'diproses') {
+            reloadData();
+            if (response.status_pemesanan == 'diproses') {
                 document.getElementById(`button${invoice}`).innerHTML = `
-                <button class="btn btn-warning btn-md" onclick="changeStatus('${invoice}', 'selesai' )" id="bFinish{{ $key }}">Selesai</button>
+                <button class="btn btn-warning btn-md" onclick="changeStatus('${invoice}', 'selesai', '${response.user_id}' )" id="bFinish{{ $key }}">Selesai</button>
                 `;
             }
-            else if (response.order_status == 'selesai') {
+            else if (response.status_pemesanan == 'selesai') {
                 $(`#accordion${invoice}`).addClass('fade-out');
                 displayNone(`${invoice}`);
             }
