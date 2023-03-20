@@ -368,11 +368,11 @@
                                                                 <div
                                                                     class="form-group fv-plugins-icon-container has-success">
                                                                     <label>SKU</label>
-                                                                    <input style="text-transform:uppercase" type="text"
+                                                                    <input style="text-transform:uppercase" type="hidden"
                                                                         class="form-control form-control-solid form-control-lg"
-                                                                        name="varian_sku[]">
-                                                                    <span class="form-text text-muted">Please enter your
-                                                                        Package Width in CM.</span>
+                                                                        name="varian_sku[]" disabled>
+                                                                    <span class="form-text text-muted">Auto Generate
+                                                                        SKU</span>
                                                                     <div class="fv-plugins-message-container"></div>
                                                                 </div>
                                                                 <!--end::Input-->
