@@ -83,10 +83,21 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!--[html-partial:include:{"file":"partials/_header.html"}]/-->
 
                 <!--begin::Content-->
-                <div class="content  d-flex flex-column flex-column-fluid mt-10" id="kt_content">
+                <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
 
                     {{-- @include('partials._subheader.subheader-v4') --}}
-
+                    <div class="subheader py-5 py-lg-10 gutter-b subheader-transparent" id="kt_subheader"
+                        style="background-color: #663259; background-position: right bottom; background-size: auto 100%; background-repeat: no-repeat; background-image: url(/media/svg/patterns/taieri.svg)">
+                        <div class="container d-flex flex-column">
+                            <!--begin::Title-->
+                            <div class="d-flex align-items-sm-end flex-column flex-sm-row">
+                                <h2 class="d-flex align-items-center text-white mr-5 mb-0">Warung Aceh Bang Ari</h2>
+                                <span class="text-white opacity-60 font-weight-bold">POS & Order Managament
+                                    System</span>
+                            </div>
+                            <!--end::Title-->
+                        </div>
+                    </div>
                     <div class="container">
                         <div class="alert alert-custom alert-white alert-shadow fade show gutter-b" role="alert">
                             <div class="alert-icon">
@@ -95,7 +106,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                         width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                            <rect x="0" y="0" width="24" height="24">
+                                            </rect>
                                             <path
                                                 d="M7.07744993,12.3040451 C7.72444571,13.0716094 8.54044565,13.6920474 9.46808594,14.1079953 L5,23 L4.5,18 L7.07744993,12.3040451 Z M14.5865511,14.2597864 C15.5319561,13.9019016 16.375416,13.3366121 17.0614026,12.6194459 L19.5,18 L19,23 L14.5865511,14.2597864 Z M12,3.55271368e-14 C12.8284271,3.53749572e-14 13.5,0.671572875 13.5,1.5 L13.5,4 L10.5,4 L10.5,1.5 C10.5,0.671572875 11.1715729,3.56793164e-14 12,3.55271368e-14 Z"
                                                 fill="#000000" opacity="0.3"></path>
