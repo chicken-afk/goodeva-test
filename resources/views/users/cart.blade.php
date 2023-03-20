@@ -1,7 +1,7 @@
 @extends('users.main-cart')
 
 @section('js')
-    <script src="{{ asset('users/js/cart.js') }}"></script>
+    <script src="{{ asset('users/js/cart.js') . '?v=' . time() }}"></script>
 @endsection
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
