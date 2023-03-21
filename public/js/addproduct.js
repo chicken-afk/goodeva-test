@@ -9,6 +9,7 @@ const inputFieldimage = document.getElementById('productImage');
 
 let data = {};
 
+
 inputFiledProductName.addEventListener('input', function () {
     data['productName'] = inputFiledProductName.value;
     inputFieldProductSKU.value = data['productName'].replace(/\s+/g, '').toUpperCase();
@@ -65,7 +66,7 @@ function generatFormData() {
     data['topping_price'] = []
 
     var input = document.getElementsByName('varian_name[]');
-    var input1 = document.getElementsByName('varian_sku[]');
+    var input1 = document.getElementsByName('varian_name[]');
     var input2 = document.getElementsByName('varian_price[]');
     var input3 = document.getElementsByName('topping_name[]');
     var input4 = document.getElementsByName('topping_price[]');
@@ -81,7 +82,7 @@ function generatFormData() {
                 if (a.value.length != 0 && b.value.length != 0 && c.value.length != 0) {
                     data.varian[i] = {
                         'varian_name': a.value,
-                        'varian_sku': b.value,
+                        'varian_sku': b.value.replace(/\s+/g, '').toUpperCase(),
                         'varian_price': c.value
                     }
                 }
@@ -110,15 +111,6 @@ function addForm() {
     var e = $(
         `
         <div class="row">
-                                                <div class="col-xl-4">
-                                                    <!--begin::Input-->
-                                                    <div class="form-group fv-plugins-icon-container has-success">
-                                                        <label>SKU</label>
-                                                        <input style="text-transform:uppercase" type="text" class="form-control form-control-solid form-control-lg" name="varian_sku[]">
-                                                        <span class="form-text text-muted">Auto generate SKU</span>
-                                                    <div class="fv-plugins-message-container"></div></div>
-                                                    <!--end::Input-->
-                                                </div>
                                                 <div class="col-xl-4">
                                                     <!--begin::Input-->
                                                     <div class="form-group fv-plugins-icon-container has-success">
