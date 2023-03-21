@@ -22,7 +22,7 @@ class DashboardController extends Controller
             ->join('invoices', 'invoices.id', '=', 'invoice_products.invoice_id')
             ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
             ->where('invoices.payment_status', 1)
-            ->select('invoices.invoice_number', 'invoice_products.active_product_id', 'active_products.*', DB::raw("count(invoice_products.active_product_id) as count"))
+            ->select('invoices.invoice_number', 'invoice_products.active_product_id', 'active_products.*', DB::raw("sum(invoice_products.qty) as count"))
             ->groupBy('invoice_products.active_product_id')
             ->get();
         $row['total_produk_terjual'] = DB::table('invoice_products')
