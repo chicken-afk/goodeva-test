@@ -24,6 +24,18 @@ class StatisticController extends Controller
         ]);
     }
 
+    public function statisticOmsetDat(Request $request)
+    {
+        $datas = DB::table('invoices')->where('payment_status', 1)
+            ->select(DB::raw('sum(payment_charge) as `omset`'), DB::raw("DATE_FORMAT(payment_at, '%d-%M-%Y') new_date"),  DB::raw('Day(payment_at) day'))
+            ->groupby('day')
+            ->get();
+        return response()->json([
+            'status_code' => 200,
+            'data' => $datas
+        ]);
+    }
+
     public function statisticOutlet()
     {
         $datas = DB::table('invoices')->where('invoices.payment_status', 1)

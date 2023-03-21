@@ -11,12 +11,25 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-4">
+                <div class="card card-custom gutter-b">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-label" style="width: 50rem">Statistik Penjualan Berdasarkan Omset</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {{-- Generate using Javascript --}}
+                        <div id="statistic_1"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
                 <div class="card card-custom gutter-b">
                     <div class="card-header h-auto">
                         <div class="card-title py-5">
                             <div class="card-label">
-                                Statistik Penjualan Berdasarkan Omset
+                                Chart Penjualan Berdasarkan Omset
                             </div>
                         </div>
                     </div>
@@ -34,23 +47,7 @@
                     <div class="card-header h-auto">
                         <div class="card-title py-5">
                             <div class="card-label">
-                                Statistik Penjualan Berdasarkan Outlet
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <!--begin::Chart-->
-                        <div id="chart_2"></div>
-                        <!--end::Chart-->
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card card-custom gutter-b">
-                    <div class="card-header h-auto">
-                        <div class="card-title py-5">
-                            <div class="card-label">
-                                Statistik Penjualan Berdasarkan Outlet
+                                Chart Penjualan Berdasarkan Outlet
                             </div>
                         </div>
                     </div>
@@ -61,8 +58,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-6">
                 <div class="card card-custom gutter-b">
                     <div class="card-header h-auto">
@@ -72,23 +67,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <!--begin::Chart-->
-                        <div id="chart_2"></div>
-                        <!--end::Chart-->
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card card-custom gutter-b">
-                    <div class="card-header h-auto">
-                        <div class="card-title py-5">
-                            <div class="card-label">
-                                Statistik Penjualan Berdasarkan Produk
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         <!--begin::Chart-->
                         <div id="chart_12"></div>
                         <!--end::Chart-->
@@ -101,5 +80,5 @@
 
 @section('script')
     <!--begin::Page Scripts(used by this page)-->
-    <script src="{{ asset('/js/pages/features/charts/apexcharts.js') }}"></script>
+    <script src="{{ asset('/js/pages/features/charts/apexcharts.js') . '?v=' . time() }}"></script>
 @endsection

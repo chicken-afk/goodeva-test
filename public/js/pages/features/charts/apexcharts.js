@@ -63,6 +63,36 @@ function generateData(count, yrange) {
 	return series;
 }
 
+function generateMonth(month) {
+	month = month - 1;
+	var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+	return months[month];
+}
+
+function number_format(number, decimals, dec_point, thousands_sep) {
+	// Strip all characters but numerical ones.
+	number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+	var n = !isFinite(+number) ? 0 : +number,
+		prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+		sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+		dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+		s = '',
+		toFixedFix = function (n, prec) {
+			var k = Math.pow(10, prec);
+			return '' + Math.round(n * k) / k;
+		};
+	// Fix for IE parseFloat(0.55).toFixed(0) = 0;
+	s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+	if (s[0].length > 3) {
+		s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+	}
+	if ((s[1] || '').length < prec) {
+		s[1] = s[1] || '';
+		s[1] += new Array(prec - s[1].length + 1).join('0');
+	}
+	return s.join(dec);
+}
+
 
 /**Generate Chart omset */
 
@@ -130,7 +160,7 @@ var KTApexChartsDemo = function () {
 			var options = {
 				series: data,
 				chart: {
-					width: 500,
+					width: 600,
 					type: 'donut',
 				},
 				labels: categories,
@@ -198,6 +228,88 @@ var KTApexChartsDemo = function () {
 	};
 }();
 
+var KTEcommerceMyOrders = function () {
+	// Private functions
+	var demo = function () {
+		var datatable = $('#statistic_1').KTDatatable({
+			// datasource definition
+			data: {
+				type: 'remote',
+				source: {
+					read: {
+						method: 'GET',
+						url: '/statistic-omset-day',
+						// sample custom headers
+						// headers: {'x-my-custom-header': 'some value', 'x-test-header': 'the value'},
+						map: function (raw) {
+							// sample data mapping
+							console.log(raw)
+							var dataSet = raw.data;
+							if (typeof raw.data !== 'undefined') {
+								dataSet = raw.data;
+							}
+							return dataSet;
+						},
+					},
+				},
+				pageSize: 10,
+				serverPaging: false,
+				serverFiltering: true,
+				serverSorting: true,
+			},
+
+			// layout definition
+			layout: {
+				scroll: false,
+				footer: false,
+			},
+
+			// column sorting
+			sortable: true,
+
+			pagination: true,
+
+			search: {
+				input: $('#kt_datatable_search_query'),
+				key: 'generalSearch'
+			},
+
+			// columns definition
+			columns: [{
+				field: 'new_date',
+				title: 'Tanggal',
+			},
+			{
+				field: 'omset',
+				title: 'Omset',
+				template: function (raw) {
+					return "Rp. " + number_format(raw.omset) + ",-"
+				}
+			}],
+
+		});
+
+		$('#kt_datatable_search_status').on('change', function () {
+			console.log($(this).val().toLowerCase());
+			datatable.search($(this).val().toLowerCase(), 'payment_status');
+		});
+
+		$('#kt_datatable_search_type').on('change', function () {
+			datatable.search($(this).val().toLowerCase(), 'Type');
+		});
+
+		$('#kt_datatable_search_status, #kt_datatable_search_type').selectpicker();
+	};
+
+	return {
+		// public functions
+		init: function () {
+			demo();
+		},
+	};
+}();
+
 jQuery(document).ready(function () {
 	KTApexChartsDemo.init();
+	KTEcommerceMyOrders.init();
 });
