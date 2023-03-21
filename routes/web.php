@@ -79,6 +79,8 @@ Route::middleware(['login'])->group(function () {
 
     /**Statistic Route */
     Route::get('/statistic', [StatisticController::class, 'view'])->name('getStatistic');
+    /**Chart Data Based On Omset Per Month */
+    Route::get('/statistic-omset', [StatisticController::class, 'statisticOmset'])->name('statisticOmset');
 });
 
 

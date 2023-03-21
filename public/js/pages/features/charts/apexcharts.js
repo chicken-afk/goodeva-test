@@ -7,74 +7,112 @@ const info = '#8950FC';
 const warning = '#FFA800';
 const danger = '#F64E60';
 
+function number_format(number, decimals, dec_point, thousands_sep) {
+	// Strip all characters but numerical ones.
+	number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+	var n = !isFinite(+number) ? 0 : +number,
+		prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+		sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+		dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+		s = '',
+		toFixedFix = function (n, prec) {
+			var k = Math.pow(10, prec);
+			return '' + Math.round(n * k) / k;
+		};
+	// Fix for IE parseFloat(0.55).toFixed(0) = 0;
+	s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+	if (s[0].length > 3) {
+		s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+	}
+	if ((s[1] || '').length < prec) {
+		s[1] = s[1] || '';
+		s[1] += new Array(prec - s[1].length + 1).join('0');
+	}
+	return s.join(dec);
+}
+
 // Class definition
 function generateBubbleData(baseval, count, yrange) {
-    var i = 0;
-    var series = [];
-    while (i < count) {
-      var x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;;
-      var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-      var z = Math.floor(Math.random() * (75 - 15 + 1)) + 15;
-  
-      series.push([x, y, z]);
-      baseval += 86400000;
-      i++;
-    }
-    return series;
-  }
+	var i = 0;
+	var series = [];
+	while (i < count) {
+		var x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;;
+		var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+		var z = Math.floor(Math.random() * (75 - 15 + 1)) + 15;
+
+		series.push([x, y, z]);
+		baseval += 86400000;
+		i++;
+	}
+	return series;
+}
 
 function generateData(count, yrange) {
-    var i = 0;
-    var series = [];
-    while (i < count) {
-        var x = 'w' + (i + 1).toString();
-        var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+	var i = 0;
+	var series = [];
+	while (i < count) {
+		var x = 'w' + (i + 1).toString();
+		var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
 
-        series.push({
-            x: x,
-            y: y
-        });
-        i++;
-    }
-    return series;
+		series.push({
+			x: x,
+			y: y
+		});
+		i++;
+	}
+	return series;
 }
+
+
+/**Generate Chart omset */
 
 var KTApexChartsDemo = function () {
 	// Private functions
 	var _demo1 = function () {
-		const apexChart = "#chart_1";
-		var options = {
-			series: [{
-				name: "Desktops",
-				data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-			}],
-			chart: {
-				height: 350,
-				type: 'line',
-				zoom: {
-					enabled: false
-				}
-			},
-			dataLabels: { 	
-				enabled: false
-			},
-			stroke: {
-				curve: 'straight'
-			},
-			grid: {
-				row: {
-					colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-					opacity: 0.5
+		$.getJSON('/statistic-omset', function (response) {
+			console.log(response);
+			var data = [];
+			var categories = [];
+			for (var i = 0; i < response.data.length; i++) {
+				data[i] = response.data[i].omset;
+				categories[i] = response.data[i].new_date
+			}
+			console.log(data, categories)
+			const apexChart = "#chart_1";
+			var options = {
+				series: [{
+					name: "Omset",
+					data: data
+				}],
+				chart: {
+					height: 350,
+					type: 'line',
+					zoom: {
+						enabled: false
+					}
 				},
-			},
-			xaxis: {
-				categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-			},
-			colors: [primary]
-		};
+				dataLabels: {
+					enabled: false
+				},
+				stroke: {
+					curve: 'straight'
+				},
+				grid: {
+					row: {
+						colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+						opacity: 0.5
+					},
+				},
+				xaxis: {
+					categories: categories,
+				},
+				colors: [primary]
+			};
 
-		var chart = new ApexCharts(document.querySelector(apexChart), options);
-		chart.render();
+			var chart = new ApexCharts(document.querySelector(apexChart), options);
+			chart.render();
+		});
+
 	}
 
 	var _demo2 = function () {
@@ -714,7 +752,7 @@ var KTApexChartsDemo = function () {
 					enabled: true
 				}
 			},
-			colors: [success,danger]
+			colors: [success, danger]
 		};
 
 		var chart = new ApexCharts(document.querySelector(apexChart), options);
@@ -727,31 +765,31 @@ var KTApexChartsDemo = function () {
 			series: [{
 				name: 'Bubble1',
 				data: generateBubbleData(new Date('11 Feb 2017 GMT').getTime(), 20, {
-				  min: 10,
-				  max: 60
+					min: 10,
+					max: 60
 				})
-			  },
-			  {
+			},
+			{
 				name: 'Bubble2',
 				data: generateBubbleData(new Date('11 Feb 2017 GMT').getTime(), 20, {
-				  min: 10,
-				  max: 60
+					min: 10,
+					max: 60
 				})
-			  },
-			  {
+			},
+			{
 				name: 'Bubble3',
 				data: generateBubbleData(new Date('11 Feb 2017 GMT').getTime(), 20, {
-				  min: 10,
-				  max: 60
+					min: 10,
+					max: 60
 				})
-			  },
-			  {
+			},
+			{
 				name: 'Bubble4',
 				data: generateBubbleData(new Date('11 Feb 2017 GMT').getTime(), 20, {
-				  min: 10,
-				  max: 60
+					min: 10,
+					max: 60
 				})
-			  }],
+			}],
 			chart: {
 				height: 350,
 				type: 'bubble',
