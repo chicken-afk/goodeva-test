@@ -367,30 +367,17 @@
                                                                 <!--begin::Input-->
                                                                 <div
                                                                     class="form-group fv-plugins-icon-container has-success">
-                                                                    <label>SKU</label>
-                                                                    <input style="text-transform:uppercase" type="text"
-                                                                        class="form-control form-control-solid form-control-lg"
-                                                                        name="varian_sku[]">
-                                                                    <span class="form-text text-muted">Auto Generate
-                                                                        SKU</span>
-                                                                    <div class="fv-plugins-message-container"></div>
-                                                                </div>
-                                                                <!--end::Input-->
-                                                            </div>
-                                                            <div class="col-xl-4">
-                                                                <!--begin::Input-->
-                                                                <div
-                                                                    class="form-group fv-plugins-icon-container has-success">
                                                                     <label>Variant Name</label>
                                                                     <input type="text"
                                                                         class="form-control form-control-solid form-control-lg"
-                                                                        name="varian_name[]">
+                                                                        name="varian_name[]" id="varianName-0">
                                                                     <span class="form-text text-muted">Please enter your
                                                                         Package Height in CM.</span>
                                                                     <div class="fv-plugins-message-container"></div>
                                                                 </div>
                                                                 <!--end::Input-->
                                                             </div>
+
                                                             <div class="col-xl-4">
                                                                 <!--begin::Input-->
                                                                 <div

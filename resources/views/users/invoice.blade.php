@@ -88,6 +88,16 @@
                         <h5 class="mb-0"> {{ $row['invoice']->no_table }}</h5>
                     </div>
                     <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
+                        <h5 class="mb-1" style="width: 7rem">Harga</h5>
+                        <h5 class="mb-1" style="width: 0.1rem">:</h5>
+                        <h5 class="mb-1"> Rp. {{ number_format($row['invoice']->charge_before_tax) }},-</h5>
+                    </div>
+                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
+                        <h5 class="mb-1" style="width: 7rem">Pajak (10%)</h5>
+                        <h5 class="mb-1" style="width: 0.1rem">:</h5>
+                        <h5 class="mb-1"> Rp. {{ number_format($row['invoice']->tax) }},-</h5>
+                    </div>
+                    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 1px;">
                         <h5 class="mb-1" style="width: 7rem">Harga Total</h5>
                         <h5 class="mb-1" style="width: 0.1rem">:</h5>
                         <h5 class="mb-1"> Rp. {{ number_format($row['invoice']->payment_charge) }},-</h5>

@@ -87,6 +87,11 @@ class UserController extends Controller
         $invoice = "INVC" . time() . $this->company_id . strtoupper(Str::random(2));
         $invoiceToday = DB::table('invoices')->whereDate('created_at', Carbon::today())->count();
         $invoice_code = $invoiceToday + 1;
+        /**Generate Tax */
+        $tax = $totalPrice * 10 / 100;
+        $pwithoutTax = $totalPrice;
+        $totalPrice = $pwithoutTax + $tax;
+        /**End Generate Tax */
         $invoiceId = DB::table('invoices')->insertGetId([
             'qr_code_id' => 0,
             'invoice_number' => $invoice,
@@ -96,6 +101,8 @@ class UserController extends Controller
             'no_table' => $request->nomor_meja,
             'started_at' => now(),
             'order_at' => now(),
+            'tax' => $tax,
+            'charge_before_tax' => $pwithoutTax,
             'payment_charge' => $totalPrice,
             'created_at' => now(),
         ]);
