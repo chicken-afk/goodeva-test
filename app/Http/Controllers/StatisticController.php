@@ -33,6 +33,21 @@ class StatisticController extends Controller
             ->select('outlets.outlet_name', DB::raw('sum(invoice_products.qty) as `data`'))
             ->groupBy('outlets.id')
             ->get();
+        $datas = $datas->sortByDesc('data')->values();
+        return response()->json([
+            'status_code' => 200,
+            'data' => $datas
+        ]);
+    }
+    public function statisticProduct()
+    {
+        $datas = DB::table('invoices')->where('invoices.payment_status', 1)
+            ->join('invoice_products', 'invoice_products.invoice_id', 'invoices.id')
+            ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
+            ->select('active_products.active_product_name', DB::raw('sum(invoice_products.qty) as `data`'))
+            ->groupBy('invoice_products.active_product_id')
+            ->get();
+        $datas = $datas->sortByDesc('data')->values();
         return response()->json([
             'status_code' => 200,
             'data' => $datas
