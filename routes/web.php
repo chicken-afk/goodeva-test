@@ -95,7 +95,7 @@ Route::middleware(['login'])->group(function () {
  * Route For Users
  */
 
-Route::get('/', [UserController::class, 'view'])->name('userPage');
+Route::get('/iwer2kj3w9weklfsalms2e2gasaeffer2ese2adlf8eidsru', [UserController::class, 'view'])->name('userPage');
 Route::get('/carts', [UserController::class, 'carts'])->name('cartPage');
 Route::post('/carts', [UserController::class, 'storeCart'])->name('storeCart');
 Route::get('/invoice', [UserController::class, 'invoice'])->name('invoice');
