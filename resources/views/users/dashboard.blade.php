@@ -33,11 +33,11 @@
                     @foreach ($row['outlets'][$key]->products as $val)
                         <div class="product_list" data-bs-toggle="modal" data-bs-target="#productModal{{ $val->uuid }}">
                             <div class="d-flex">
-                                <div class="p-2 flex-fill wrapper_image">
+                                <div class="p-2 wrapper_image">
                                     <img loading="lazy" src="{{ asset($val->product_image) }}"
                                         class="rounded float-start thumbnail-product" alt="...">
                                 </div>
-                                <div class="p-2 flex-fill product_detail">
+                                <div class="p-0 product_detail pt-2">
                                     <h4>{{ $val->active_product_name }}</h4>
                                     <p>{{ $val->description }}</p>
                                     @if ($val->is_available == 0)
@@ -68,9 +68,10 @@
                                     <div class="modal-body">
                                         <button type="button" class="btn-close close-modal" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-
-                                        <img loading="lazy" src="{{ asset($val->product_image) }}"
-                                            class="rounded img-fluid" alt="...">
+                                        <div class="justify-content-center text-center" style="">
+                                            <img loading="lazy" src="{{ asset($val->product_image) }}"
+                                                class="rounded img-fluid" alt="...">
+                                        </div>
                                         <div class="product-detail">
                                             <input type="hidden" id="uuid-{{ $val->uuid }}"
                                                 value="{{ $val->uuid }}">
