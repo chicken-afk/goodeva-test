@@ -136,16 +136,16 @@ main {
 }
 
 .thumbnail-product {
-    width: 150px;
-    height: 150px;
+    width: 110px !important;
+    height: 110px !important;
 }
 
 .product-wrap h4 {
     color: #3F4254 !important;
     opacity: 0.9;
     font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 500;
+    font-size: 0.86rem;
+    font-weight: 620 !important;
     line-height: 1;
     margin-bottom: 0px;
 }
@@ -225,7 +225,7 @@ main {
 }
 
 .product_list .product_detail {
-    padding-top: 20px !important;
+    /* padding-top: 20px !important; */
 }
 
 .modal-product {
