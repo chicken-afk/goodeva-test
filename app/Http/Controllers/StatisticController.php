@@ -23,4 +23,19 @@ class StatisticController extends Controller
             'data' => $datas
         ]);
     }
+
+    public function statisticOutlet()
+    {
+        $datas = DB::table('invoices')->where('invoices.payment_status', 1)
+            ->join('invoice_products', 'invoice_products.invoice_id', 'invoices.id')
+            ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
+            ->join('outlets', 'outlets.id', 'active_products.outlet_id')
+            ->select('outlets.outlet_name', DB::raw('sum(invoice_products.qty) as `data`'))
+            ->groupBy('outlets.id')
+            ->get();
+        return response()->json([
+            'status_code' => 200,
+            'data' => $datas
+        ]);
+    }
 }

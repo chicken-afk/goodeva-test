@@ -970,29 +970,40 @@ var KTApexChartsDemo = function () {
 	}
 
 	var _demo11 = function () {
-		const apexChart = "#chart_11";
-		var options = {
-			series: [44, 55, 41, 17, 15],
-			chart: {
-				width: 380,
-				type: 'donut',
-			},
-			responsive: [{
-				breakpoint: 480,
-				options: {
-					chart: {
-						width: 200
-					},
-					legend: {
-						position: 'bottom'
-					}
-				}
-			}],
-			colors: [primary, success, warning, danger, info]
-		};
+		$.getJSON('/statistic-outlet', function (response) {
+			console.log(response);
+			var data = [];
+			var categories = [];
+			for (var i = 0; i < response.data.length; i++) {
+				data[i] = parseInt(response.data[i].data);
+				categories[i] = response.data[i].outlet_name + " : " + data[i] + " Terjual";
+			}
+			console.log(data, categories)
 
-		var chart = new ApexCharts(document.querySelector(apexChart), options);
-		chart.render();
+			const apexChart = "#chart_11";
+			var options = {
+				series: data,
+				chart: {
+					width: 500,
+					type: 'donut',
+				},
+				labels: categories,
+				responsive: [{
+					breakpoint: 480,
+					options: {
+						chart: {
+							width: 200
+						},
+						legend: {
+							position: 'bottom'
+						}
+					}
+				}]
+			};
+
+			var chart = new ApexCharts(document.querySelector(apexChart), options);
+			chart.render();
+		});
 	}
 
 	var _demo12 = function () {
