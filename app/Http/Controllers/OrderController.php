@@ -15,10 +15,19 @@ class OrderController extends Controller
         if ($request->has('invoice')) {
             $invoice = DB::table('invoices')->where('invoice_number', $request->invoice)->first();
             $row['invoice'] = $invoice;
-            $row['products'] = DB::table('invoice_products')->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
-                ->select('invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
-                ->where('invoice_products.invoice_id', $invoice->id)
-                ->get();
+            if (Auth::user()->role_id == 1) {
+                $row['products'] = DB::table('invoice_products')->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
+                    ->select('invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
+                    ->where('invoice_products.invoice_id', $invoice->id)
+                    ->get();
+            } else {
+                $row['products'] = DB::table('invoice_products')->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
+                    ->join('outlets', 'outlets.id', 'active_products.outlet_id')
+                    ->where('active_products.outlet_id', Auth::user()->outlet_id)
+                    ->select('invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
+                    ->where('invoice_products.invoice_id', $invoice->id)
+                    ->get();
+            }
 
             foreach ($row['products'] as $key => $value) {
                 $variant = DB::table('invoice_product_variants')
@@ -60,16 +69,31 @@ class OrderController extends Controller
         if (isset($query['query']['payment_status'])) {
             $payment_status = $query['query']['payment_status'] == '1' ? [1] : [0];
         }
-        $invoice = DB::table('invoices')->where('company_id', Auth::user()->company_id)
-            ->select('id', 'invoice_number', 'payment_charge', 'name', 'no_table', 'order_at', 'payment_status', 'payment_at', 'order_status')
-            ->orderByDesc('id')
-            ->whereIn('payment_status', $payment_status)
-            ->where(function ($query) use ($search) {
-                $query->where('invoice_number', "LIKE", "%" . $search . "%")
-                    ->orWhere('name', "LIKE", "%" . $search . "%")
-                    ->orWhere('no_table', "LIKE", "%" . $search . "%");
-            })
-            ->get();
+        if (Auth::user()->role_id == 3) {
+            $invoice = DB::table('invoices')->where('invoices.company_id', Auth::user()->company_id)
+                ->select('invoices.id', 'invoices.invoice_number', 'invoices.payment_charge', 'invoices.name', 'invoices.no_table', 'invoices.order_at', 'invoices.payment_status', 'invoices.payment_at', 'invoices.order_status')
+                ->orderByDesc('invoices.id')
+                ->whereIn('invoices.payment_status', $payment_status)
+                ->where('invoice_outlets.outlet_id', Auth::user()->outlet_id)
+                ->join('invoice_outlets', 'invoice_outlets.invoice_id', 'invoices.id')
+                ->where(function ($query) use ($search) {
+                    $query->where('invoices.invoice_number', "LIKE", "%" . $search . "%")
+                        ->orWhere('invoices.name', "LIKE", "%" . $search . "%")
+                        ->orWhere('invoices.no_table', "LIKE", "%" . $search . "%");
+                })
+                ->get();
+        } else {
+            $invoice = DB::table('invoices')->where('company_id', Auth::user()->company_id)
+                ->select('id', 'invoice_number', 'payment_charge', 'name', 'no_table', 'order_at', 'payment_status', 'payment_at', 'order_status')
+                ->orderByDesc('id')
+                ->whereIn('payment_status', $payment_status)
+                ->where(function ($query) use ($search) {
+                    $query->where('invoice_number', "LIKE", "%" . $search . "%")
+                        ->orWhere('name', "LIKE", "%" . $search . "%")
+                        ->orWhere('no_table', "LIKE", "%" . $search . "%");
+                })
+                ->get();
+        }
         return response()->json([
             'status_code' => 200,
             'data' => $invoice

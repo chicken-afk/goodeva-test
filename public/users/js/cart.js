@@ -286,10 +286,21 @@ function submitOrders() {
     }
     var nUser = document.getElementById('nUser');
     var nTable = document.getElementById('nTable');
-    console.log(nUser.value)
-    console.log(nTable.value)
-    if (nUser.value == '' && nTable.value == '') {
-        console.log('masuk if')
+     if (nUser.value == '' || nTable.value == '') {
+        if (nUser.value != '' && nTable.value == '') {
+            $("#alert-user").addClass("d-none");
+            $("#alert-table").removeClass("d-none");
+            var access = document.getElementById("detailPemesan");
+            access.scrollIntoView({ behavior: 'smooth' }, true);
+            return true
+        }
+        if (nUser.value == '' && nTable.value != '') {
+            $("#alert-user").removeClass("d-none");
+            $("#alert-table").addClass("d-none");
+            var access = document.getElementById("detailPemesan");
+            access.scrollIntoView({ behavior: 'smooth' }, true);
+            return true
+        }
         $("#alert-user").removeClass("d-none");
         $("#alert-table").removeClass("d-none");
         var access = document.getElementById("detailPemesan");

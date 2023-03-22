@@ -20,14 +20,16 @@
         <!--begin::Nav-->
         <ul class="nav flex-column">
 
-            <!--begin::Item-->
-            <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
-                data-boundary="window" title="Dashboard">
-                <a href="{{ route('dashboard') }}"
-                    class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('dashboard') }}">
-                    <i class="flaticon2-protection icon-lg"></i>
-                </a>
-            </li>
+            @if (Auth::user()->role_id == 1)
+                <!--begin::Item-->
+                <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
+                    data-boundary="window" title="Dashboard">
+                    <a href="{{ route('dashboard') }}"
+                        class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('dashboard') }}">
+                        <i class="flaticon2-protection icon-lg"></i>
+                    </a>
+                </li>
+            @endif
 
             <!--end::Item-->
 
@@ -41,53 +43,55 @@
             </li>
 
             <!--end::Item-->
+            @if (Auth::user()->role_id == 1)
+                <!--begin::Item-->
+                <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
+                    data-boundary="window" title="Statistik">
+                    <a href="{{ route('getStatistic') }}"
+                        class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('getStatistic') }}">
+                        <i class="flaticon2-list-3 icon-lg"></i>
+                    </a>
+                </li>
 
-            <!--begin::Item-->
-            <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
-                data-boundary="window" title="Statistik">
-                <a href="{{ route('getStatistic') }}"
-                    class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('getStatistic') }}">
-                    <i class="flaticon2-list-3 icon-lg"></i>
-                </a>
-            </li>
+                <!--end::Item-->
 
-            <!--end::Item-->
+                <!--begin::Item-->
+                <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
+                    data-boundary="window" title="Master Data">
+                    <a href="{{ route('getProduct') }}"
+                        class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active(['getProduct', 'getCategory', 'getOutlets', 'addProductPage', 'createBundlePage']) }}"
+                        role="tab">
+                        <i class="flaticon2-layers icon-lg"></i>
+                    </a>
+                </li>
 
-            <!--begin::Item-->
-            <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
-                data-boundary="window" title="Master Data">
-                <a href="{{ route('getProduct') }}"
-                    class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active(['getProduct', 'getCategory', 'getOutlets', 'addProductPage', 'createBundlePage']) }}"
-                    role="tab">
-                    <i class="flaticon2-layers icon-lg"></i>
-                </a>
-            </li>
+                <!--end::Item-->
 
-            <!--end::Item-->
+                <!--begin::Item-->
+                <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
+                    data-boundary="window" title="User Management">
+                    <a href="{{ route('userManagement') }}"
+                        class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('userManagement') }}"
+                        role="tab">
+                        <i class="flaticon2-user-1 icon-lg"></i>
+                    </a>
+                </li>
 
-            <!--begin::Item-->
-            <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
-                data-boundary="window" title="User Management">
-                <a href="{{ route('userManagement') }}"
-                    class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('userManagement') }}"
-                    role="tab">
-                    <i class="flaticon2-user-1 icon-lg"></i>
-                </a>
-            </li>
+                <!--end::Item-->
 
-            <!--end::Item-->
+                <!--begin::Item-->
+                <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
+                    data-boundary="window" title="Setting">
+                    <a href="{{ route('settingPage') }}"
+                        class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('settingPage') }}"
+                        role="tab">
+                        <i class="flaticon2-gear icon-lg"></i>
+                    </a>
+                </li>
 
-            <!--begin::Item-->
-            <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
-                data-boundary="window" title="Setting">
-                <a href="{{ route('settingPage') }}"
-                    class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('settingPage') }}"
-                    role="tab">
-                    <i class="flaticon2-gear icon-lg"></i>
-                </a>
-            </li>
+                <!--end::Item-->
+            @endif
 
-            <!--end::Item-->
 
         </ul>
 
