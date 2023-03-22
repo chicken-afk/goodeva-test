@@ -202,7 +202,7 @@ function minus(id) {
                 generateContent();
                 var newCarts = [];
                 getTotalPrice()
-                Swal.fire('Berhasil!', '', 'success')
+                // Swal.fire('Berhasil!', '', 'success')
                 return true
             } else if (result.isDenied) {
                 Swal.fire('Changes are not saved', '', 'info')
@@ -286,7 +286,7 @@ function submitOrders() {
     }
     var nUser = document.getElementById('nUser');
     var nTable = document.getElementById('nTable');
-     if (nUser.value == '' || nTable.value == '') {
+    if (nUser.value == '' || nTable.value == '') {
         if (nUser.value != '' && nTable.value == '') {
             $("#alert-user").addClass("d-none");
             $("#alert-table").removeClass("d-none");
