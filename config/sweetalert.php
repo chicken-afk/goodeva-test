@@ -199,7 +199,7 @@ return [
         'header' => env('SWEET_ALERT_HEADER_CLASS'),
         'title' => env('SWEET_ALERT_TITLE_CLASS'),
         'closeButton' => env('SWEET_ALERT_CLOSE_BUTTON_CLASS'),
-        'icon' => env('SWEET_ALERT_ICON_CLASS'),
+        'icon' => env('SWEET_ALERT_ICON_CLASS', 'mx-auto'),
         'image' => env('SWEET_ALERT_IMAGE_CLASS'),
         'content' => env('SWEET_ALERT_CONTENT_CLASS'),
         'input' => env('SWEET_ALERT_INPUT_CLASS'),
