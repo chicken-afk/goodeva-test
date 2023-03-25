@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\GenerateInvoice;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,3 +116,6 @@ Route::get('/config-clear', function () {
     Artisan::call('config:clear');
     return 'Application config cleared!';
 });
+
+
+Route::get('/invoice-print', [GenerateInvoice::class, 'generate']);
