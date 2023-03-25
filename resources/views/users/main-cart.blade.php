@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="{{ asset('users/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('users/css/main.css'). "?v=" . time() }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="icon" type="image/x-icon" href="{{ asset('media/client-logos/logo.png') }}">
     <!--begin::Global Theme Styles(used by all pages)-->

@@ -302,11 +302,21 @@
             totalCart();
             $(`input[name="varian-${uuid}"]`).attr('checked', false);
             $(`#toppings-${uuid} input:checkbox`).attr('checked', false);
+            // Swal.fire({
+            //     icon: 'success',
+            //     // title: 'Berhasil',
+            //     text: 'Berhasil Menambahkan Produk Ke keranjang!',
+            //     footer: '<a href="/carts">Lihat Keranjang</a>'
+            // });
             Swal.fire({
-                icon: 'success',
                 // title: 'Berhasil',
-                text: 'Berhasil Menambahkan Produk Ke keranjang!',
-                footer: '<a href="/carts">Lihat Keranjang</a>'
+                position: 'center',
+                title: '<p class="m-0" style="font-size : small; padding : 1px; color : #FFFFFF;">Berhasil Menambahkan Produk Ke keranjang!</p>',
+                footer: '<a style="font-size : small; padding : 1px; color : #FFFFFF;" style="font-size : small" href="/carts">Lihat Keranjang</a>',
+                // width: 300,
+                showConfirmButton: false,
+                timer: 1500,
+                background: '#4CC9F0'
             });
 
         }

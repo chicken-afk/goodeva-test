@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400");
-@import url(//db.onlinewebfonts.com/c/b1a51e5931ace5eed8f1573593790f4b?family=SpartacusW00-Black);
+/*@import url('https://fonts.cdnfonts.com/css/spartacus');*/
+/*@import url('https://db.onlinewebfonts.com/c/b1a51e5931ace5eed8f1573593790f4b?family=SpartacusW00-Black');*/
 
 :root {
     --color-black: #1a1a1a;
@@ -14,6 +15,12 @@
     --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
+
+@font-face {
+  font-family: 'SpartacusW00-Black';
+  src: url(b1a51e5931ace5eed8f1573593790f4b.woff);
+}
+
 
 *,
 *::before,
@@ -73,6 +80,7 @@ main {
     letter-spacing: -1px;
     text-transform: uppercase;
     color: rgb(75, 41, 19);
+    margin: auto !important;
 }
 
 /* // Header */
@@ -97,10 +105,10 @@ main {
 
 .logo-brand {
     font-family: "SpartacusW00-Black";
-    float: left;
+    /*float: left;*/
     height: 30px;
     width: 30px;
-    margin-right: 5px;
+    margin-right: 1px;
 }
 
 .fillter-section {
