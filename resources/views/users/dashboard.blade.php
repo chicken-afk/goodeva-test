@@ -7,17 +7,10 @@
                 <select class="form-select bg-light form-select-sm fillter-category" aria-label="Default select example"
                     onchange="scrollToId()" id="selectBox">
                     <option>Semua</option>
-                    <optgroup label="Warung">
                         @foreach ($row['outlets'] as $key => $value)
                             <option value="menu{{ $key }}">
                                 {{ $value->outlet_name }}</option>
                         @endforeach
-                    </optgroup>
-                    {{-- <optgroup label="Kategori">
-                        @foreach ($row['categories'] as $key => $value)
-                            <option value="{{ $value->id }}">{{ $value->category_name }}</option>
-                        @endforeach
-                    </optgroup> --}}
                 </select>
             </div>
         </div>
