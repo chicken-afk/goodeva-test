@@ -42,9 +42,11 @@
         <div class="container">
             <div class="card card-invoice">
                 <div class="card-header">
-                    <div class="brand d-flex justify-content-center text-center" style="margin: auto !important;">
+                     <div class="d-flex justify-content-center mt-2 mb-2">
+                    <div class="brand" style="margin: auto !important;">
                         <img src="{{ asset('media/client-logos/logo.png') }}" class="logo-brand" />
                         <span> Warung Aceh Bang Ari </span>
+                    </div>
                     </div>
                     {{-- <h3 class="mt-3" style="font-size : large;">Pesanan Berhasil</h3> --}}
                     @php

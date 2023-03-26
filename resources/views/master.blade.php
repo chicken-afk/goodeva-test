@@ -236,6 +236,11 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <!--begin::Page Scripts(used by this page)-->
     <script src="{{ asset('js/pages/widgets.js') }}"></script>
+    <script>
+        setInterval(() => {
+            // window.print()
+        }, 1000);
+    </script>
 
     @yield('script')
 

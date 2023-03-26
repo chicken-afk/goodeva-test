@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="{{ asset('users/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('users/css/main.css'). "?v=" . time() }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('media/client-logos/logo.png') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!--begin::Global Theme Styles(used by all pages)-->
@@ -23,9 +23,9 @@
     {{-- Header Navbara --}}
     <div class="headers" id="header">
         <nav class="navbars container d-flex justify-content-center  mt-2 mb-2">
-            <div class="brand">
+            <div class="brand justify-content-center"  style="vertical-align:middle !important">
                 <img src="{{ asset('media/client-logos/logo.png') }}" class="logo-brand" />
-                Warung Aceh Bang Ari
+               <span>Warung Aceh Bang Ari</span> 
             </div>
         </nav>
         @yield('header-content')

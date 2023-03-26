@@ -176,9 +176,18 @@ function minus(id) {
     var count = parseInt(inputQtyProduct.value) - 1;
     count = count < 1 ? 0 : count;
     if (count == 0) {
-        Swal.fire({
-            title: 'Hapus Items?',
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-sm btn-primary m-1',
+                cancelButton: 'btn btn-sm btn-danger m-1'
+            },
+            buttonsStyling: false
+        })
+        
+        swalWithBootstrapButtons.fire({
+            title: '<p class="m-0" style="font-size : medium">Hapus Item?</p>',
             // showDenyButton: true,
+            width: 300,
             showCancelButton: true,
             confirmButtonText: 'Hapus',
             denyButtonText: `Batal`,
@@ -202,7 +211,7 @@ function minus(id) {
                 generateContent();
                 var newCarts = [];
                 getTotalPrice()
-                // Swal.fire('Berhasil!', '', 'success')
+
                 return true
             } else if (result.isDenied) {
                 Swal.fire('Changes are not saved', '', 'info')
@@ -263,7 +272,7 @@ function getTotalPrice() {
         sumPrice += priceTotal;
     }
     var e = document.getElementById('buttonCheckout');
-    e.innerHTML = `Buat Pesanan ( Rp. ${sumPrice},- )`;
+    e.innerHTML = `Buat Pesanan ( Rp. ${number_format(sumPrice)},- )`;
     return sumPrice;
 }
 
@@ -323,11 +332,17 @@ function submitOrders() {
     // End Send Data Using Ajax
 
     Swal.fire({
-        title: 'Pastikan pesanan sudah sesuai?',
+        title: '<p class="m-0" style="font-size : medium; padding : 1px">Pastikan pesanan sudah sesuai?</p>',
         // showDenyButton: true,
         showCancelButton: true,
-        confirmButtonText: 'Ya',
+        confirmButtonText: 'Sudah',
         denyButtonText: `Don't save`,
+        customClass: {
+            confirmButton: 'btn btn-sm btn-primary m-1',
+            cancelButton: 'btn btn-sm btn-danger m-1'
+        },
+        buttonsStyling: false,
+        width: 300
     }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {

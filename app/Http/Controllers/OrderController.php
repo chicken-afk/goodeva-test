@@ -12,49 +12,41 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->has('invoice')) {
-            $invoice = DB::table('invoices')->where('invoice_number', $request->invoice)->first();
-            $row['invoice'] = $invoice;
-            if (Auth::user()->role_id == 1) {
+       if ($request->has('invoice')) {
+                $invoice = DB::table('invoices')->where('invoice_number', $request->invoice)->first();
+                $row['invoice'] = $invoice;
                 $row['products'] = DB::table('invoice_products')->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
-                    ->select('invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
+                    ->select('invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name', 'active_products.product_image')
                     ->where('invoice_products.invoice_id', $invoice->id)
+                    ->where('invoice_products.deleted_at', null)
                     ->get();
-            } else {
-                $row['products'] = DB::table('invoice_products')->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
-                    ->join('outlets', 'outlets.id', 'active_products.outlet_id')
-                    ->where('active_products.outlet_id', Auth::user()->outlet_id)
-                    ->select('invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
-                    ->where('invoice_products.invoice_id', $invoice->id)
-                    ->get();
-            }
 
-            foreach ($row['products'] as $key => $value) {
-                $variant = DB::table('invoice_product_variants')
-                    ->join('variants', 'variants.id', 'invoice_product_variants.variant_id')
-                    ->where('invoice_product_variants.invoice_product_variants', $value->id)
-                    ->select('variants.varian_name')
-                    ->first();
-                $row['products'][$key]->varian_name = $variant ? $variant->varian_name : '';
-                $toppings = DB::table('invoice_product_toppings')
-                    ->join('toppings', 'toppings.id', 'invoice_product_toppings.topping_id')
-                    ->where('invoice_product_toppings.invoice_product_id', $value->id)
-                    ->select('toppings.topping_name')
-                    ->get();
-                $topping_text = "";
-                foreach ($toppings as $k => $v) {
-                    $topping_text = $topping_text . $v->topping_name . ", ";
+                foreach ($row['products'] as $key => $value) {
+                    $variant = DB::table('invoice_product_variants')
+                        ->join('variants', 'variants.id', 'invoice_product_variants.variant_id')
+                        ->where('invoice_product_variants.invoice_product_variants', $value->id)
+                        ->select('variants.varian_name')
+                        ->first();
+                    $row['products'][$key]->varian_name = $variant ? $variant->varian_name : '';
+                    $toppings = DB::table('invoice_product_toppings')
+                        ->join('toppings', 'toppings.id', 'invoice_product_toppings.topping_id')
+                        ->where('invoice_product_toppings.invoice_product_id', $value->id)
+                        ->select('toppings.topping_name')
+                        ->get();
+                    $topping_text = "";
+                    foreach ($toppings as $k => $v) {
+                        $topping_text = $topping_text . $v->topping_name . ", ";
+                    }
+                    $row['products'][$key]->topping_text = $topping_text;
                 }
-                $row['products'][$key]->topping_text = $topping_text;
-            }
 
-            return response()->json([
-                'status_code' => 200,
-                'data' => $row
-            ]);
-        }
+                return response()->json([
+                    'status_code' => 200,
+                    'data' => $row
+                ]);
+       }
 
-        return view('main.order');
+         return view('main.order');
     }
 
     public function orderData(Request $request)
@@ -106,8 +98,8 @@ class OrderController extends Controller
 
         /**End Validation */
 
-        $invoice = DB::table('invoices')->where('invoice_number', $request->invoice)->count();
-        if ($invoice == 0) {
+        $invoice = DB::table('invoices')->where('invoice_number', $request->invoice)->first();
+        if (!$invoice) {
             return response()->json([
                 'status_code' => 404,
                 'message' => 'invoice tidak ditemukan'
@@ -117,8 +109,16 @@ class OrderController extends Controller
             'payment_method' => $request->payment_method,
             'payment_change' => $request->payment_change,
             'payment_at' => now(),
-            'payment_status' => 1
+            'payment_status' => 1,
+            'order_status' => 'selesai'
         ]);
+
+        /**Change All Order Proses to selesai */
+        DB::table('invoice_outlets')->where('invoice_id', $invoice->id)->update([
+            'order_status' => 'selesai',
+            'updated_at' => now()
+        ]);
+
         return response()->json([
             'status_code' => 200,
             'message' => 'payment success',
@@ -149,6 +149,7 @@ class OrderController extends Controller
                     ->join('outlets', 'outlets.id', 'active_products.outlet_id')
                     ->where('invoice_products.invoice_id', $invoice->id)
                     ->where('active_products.outlet_id', Auth::user()->outlet_id)
+                    ->where('invoice_products.deleted_at', null)
                     ->select('outlets.id as outlet_id', 'outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
                     ->get();
             } else {
@@ -157,6 +158,7 @@ class OrderController extends Controller
                     ->join('outlets', 'outlets.id', 'active_products.outlet_id')
                     ->select('outlets.id as outlet_id', 'outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
                     ->where('invoice_products.invoice_id', $invoice->id)
+                    ->where('invoice_products.deleted_at', null)
                     ->get();
             }
 
@@ -207,6 +209,7 @@ class OrderController extends Controller
                     ->join('outlets', 'outlets.id', 'active_products.outlet_id')
                     ->select('outlets.id as outlet_id', 'outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
                     ->where('invoice_products.invoice_id', $invoice->id)
+                    ->where('invoice_products.deleted_at', null)
                     ->where('active_products.outlet_id', Auth::user()->outlet_id)
                     ->get();
             } else {
@@ -215,6 +218,7 @@ class OrderController extends Controller
                     ->join('outlets', 'outlets.id', 'active_products.outlet_id')
                     ->select('outlets.id as outlet_id', 'outlets.outlet_name', 'invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
                     ->where('invoice_products.invoice_id', $invoice->id)
+                    ->where('invoice_products.deleted_at', null)
                     ->get();
             }
 
@@ -294,5 +298,38 @@ class OrderController extends Controller
             'order_status' => $request->order_status,
             'invoice' => $request->invoice
         ]);
+    }
+
+    public function deleteProductInvoice($id)
+    {
+        $product = DB::table('invoice_products')->where('id', $id)->first();
+        if (!$product) {
+            return response()->json([
+                'status_code' => 404,
+                'message' => 'Product Not Found'
+            ], 404);
+        }
+
+        DB::table('invoice_products')->where('id', $id)->update([
+            'deleted_at' => now()
+        ]);
+
+        //Generate New Total Price//
+        $price = DB::table('invoice_products')->where('invoice_id', $product->invoice_id)->where('deleted_at', null)->sum('price');
+        $tax = $price * 10 / 100;
+        DB::table('invoices')->where('id', $product->invoice_id)->update([
+            'tax' => $tax,
+            'payment_charge' => $price + $tax,
+            'charge_before_tax' => $price,
+            'updated_at' => now()
+        ]);
+        $invoice = DB::table('invoices')->where('id', $product->invoice_id)->first();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Success Delete Product',
+            'payment_charge' => $price + $tax,
+            'invoice_number' => $invoice->invoice_number
+        ], 200);
     }
 }

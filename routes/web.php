@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\GenerateInvoice;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,7 @@ Route::middleware(['login'])->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('getOrders');
     Route::get('/order-datas', [OrderController::class, 'orderData'])->name('orderDataApi');
     Route::post('/payment', [OrderController::class, 'payment'])->name('paymentApi');
+    Route::get('/delete-invoice-product/{id}', [OrderController::class, 'deleteProductInvoice'])->name('deleteProductInvoice');
 
     /**Live Order Data */
     Route::get('/live-order', [OrderController::class, 'liveOrder'])->name('liveOrder');
@@ -115,3 +117,6 @@ Route::get('/config-clear', function () {
     Artisan::call('config:clear');
     return 'Application config cleared!';
 });
+
+
+Route::get('/invoice-print', [GenerateInvoice::class, 'generate']);
