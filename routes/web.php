@@ -64,6 +64,8 @@ Route::middleware(['login'])->group(function () {
     Route::get('/order-datas', [OrderController::class, 'orderData'])->name('orderDataApi');
     Route::post('/payment', [OrderController::class, 'payment'])->name('paymentApi');
     Route::get('/delete-invoice-product/{id}', [OrderController::class, 'deleteProductInvoice'])->name('deleteProductInvoice');
+    Route::get('/invoices', [OrderController::class, 'getInvoices'])->name('getInvoices');
+    Route::post('/payment-table', [OrderController::class, 'paymentTable'])->name('paymentTableApi');
 
     /**Live Order Data */
     Route::get('/live-order', [OrderController::class, 'liveOrder'])->name('liveOrder');
