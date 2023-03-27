@@ -2,7 +2,6 @@
 // Class definition
 var app_url = "127.0.0.1:8000";
 
-
 function deleteProduct(id) {
     console.log(id);
     $.ajaxSetup({
@@ -36,12 +35,259 @@ function deleteProduct(id) {
 
 }
 
+function deleteInvoice(id) {
+    var response = JSON.parse(localStorage.getItem("response") || "[]");
+    var j = 0;
+    var newCarts = [];
+    var name = [];
+    var payment_charge = 0;
+    console.log(response);
+    for (var i = 0; i < response.invoices.length; i++) {
+        if (i != id) {
+            console.log('array carts ', i, ' ', response.invoices[i]);
+            payment_charge += parseInt(response.invoices[i].payment_charge);
+            name[i] = response.invoices[i].name;
+            newCarts[j] = response.invoices[i];
+            j++;
+        }
+        else {
+        }
+    }
+    response = {
+        "data": {
+            "name": name,
+            "no_table": response.data.no_table,
+            "payment_charge": payment_charge,
+        },
+        "invoices": newCarts
+    }
+    console.log(response);
+    localStorage.removeItem("response");
+    localStorage.setItem("response", JSON.stringify(response));
+    var html = generateContentMeja(response);
+    document.getElementById('modalContentMeja').innerHTML = html;
+    paymentChargeMeja();
+}
+
+function submitFormMeja() {
+    var payment_charge = document.getElementById("paymentMoneyMeja").value || 0;
+    var payment_method = document.getElementById("paymentMethodMeja").value || "cash";
+    var payment_change = document.getElementById("paymentChangeMeja").value;
+    var datas = JSON.parse(localStorage.getItem("response") || "[]");
+    if (payment_charge < parseInt(datas.data.payment_charge)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: `Uang Pembayaran Kurang Dari ${number_format(datas.data.payment_charge)}`,
+        });
+        return false;
+    }
+    datas.data.payment_money = payment_charge;
+    datas.data.payment_method = payment_method;
+    datas.data.payment_change = payment_change;
+    console.log(payment_charge, datas);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: `/payment-table`,
+        type: "POST",
+        data: datas,
+        success: function (response) {
+            if (response.status_code == 404) {
+                Swal.fire({
+                    icon: 'Error',
+                    title: 'Gagal',
+                    text: 'Invoice tidak Ditemukan',
+                })
+                return false;
+            }
+
+            $("#modalMeja").modal('hide');
+            console.log(response);
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'Berhasil Melakukan Pembayaran'
+            });
+            console.log(KTEcommerceMyOrders.datatable)
+            $('#kt_datatable').KTDatatable().reload();
+
+            return true
+
+            // window.location = "/products"
+        },
+        error: function (response) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Something went wrong, please contact developer',
+            })
+        }
+    });
+}
+
+function searchInvoice() {
+    var tableNo = document.getElementById('nomor_meja').value;
+    generateModalMeja(tableNo)
+}
+
+function generateModalMeja(tableNo) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: `/invoices?no_table=` + tableNo,
+        type: "GET",
+        success: function (response) {
+            localStorage.removeItem("response");
+            localStorage.setItem("response", JSON.stringify(response));
+            if (response.invoices.length == 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Tidak ada invoice belum dibayar pada nomor meja ' + tableNo,
+                })
+                return false
+            }
+
+            var html = generateContentMeja(response);
+            document.getElementById('modalContentMeja').innerHTML = html;
+            paymentChargeMeja();
+            $('#modalMeja').modal('show');
+
+
+            return true;
+            // window.location = "/products"
+        },
+        error: function (response) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Something went wrong, please contact developer',
+            })
+        }
+    });
+}
+
+function generateContentMeja(data) {
+    console.log('data on generate content:', data)
+    var name = '';
+    var headerHtml = '';
+    var invoices = '';
+
+    for (var i = 0; i < data.invoices.length; i++) {
+        var invoice = data.invoices[i];
+        var lenght = invoice.products.length
+        for (var j = 0; j < lenght; j++) {
+            var productHtml = '';
+            var product = invoice.products[j];
+            productHtml += `
+            <div class="card card-custom gutter-b card-stretch m-2" id="product${product.id}">
+                <div class="card-body d-flex flex-column rounded justify-content-between">
+                    <div class="text-center rounded mb-7">
+                        <img src="${product.product_image}" class="mw-100 w-200px">
+                    </div>
+                    <div>
+                        <h4 class="font-size-h5">
+                            <a href="#" class="text-dark-75 font-weight-bolder">${product.active_product_name}</a>
+                        </h4>
+                        <div class="font-size-h7 text-muted font-weight-bolder">Varian : ${product.varian_name}</div>
+                        <div class="font-size-h7 text-muted font-weight-bolder">Topping : ${product.topping_text}</div>
+                        <div class="font-size-h6 text-muted font-weight-bolder">Rp. ${number_format(product.price * product.qty)},-</div>
+                        <div class="font-size-h6 text-muted font-weight-bolder">${product.qty} Pcs</div>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+
+        invoices += `
+        <div id="${i}">
+        <div class="row align-items-center">
+            <div class="col-md-4 justify-content-center" style="font-weight : 600;">Invoice : ${invoice.invoice_number}</div>
+            <div class="col-md-4" style="font-weight : 600;">Nama : ${invoice.name}</div>
+            <div class="col-md-4 text-danger"><button class="button btn btn-sm btn-outline-danger" onclick="deleteInvoice('${i}')">Hapus</button></div>
+        </div>
+        <div class="row">${productHtml}</div>
+        </div>
+        `
+    }
+
+    data.data.name.forEach(element => name = name + element + ", ");
+
+    headerHtml = `
+    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 20px;">
+    <h5 class="mb-1" style="width: 30rem">Nomor Meja</h5>
+    <h5 class="mb-1" style="width: 0.5rem">:</h5>
+    <h5 class="mb-1"> ${data.data.no_table}</h5>
+    </div>
+    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 20px;">
+        <h5 class="mb-0" style="width: 30rem">Nama</h5>
+        <h5 class="mb-0" style="width: 0.5rem">:</h5>
+        <h5 class="mb-0">${name}</h5>
+    </div>
+    <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 20px;">
+        <h5 class="mb-1" style="width: 30rem">Harga Total</h5>
+        <h5 class="mb-1" style="width: 0.5rem">:</h5>
+        <h5 class="mb-1" style="font-weight: 900;font-size:2.4rem"
+            id="payment_charge${data.data.no_table}"> Rp.
+            ${number_format(data.data.payment_charge)},-</h5>
+    </div>
+    <div class="mb-5" style="display: grid;grid-template-columns: 1fr 1fr 1fr 1fr; grid-gap: 20px;">
+    <div class="input-group input-group-lg">
+        <select name="payment_method" class="form-select form-control"
+            aria-label="Default select example" id="paymentMethodMeja">
+            <option value="payment_method" selected>Payment Method</option>
+            <option value="cash">Cash</option>
+            <option value="qris">QRIS</option>
+            <option value="ovo">OVO</option>
+        </select>
+    </div>
+    <input type="hidden" id="paymentChargeMeja" value="${data.data.payment_charge}">
+    <div class="input-group input-group-lg">
+        <span class="input-group-text" id="inputGroup-sizing-lg">Uang</span>
+        <input type="number" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-lg" name="payment_money" id="paymentMoneyMeja">
+    </div>
+    <div class="input-group input-group-lg">
+        <span class="input-group-text" id="inputGroup-sizing-lg">Kembalian</span>
+        <input disabled type="number" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-lg" name="payment_change" id="paymentChangeMeja">
+    </div>
+    <button onclick="submitFormMeja()" class="btn btn-success font-weight-bolder">
+        <span class="svg-icon svg-icon-md">
+            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
+            <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo4\dist/../src/media/svg/icons\Shopping\Money.svg-->
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <rect x="0" y="0" width="24" height="24" />
+                    <path
+                        d="M2,6 L21,6 C21.5522847,6 22,6.44771525 22,7 L22,17 C22,17.5522847 21.5522847,18 21,18 L2,18 C1.44771525,18 1,17.5522847 1,17 L1,7 C1,6.44771525 1.44771525,6 2,6 Z M11.5,16 C13.709139,16 15.5,14.209139 15.5,12 C15.5,9.790861 13.709139,8 11.5,8 C9.290861,8 7.5,9.790861 7.5,12 C7.5,14.209139 9.290861,16 11.5,16 Z"
+                        fill="#000000" opacity="0.3"
+                        transform="translate(11.500000, 12.000000) rotate(-345.000000) translate(-11.500000, -12.000000) " />
+                    <path
+                        d="M2,6 L21,6 C21.5522847,6 22,6.44771525 22,7 L22,17 C22,17.5522847 21.5522847,18 21,18 L2,18 C1.44771525,18 1,17.5522847 1,17 L1,7 C1,6.44771525 1.44771525,6 2,6 Z M11.5,16 C13.709139,16 15.5,14.209139 15.5,12 C15.5,9.790861 13.709139,8 11.5,8 C9.290861,8 7.5,9.790861 7.5,12 C7.5,14.209139 9.290861,16 11.5,16 Z M11.5,14 C12.6045695,14 13.5,13.1045695 13.5,12 C13.5,10.8954305 12.6045695,10 11.5,10 C10.3954305,10 9.5,10.8954305 9.5,12 C9.5,13.1045695 10.3954305,14 11.5,14 Z"
+                        fill="#000000" />
+                </g>
+            </svg>
+            <!--end::Svg Icon-->
+        </span>Submit
+    </button>
+</div>
+${invoices}
+    `;
+    return headerHtml;
+}
 
 /**
  * Function Payment Charge
  */
-
-
 
 function generateModalContent(data) {
     console.log(data);
@@ -438,6 +684,38 @@ function payment_change() {
     var paymentChange = document.getElementById('paymentChange');
     var invoiceNumber = document.getElementById('invoiceNumber');
     var paymentCharge = document.getElementById('paymentCharge');
+
+    var change = paymentMoney.value - paymentCharge.value;
+    paymentChange.value = change;
+}
+
+function paymentChargeMeja() {
+    var paymentMethod = document.getElementById('paymentMethodMeja');
+    var paymentMoney = document.getElementById('paymentMoneyMeja');
+    console.log(paymentMoney);
+    var paymentChange = document.getElementById('paymentChangeMeja');
+    var paymentCharge = document.getElementById('paymentChargeMeja');
+    $("#paymentMethodMeja").change(function () {
+        console.log('onchange jalan')
+        if (paymentMethod.value != 'cash' && paymentMethod.value != 'payment_method') {
+            paymentMoney.value = paymentCharge.value;
+            paymentChange.value = 0;
+        } else {
+            payment_change_meja();
+        }
+    });
+
+    paymentMoney.addEventListener('input', function () {
+        console.log('event listener')
+        payment_change_meja();
+    });
+
+}
+
+function payment_change_meja() {
+    var paymentMoney = document.getElementById('paymentMoneyMeja');
+    var paymentChange = document.getElementById('paymentChangeMeja');
+    var paymentCharge = document.getElementById('paymentChargeMeja');
 
     var change = paymentMoney.value - paymentCharge.value;
     paymentChange.value = change;

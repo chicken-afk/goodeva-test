@@ -317,4 +317,52 @@ class OrderController extends Controller
             'invoice_number' => $invoice->invoice_number
         ], 200);
     }
+
+    public function getInvoices(Request $request)
+    {
+        if ($request->has('no_table')) {
+            $data['payment_charge'] = DB::table('invoices')->where('payment_status', 0)->where('no_table', $request->no_table)->sum('payment_charge');
+            $data['name'] = DB::table('invoices')->where('payment_status', 0)->where('no_table', $request->no_table)->select('name')->pluck('name');
+            $data['no_table'] = $request->no_table;
+            $invoices = DB::table('invoices')->where('payment_status', 0)->where('no_table', $request->no_table)->get();
+            foreach ($invoices as $index => $invoice) {
+                $row['products'] = DB::table('invoice_products')->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
+                    ->select('invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name', 'active_products.product_image')
+                    ->where('invoice_products.invoice_id', $invoice->id)
+                    ->where('invoice_products.deleted_at', null)
+                    ->get();
+
+                foreach ($row['products'] as $key => $value) {
+                    $variant = DB::table('invoice_product_variants')
+                        ->join('variants', 'variants.id', 'invoice_product_variants.variant_id')
+                        ->where('invoice_product_variants.invoice_product_variants', $value->id)
+                        ->select('variants.varian_name')
+                        ->first();
+                    $row['products'][$key]->varian_name = $variant ? $variant->varian_name : '';
+                    $toppings = DB::table('invoice_product_toppings')
+                        ->join('toppings', 'toppings.id', 'invoice_product_toppings.topping_id')
+                        ->where('invoice_product_toppings.invoice_product_id', $value->id)
+                        ->select('toppings.topping_name')
+                        ->get();
+                    $topping_text = "";
+                    foreach ($toppings as $k => $v) {
+                        $topping_text = $topping_text . $v->topping_name . ", ";
+                    }
+                    $row['products'][$key]->topping_text = $topping_text;
+                }
+                $invoices[$index]->products = $row['products'];
+            }
+            return response()->json([
+                'status_code' => 200,
+                'data' => $data,
+                'invoices' => $invoices,
+            ]);
+        }
+        abort(404);
+    }
+
+    public function paymentTable(Request $request)
+    {
+        return $request;
+    }
 }
