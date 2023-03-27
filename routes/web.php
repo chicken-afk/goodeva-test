@@ -118,5 +118,17 @@ Route::get('/config-clear', function () {
     return 'Application config cleared!';
 });
 
+Route::get('/migrate-data', function () {
+    Artisan::call(
+        'migrate',
+        array(
+            '--path' => 'database/migrations',
+            '--database' => 'mysql',
+            '--force' => true
+        )
+    );
+    return 'Application Migrated Sucessfully!';
+});
+
 
 Route::get('/invoice-print', [GenerateInvoice::class, 'generate']);
