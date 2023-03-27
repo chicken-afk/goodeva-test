@@ -33,6 +33,8 @@ class AdminController extends Controller
                     return redirect()->route('getOrders');
                 } elseif (Auth::user()->role_id == 3) {
                     return redirect()->route('getOrders');
+                } elseif (Auth::user()->role_id == 4) {
+                    return redirect()->route('userPage');
                 }
             } else {
                 alert('Gagal', 'Kombinasi Email Dan Password Salah', 'error');

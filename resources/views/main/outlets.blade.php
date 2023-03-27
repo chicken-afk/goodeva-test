@@ -5,6 +5,15 @@
 @section('header-name')
     Outlet
 @endsection
+@section('script')
+    <script>
+        if (navigator && navigator.print) {
+            console.log('Printing is supported!');
+        } else {
+            console.log('Printing is not supported.');
+        }
+    </script>
+@endsection
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 

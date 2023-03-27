@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -14,7 +15,11 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->company_id = 1;
+        $this->middleware(function ($request, $next) {
+            $this->company_id = Auth::user()->company_id;
+
+            return $next($request);
+        });
     }
 
     public function view()
@@ -94,6 +99,7 @@ class UserController extends Controller
         /**End Generate Tax */
         $invoiceId = DB::table('invoices')->insertGetId([
             'qr_code_id' => 0,
+            'user_id' => Auth::id(),
             'invoice_number' => $invoice,
             'company_id' => $this->company_id,
             'invoice_code' => $invoice_code,
