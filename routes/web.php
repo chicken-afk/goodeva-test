@@ -130,3 +130,7 @@ Route::get('/migrate-data', function () {
 
 
 Route::get('/invoice-print', [GenerateInvoice::class, 'generate']);
+
+Route::get('/lab/print', function () {
+    return view('lab.printing');
+});
