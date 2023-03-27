@@ -3,6 +3,40 @@
 var app_url = "127.0.0.1:8000";
 
 
+function deleteProduct(id) {
+    console.log(id);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: `/delete-invoice-product/` + id,
+        type: "GET",
+        success: function (response) {
+
+            console.log(response)
+
+            //DIsplay None
+            $(`#product${id}`).addClass("d-none");
+            document.getElementById(`payment_charge${response.invoice_number}`).innerHTML = `${response.payment_charge}`;
+
+            return true;
+            // window.location = "/products"
+        },
+        error: function (response) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Something went wrong, please contact developer',
+            })
+        }
+    });
+
+
+}
+
+
 /**
  * Function Payment Charge
  */
@@ -10,6 +44,7 @@ var app_url = "127.0.0.1:8000";
 
 
 function generateModalContent(data) {
+    console.log(data);
     var modalHtml = "";
     var pesananHtml = "";
     var paymentHtml = `<h3 style="color:red;font-weight:700"> Sudah Dibayar <h3/>`;
@@ -62,26 +97,30 @@ function generateModalContent(data) {
         `;
     }
     for (var k = 0; k < data.products.length; k++) {
+        var closeButton = '';
+        if (data.invoice.payment_status == 0) {
+            closeButton = ` <div class="card-toolbar ms-auto text-danger mb-1 text-right">
+            <a onclick="deleteProduct(${data.products[k].id})" type="button" class="btn btn-sm btn-outline-danger"> X </a>
+         </div>`;
+        };
         pesananHtml += `
-        <div class="order-list p-4 m-2"
-        style="background-color: rgb(245, 215, 191);border-radius:5px;width:15rem">
-        <div class="d-flex bd-highlight">
-            <div class="bd-highlight pr-2 product-name">
-                <h4>${data.products[k].active_product_name}</h4>
-                <h5>Varian : ${data.products[k].varian_name}</h5>
-                <h5>Topping : ${data.products[k].topping_text}</h5>
-            </div>
-            <div class="bd-highlight  ms-auto" style="font-weight:500;font-size:1rem">
-                <h5>Qty : ${data.products[k].qty}</h5>
-            </div>
-        </div>
-        <div class="d-flex bd-highlight mb-2">
-            <div class="bd-highlight pr-2">
-                <h5 class="price">Rp.
-                ${number_format(data.products[k].price * data.products[k].qty)},-</h5>
-            </div>
-        </div>
-    </div>
+        <div class="card card-custom gutter-b card-stretch m-2" id="product${data.products[k].id}">
+															<div class="card-body d-flex flex-column rounded justify-content-between">
+                                                                    ${closeButton}
+																<div class="text-center rounded mb-7">
+																	<img src="${data.products[k].product_image}" class="mw-100 w-200px">
+																</div>
+																<div>
+																	<h4 class="font-size-h5">
+																		<a href="#" class="text-dark-75 font-weight-bolder">${data.products[k].active_product_name}</a>
+																	</h4>
+                                                                    <div class="font-size-h7 text-muted font-weight-bolder">Varian : ${data.products[k].varian_name}</div>
+                                                                    <div class="font-size-h7 text-muted font-weight-bolder">Topping : ${data.products[k].topping_text}</div>
+																	<div class="font-size-h6 text-muted font-weight-bolder">Rp. ${number_format(data.products[k].price * data.products[k].qty)},-</div>
+                                                                    <div class="font-size-h6 text-muted font-weight-bolder">${data.products[k].qty} Pcs</div>
+																</div>
+															</div>
+														</div>
         `;
     }
     modalHtml = `
@@ -114,7 +153,7 @@ function generateModalContent(data) {
     <div style="display: grid;grid-template-columns: 1fr 0.1fr 1fr; grid-gap: 20px;">
         <h5 class="mb-1" style="width: 30rem">Harga Total</h5>
         <h5 class="mb-1" style="width: 0.5rem">:</h5>
-        <h5 class="mb-1" style="font-weight: 900;font-size:2.4rem"> Rp.
+        <h5 class="mb-1" style="font-weight: 900;font-size:2.4rem" id="payment_charge${data.invoice.invoice_number}"> Rp.
             ${number_format(data.invoice.payment_charge)},-</h5>
     </div>
     <h5 class="mb-1" style="width: 30rem">Bayar</h5>
@@ -132,7 +171,6 @@ function generateModalContent(data) {
 
 function closeModalDetail() {
     document.getElementById('modalContent').innerHTML = `
-
     `;
 
     $("#modalDetail").modal('hide');
@@ -234,7 +272,7 @@ var KTEcommerceMyOrders = function () {
 
             // layout definition
             layout: {
-                scroll: false,
+                scroll: true,
                 footer: false,
             },
 
@@ -279,7 +317,7 @@ var KTEcommerceMyOrders = function () {
             },
             {
                 field: 'order_status',
-                title: 'Status Pesanan'
+                title: 'Status Pesanan',
             },
             {
                 field: 'payment_status',
@@ -309,12 +347,10 @@ var KTEcommerceMyOrders = function () {
                 field: 'Actions',
                 title: 'Actions',
                 sortable: false,
-                width: 125,
-                overflow: 'visible',
                 autoHide: false,
                 template: function (row) {
                     return `\
-                    <a href="#" class="btn btn-warning mb-2 font-weight-bolder" onclick="openModalDetail('${row.invoice_number}')">
+                    <a href="#" class="btn btn-sm btn-warning mb-2 font-weight-bolder" onclick="openModalDetail('${row.invoice_number}')">
                     <span class="svg-icon svg-icon-md">
                         <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                         <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo4\dist/../src/media/svg/icons\Shopping\Money.svg-->
@@ -328,7 +364,7 @@ var KTEcommerceMyOrders = function () {
                         </svg>
                         <!--end::Svg Icon-->
                     </span>Detail</a>
-                    <a onclick="openModalDetail('${row.invoice_number}')" href="#" class="btn btn-success font-weight-bolder">
+                    <a onclick="openModalDetail('${row.invoice_number}')" href="#" class="btn btn-sm btn-success font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                         <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo4\dist/../src/media/svg/icons\Shopping\Money.svg-->

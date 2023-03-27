@@ -32,7 +32,7 @@ class AdminController extends Controller
                 } elseif (Auth::user()->role_id == 2) {
                     return redirect()->route('getOrders');
                 } elseif (Auth::user()->role_id == 3) {
-                    return redirect()->route('liveOrder');
+                    return redirect()->route('getOrders');
                 }
             } else {
                 alert('Gagal', 'Kombinasi Email Dan Password Salah', 'error');
