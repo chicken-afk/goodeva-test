@@ -94,12 +94,12 @@
     </table>
     <div class="line"></div>
     @foreach ($row['products'] as $key => $value)
-        <p class="products" style="margin-bottom: 2px">{{ $value['product_name'] }}</p>
+        <p class="products" style="margin-bottom: 2px">{{ $value->active_product_name }}</p>
         <table class="products table">
             <tr>
-                <td>{{ $value['product_qty'] }}x</td>
-                <td>{{ (int) $value['total_price'] }}</td>
-                <td style="text-align: right">{{ $value['total_price'] * (int) $value['product_qty'] }}</td>
+                <td>{{ $value->qty }}x</td>
+                <td>{{ (int) $value->price }}</td>
+                <td style="text-align: right">{{ $value->price * (int) $value->qty }}</td>
             </tr>
         </table>
     @endforeach

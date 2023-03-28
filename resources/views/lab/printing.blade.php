@@ -112,6 +112,8 @@
         //Do printing...
         function print() {
             if (jspmWSStatus()) {
+                console.log($('#lstPrinters').val());
+                return true;
 
                 //Create a ClientPrintJob
                 var cpj = new JSPM.ClientPrintJob();

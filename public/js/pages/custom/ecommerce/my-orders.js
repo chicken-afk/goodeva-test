@@ -86,6 +86,7 @@ function submitFormMeja() {
     datas.data.payment_method = payment_method;
     datas.data.payment_change = payment_change;
     console.log(payment_charge, datas);
+    Swal.showLoading()
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -104,18 +105,26 @@ function submitFormMeja() {
                 })
                 return false;
             }
-
+            Swal.close()
             $("#modalMeja").modal('hide');
-            console.log(response);
+            console.log('response from ajax', response);
+            // Swal.fire({
+            //     icon: 'success',
+            //     title: 'Berhasil',
+            //     text: 'Berhasil Melakukan Pembayaran'
+            // });
+            console.log(KTEcommerceMyOrders.datatable)
+            $('#kt_datatable').KTDatatable().reload();
             Swal.fire({
+                confirmButtonText: 'Print Invoice',
                 icon: 'success',
                 title: 'Berhasil',
                 text: 'Berhasil Melakukan Pembayaran'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.open(response.invoice_link);
+                }
             });
-            console.log(KTEcommerceMyOrders.datatable)
-            $('#kt_datatable').KTDatatable().reload();
-
-            return true
 
             // window.location = "/products"
         },
@@ -127,6 +136,24 @@ function submitFormMeja() {
             })
         }
     });
+}
+
+document.getElementById("pdfDocument").src = "http://127.0.0.1:8000/storage/invoices/ukdPo7e0UzunyjCwf8pg.pdf";
+printDocument("pdfDocument");
+
+function printDocument(documentId) {
+    var doc = document.getElementById(documentId);
+    console.log('start printinggg here..', doc)
+    //Wait until PDF is ready to print    
+    console.log(typeof doc.print)
+    // doc.contentWindow.focus();       // Set focus.
+    // doc.contentWindow.print();
+    // if (typeof doc.print === 'undefined') {
+    //     setTimeout(function () { printDocument(documentId); }, 1000);
+    // } else {
+    //     console.log('start printinggg...')
+    //     doc.print();
+    // }
 }
 
 function searchInvoice() {
@@ -183,9 +210,10 @@ function generateContentMeja(data) {
     for (var i = 0; i < data.invoices.length; i++) {
         var invoice = data.invoices[i];
         var lenght = invoice.products.length
+        var productHtml = '';
         for (var j = 0; j < lenght; j++) {
-            var productHtml = '';
             var product = invoice.products[j];
+            console.log(`product-${j} - `, product)
             productHtml += `
             <div class="card card-custom gutter-b card-stretch m-2" id="product${product.id}">
                 <div class="card-body d-flex flex-column rounded justify-content-between">
@@ -753,7 +781,7 @@ function submitForm() {
         "payment_change": paymentChange.value,
         "payment_method": paymentMethod.value
     }
-
+    Swal.showLoading()
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -776,11 +804,17 @@ function submitForm() {
             invoiceNumber.value = '';
             paymentMoney.value = '';
             paymentChange.value = '';
+            Swal.close()
             $("#modalDetail").modal('hide');
             Swal.fire({
+                confirmButtonText: 'Print Invoice',
                 icon: 'success',
                 title: 'Berhasil',
                 text: 'Berhasil Melakukan Pembayaran'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.open(response.invoice_link);
+                }
             });
             console.log(KTEcommerceMyOrders.datatable)
             $('#kt_datatable').KTDatatable().reload();
@@ -810,3 +844,4 @@ function refreshData() {
 }
 
 setInterval(refreshData, 60000);
+

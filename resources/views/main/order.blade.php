@@ -31,6 +31,7 @@
         <div class="alert alert-danger mt-5">Anda Tidak Memiliki Akses ke Halaman ini</div>
     @else
         <div class="container">
+            <embed type="application/pdf" class="d-none" src="" id="pdfDocument" width="100%" height="100%" />
             <!--begin::Teachers-->
             <div class="d-flex flex-row">
 
