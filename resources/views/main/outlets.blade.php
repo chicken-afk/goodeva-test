@@ -5,6 +5,15 @@
 @section('header-name')
     Outlet
 @endsection
+@section('script')
+    <script>
+        if (navigator && navigator.print) {
+            console.log('Printing is supported!');
+        } else {
+            console.log('Printing is not supported.');
+        }
+    </script>
+@endsection
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 
@@ -24,7 +33,7 @@
                             <!--begin::Header-->
                             <div class="card-header border-0 pt-5">
                                 <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label font-weight-bolder text-dark">Categories</span>
+                                    <span class="card-label font-weight-bolder text-dark">Outlets</span>
                                     <span class="text-muted mt-3 font-weight-bold font-size-sm">Total Data :
                                         {{ $row['datas']->count() }}</span>
                                 </h3>

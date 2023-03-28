@@ -64,6 +64,8 @@ Route::middleware(['login'])->group(function () {
     Route::get('/order-datas', [OrderController::class, 'orderData'])->name('orderDataApi');
     Route::post('/payment', [OrderController::class, 'payment'])->name('paymentApi');
     Route::get('/delete-invoice-product/{id}', [OrderController::class, 'deleteProductInvoice'])->name('deleteProductInvoice');
+    Route::get('/invoices', [OrderController::class, 'getInvoices'])->name('getInvoices');
+    Route::post('/payment-table', [OrderController::class, 'paymentTable'])->name('paymentTableApi');
 
     /**Live Order Data */
     Route::get('/live-order', [OrderController::class, 'liveOrder'])->name('liveOrder');
@@ -89,18 +91,16 @@ Route::middleware(['login'])->group(function () {
     Route::get('/statistic-product', [StatisticController::class, 'statisticProduct'])->name('statisticProduct');
     /**Chart Data Based On Omset Per Month */
     Route::get('/statistic-omset-day', [StatisticController::class, 'statisticOmsetDat'])->name('statisticOmsetDat');
+
+    /**
+     * Route For Users / Waiters
+     */
+
+    Route::get('/shopping', [UserController::class, 'view'])->name('userPage');
+    Route::get('/carts', [UserController::class, 'carts'])->name('cartPage');
+    Route::post('/carts', [UserController::class, 'storeCart'])->name('storeCart');
+    Route::get('/invoice', [UserController::class, 'invoice'])->name('invoice');
 });
-
-
-
-/**
- * Route For Users
- */
-
-Route::get('/iwer2kj3w9weklfsalms2e2gasaeffer2ese2adlf8eidsru', [UserController::class, 'view'])->name('userPage');
-Route::get('/carts', [UserController::class, 'carts'])->name('cartPage');
-Route::post('/carts', [UserController::class, 'storeCart'])->name('storeCart');
-Route::get('/invoice', [UserController::class, 'invoice'])->name('invoice');
 
 /** Artisan **/
 Route::get('/storage-link', function () {
@@ -118,5 +118,21 @@ Route::get('/config-clear', function () {
     return 'Application config cleared!';
 });
 
+Route::get('/migrate-data', function () {
+    Artisan::call(
+        'migrate',
+        array(
+            '--path' => 'database/migrations',
+            '--database' => 'mysql',
+            '--force' => true
+        )
+    );
+    return 'Application Migrated Sucessfully!';
+});
+
 
 Route::get('/invoice-print', [GenerateInvoice::class, 'generate']);
+
+Route::get('/lab/print', function () {
+    return view('lab.printing');
+});

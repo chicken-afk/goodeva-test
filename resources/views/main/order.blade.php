@@ -31,6 +31,7 @@
         <div class="alert alert-danger mt-5">Anda Tidak Memiliki Akses ke Halaman ini</div>
     @else
         <div class="container">
+            <embed type="application/pdf" class="d-none" src="" id="pdfDocument" width="100%" height="100%" />
             <!--begin::Teachers-->
             <div class="d-flex flex-row">
 
@@ -71,7 +72,7 @@
                             <!--begin::Search Form-->
                             <div class="mb-10">
                                 <div class="row align-items-center">
-                                    <div class="col-lg-9 col-xl-8">
+                                    <div class="col-lg-6 col-xl-6">
                                         <div class="row align-items-center">
                                             <div class="col-md-4 my-2 my-md-0">
                                                 <div class="input-icon">
@@ -100,9 +101,21 @@
                                         </div> --}}
                                         </div>
                                     </div>
-                                    {{-- <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
-                                    <a href="#" class="btn btn-light-primary px-6 font-weight-bold">Search</a>
-                                </div> --}}
+                                    <div class="col-lg-6 col-xl-6">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-4">Bayar Berdasarkan Meja :</div>
+                                            <div class="col-md-4 my-2 my-md-0">
+                                                <div class="input-icon">
+                                                    <input type="text" class="form-control form-control-solid"
+                                                        placeholder="Nomor Meja" id="nomor_meja" value="" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 my-2 my-md-0">
+                                                <button onclick="searchInvoice()"
+                                                    class="button btn btn-sm btn-primary">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!--end::Search Form-->
@@ -125,6 +138,28 @@
                 <div class="modal-dialog modal-fullscreen modal-xl modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content" id="modalContent">
                         {{-- Generate Content using jquery --}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            onclick="closeModalDetail()">Close</button>
+                        {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalMeja" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-fullscreen modal-xl modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        {{-- Generate Content using jquery --}}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Payment</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="closeModalDetail()"></button>
+                        </div>
+                        <div class="modal-body" id="modalContentMeja">
+
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"

@@ -15,6 +15,7 @@
                 $("#outletName").addClass('d-none')
             }
         })
+        let table = new DataTable('#table');
     </script>
 @endsection
 @section('content')
@@ -87,7 +88,7 @@
                                         <div class="tab-pane fade show active" id="kt_tab_pane_12_3" role="tabpanel"
                                             aria-labelledby="kt_tab_pane_12_3">
                                             <!--begin::Table-->
-                                            <div class="table-responsive">
+                                            <div class="table-responsive" id="table">
                                                 <table class="table table-separate table-head-custom table-checkable">
                                                     <thead>
                                                         <tr>
@@ -323,7 +324,7 @@
                                         <div class="form-group">
                                             <label>Nama Pengguna<span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" name="name"
-                                                placeholder="Enter Kategori Name" required />
+                                                placeholder="Enter Name" required />
                                             {{-- <span class="form-text text-muted">Nama Pengguna</span> --}}
                                         </div>
                                     </div>
@@ -331,7 +332,7 @@
                                         <div class="form-group">
                                             <label>Email<span class="text-danger">*</span></label>
                                             <input type="email" class="form-control" name="email"
-                                                placeholder="Enter Kategori Name" required />
+                                                placeholder="Enter Email" required />
                                             {{-- <span class="form-text text-muted">Email Pengguna</span> --}}
                                         </div>
                                     </div>
@@ -339,7 +340,7 @@
                                         <div class="form-group">
                                             <label>Password<span class="text-danger">*</span></label>
                                             <input type="password" class="form-control" name="password"
-                                                placeholder="Enter Kategori Name" required />
+                                                placeholder="Enter Password" required />
                                             {{-- <span class="form-text text-muted">Email Pengguna</span> --}}
                                         </div>
                                     </div>
