@@ -158,6 +158,8 @@ class UserController extends Controller
             }
         }
 
+        // Generate Invoice For Each Outlet
+
         return response()->json([
             'status_code' => 200,
             'invoice' => $invoice,
