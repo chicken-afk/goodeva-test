@@ -445,7 +445,7 @@
 </head>
 
 <body>
-    <div id="loader-wrapper">
+    <div id="loader-wrapper" class="d-none">
         <div id="loader"></div>
 
         <div class="loader-section">

@@ -345,8 +345,8 @@ function submitOrders() {
         width: 300
     }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
-        $("#loader-wrapper").removeClass("d-none");
         if (result.isConfirmed) {
+            $("#loader-wrapper").removeClass("d-none");
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
