@@ -6,12 +6,136 @@
     Outlet
 @endsection
 @section('script')
+    <script src="https://cdn.jsdelivr.net/npm/jsprintmanager@5.0.3/JSPrintManager.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script>
-        if (navigator && navigator.print) {
-            console.log('Printing is supported!');
-        } else {
-            console.log('Printing is not supported.');
+        var clientPrinters = null;
+        var _this = this;
+
+        //WebSocket settings
+        JSPM.JSPrintManager.auto_reconnect = true;
+        JSPM.JSPrintManager.start();
+        JSPM.JSPrintManager.WS.onStatusChanged = function() {
+            if (jspmWSStatus()) {
+                //get client installed printers
+                JSPM.JSPrintManager.getPrintersInfo().then(function(printersList) {
+                    clientPrinters = printersList;
+                    var options = '';
+                    for (var i = 0; i < clientPrinters.length; i++) {
+                        options += '<option>' + clientPrinters[i].name + '</option>';
+                    }
+                    $('#lstPrinters').html(options);
+                    $('.lstPrintersE').html(options);
+                    _this.showSelectedPrinterInfo();
+                });
+            }
+        };
+
+        //Check JSPM WebSocket status
+        function jspmWSStatus() {
+            if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Open)
+                return true;
+            else if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Closed) {
+                alert(
+                    'JSPrintManager (JSPM) is not installed or not running! Download JSPM Client App from https://neodynamic.com/downloads/jspm'
+                );
+                return false;
+            } else if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Blocked) {
+                alert('JSPM has blocked this website!');
+                return false;
+            }
         }
+
+        //Do printing...
+        function print() {
+            if (jspmWSStatus()) {
+                console.log($('#lstPrinters').val());
+
+                //Create a ClientPrintJob
+                var cpj = new JSPM.ClientPrintJob();
+
+                //Set Printer info
+                var myPrinter = new JSPM.InstalledPrinter($('#lstPrinters').val());
+                myPrinter.paperName = $('#lstPrinterPapers').val();
+                myPrinter.trayName = $('#lstPrinterTrays').val();
+                console.log('paper name :' + $('#lstPrinterPapers').val());
+                console.log('Tray name :' + $('#lstPrinterTrays').val());
+
+                cpj.clientPrinter = myPrinter;
+
+                //Set PDF file
+                var my_file = new JSPM.PrintFilePDF($('#txtPdfFile').val(), JSPM.FileSourceType.URL, 'MyFile.pdf', 1);
+                my_file.printRotation = JSPM.PrintRotation[$('#lstPrintRotation').val()];
+                my_file.printRange = $('#txtPagesRange').val();
+                my_file.printAnnotations = $('#chkPrintAnnotations').prop('checked');
+                my_file.printAsGrayscale = $('#chkPrintAsGrayscale').prop('checked');
+                my_file.printInReverseOrder = $('#chkPrintInReverseOrder').prop('checked');
+
+                cpj.files.push(my_file);
+
+                //Send print job to printer!
+                cpj.sendToClient();
+
+            }
+        }
+
+        //Do printing...
+        function printOwn() {
+            if (jspmWSStatus()) {
+                console.log('printinggg')
+                var printerName = "OneNote (Desktop)";
+                var paperName = "Letter";
+                var trayName = null;
+
+                //Create a ClientPrintJob
+                var cpj = new JSPM.ClientPrintJob();
+
+                //Set Printer info
+                var myPrinter = new JSPM.InstalledPrinter(printerName);
+                myPrinter.paperName = paperName;
+                myPrinter.trayName = trayName;
+
+                cpj.clientPrinter = myPrinter;
+
+                //Set PDF file
+                var my_file = new JSPM.PrintFilePDF($('#txtPdfFile').val(), JSPM.FileSourceType.URL, 'MyFile.pdf', 1);
+                my_file.printRotation = JSPM.PrintRotation[$('#lstPrintRotation').val()];
+                my_file.printRange = $('#txtPagesRange').val();
+                my_file.printAnnotations = $('#chkPrintAnnotations').prop('checked');
+                my_file.printAsGrayscale = $('#chkPrintAsGrayscale').prop('checked');
+                my_file.printInReverseOrder = $('#chkPrintInReverseOrder').prop('checked');
+
+                cpj.files.push(my_file);
+
+                //Send print job to printer!
+                cpj.sendToClient();
+
+            }
+        }
+
+        function showSelectedPrinterInfo() {
+            // get selected printer index
+            var idx = $("#lstPrinters")[0].selectedIndex || $(".lstPrintersE")[0].selectedIndex;
+            // get supported trays
+            var options = '';
+            for (var i = 0; i < clientPrinters[idx].trays.length; i++) {
+                options += '<option>' + clientPrinters[idx].trays[i] + '</option>';
+            }
+            $('#lstPrinterTrays').html(options);
+            $('#lstPrinterTraysE').html(options);
+            // get supported papers
+            options = '';
+            for (var i = 0; i < clientPrinters[idx].papers.length; i++) {
+                options += '<option>' + clientPrinters[idx].papers[i] + '</option>';
+            }
+            $('#lstPrinterPapers').html(options);
+            $('.lstPrinterPapersE').html(options);
+        }
+
+        setInterval(() => {
+            // print()
+        }, 2000);
     </script>
 @endsection
 @section('content')
@@ -63,6 +187,8 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="p-0 min-w-200px">Nama Outlet</th>
+                                                        <th class="p-0 min-w-200px">Printer</th>
+                                                        <th class="p-0 min-w-200px">Paper</th>
                                                         <th class="p-0 min-w-120px">Ditambahkan oleh</th>
                                                         <th class="p-0 min-w-120px">Status</th>
                                                         <th class="p-0 min-w-120px">Tanggal</th>
@@ -75,6 +201,12 @@
                                                             <td class="">
                                                                 <span
                                                                     class="font-weight-bold">{{ $value->outlet_name }}</span>
+                                                            </td>
+                                                            <td class="">
+                                                                <span class="font-weight-bold">{{ $value->printer }}</span>
+                                                            </td>
+                                                            <td class="">
+                                                                <span class="font-weight-bold">{{ $value->paper }}</span>
                                                             </td>
                                                             <td class="">
                                                                 <span class="font-weight-bold">{{ $value->name }}</span>
@@ -154,11 +286,12 @@
                                                         <div class="modal fade" id="editModal{{ $value->id }}"
                                                             tabindex="-1" role="dialog"
                                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title" id="exampleModalLabel">
-                                                                            Edit Kategori</h5>
+                                                                            Edit Outlet</h5>
                                                                         <button type="button" class="close"
                                                                             data-dismiss="modal" aria-label="Close">
                                                                             <i aria-hidden="true" class="ki ki-close"></i>
@@ -175,7 +308,7 @@
                                                                                 <div class="card-body">
                                                                                     <div class="form-group mb-8">
                                                                                         <div class="form-group">
-                                                                                            <label>Nama Kategori<span
+                                                                                            <label>Nama Outlet<span
                                                                                                     class="text-danger">*</span></label>
                                                                                             <input type="text"
                                                                                                 class="form-control"
@@ -184,10 +317,29 @@
                                                                                                 placeholder="Enter Kategori Name"
                                                                                                 required />
                                                                                             <span
-                                                                                                class="form-text text-muted">Kategori
-                                                                                                produk, contoh : "Makanan",
+                                                                                                class="form-text text-muted">Nama
+                                                                                                Outlet, contoh : "Makanan",
                                                                                                 "Minuman", "Desert"</span>
                                                                                         </div>
+                                                                                    </div>
+                                                                                    <div class="form-group mb-8">
+                                                                                        <label>Printers<span
+                                                                                                class="text-danger">*</span></label>
+                                                                                        <select
+                                                                                            class="form-control lstPrintersE"
+                                                                                            name="lstPrinters"
+                                                                                            id="lstPrintersE"
+                                                                                            onchange="showSelectedPrinterInfo();">
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="form-group mb-8">
+                                                                                        <label>Paper<span
+                                                                                                class="text-danger">*</span></label>
+                                                                                        <select
+                                                                                            class="form-control lstPrinterPapersE"
+                                                                                            name="lstPrinterPapers"
+                                                                                            id="lstPrinterPapersE">
+                                                                                        </select>
                                                                                     </div>
                                                                                     <!--end::Form-->
                                                                                 </div>
@@ -232,10 +384,10 @@
     {{-- Modal --}}
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Kategori</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Outlet</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
@@ -251,9 +403,20 @@
                                         <label>Nama Outlets<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="outlet_name"
                                             placeholder="Enter Outlet Name" required />
-                                        <span class="form-text text-muted">Kategori produk, contoh : "Warung Bakmi",
+                                        <span class="form-text text-muted">Nama Outlet, contoh : "Warung Bakmi",
                                             "Warung Bang Asep"</span>
                                     </div>
+                                </div>
+                                <div class="form-group mb-8">
+                                    <label>Printers<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="lstPrinters" id="lstPrinters"
+                                        onchange="showSelectedPrinterInfo();">
+                                    </select>
+                                </div>
+                                <div class="form-group mb-8">
+                                    <label>Paper<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="lstPrinterPapers" id="lstPrinterPapers">
+                                    </select>
                                 </div>
                                 <!--end::Form-->
                             </div>

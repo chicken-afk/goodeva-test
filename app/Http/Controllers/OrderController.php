@@ -65,11 +65,13 @@ class OrderController extends Controller
         }
         if (Auth::user()->role_id == 3) {
             $invoice = DB::table('invoices')->where('invoices.company_id', Auth::user()->company_id)
-                ->select('invoices.id', 'invoices.invoice_number', 'invoices.payment_charge', 'invoices.name', 'invoices.no_table', 'invoices.order_at', 'invoices.payment_status', 'invoices.payment_at', 'invoices.order_status')
+                ->select('invoices.id', 'invoice_users.invoice_pdf', 'invoices.invoice_number', 'invoices.payment_charge', 'invoices.name', 'invoices.no_table', 'invoices.order_at', 'invoices.payment_status', 'invoices.payment_at', 'invoices.order_status')
                 ->orderByDesc('invoices.id')
                 ->whereIn('invoices.payment_status', $payment_status)
                 ->where('invoice_outlets.outlet_id', Auth::user()->outlet_id)
                 ->join('invoice_outlets', 'invoice_outlets.invoice_id', 'invoices.id')
+                ->leftJoin('invoice_user_invoices', 'invoice_user_invoices.invoice_number', 'invoices.invoice_number')
+                ->leftJoin('invoice_users', 'invoice_users.id', 'invoice_user_invoices.invoice_user_id')
                 ->where(function ($query) use ($search) {
                     $query->where('invoices.invoice_number', "LIKE", "%" . $search . "%")
                         ->orWhere('invoices.name', "LIKE", "%" . $search . "%")
@@ -78,13 +80,15 @@ class OrderController extends Controller
                 ->get();
         } else {
             $invoice = DB::table('invoices')->where('company_id', Auth::user()->company_id)
-                ->select('id', 'invoice_number', 'payment_charge', 'name', 'no_table', 'order_at', 'payment_status', 'payment_at', 'order_status')
-                ->orderByDesc('id')
-                ->whereIn('payment_status', $payment_status)
+                ->select('invoices.id', 'invoice_users.invoice_pdf', 'invoices.invoice_number', 'invoices.payment_charge', 'invoices.name', 'invoices.no_table', 'invoices.order_at', 'invoices.payment_status', 'invoices.payment_at', 'invoices.order_status')
+                ->orderByDesc('invoices.id')
+                ->whereIn('invoices.payment_status', $payment_status)
+                ->leftJoin('invoice_user_invoices', 'invoice_user_invoices.invoice_number', 'invoices.invoice_number')
+                ->leftJoin('invoice_users', 'invoice_users.id', 'invoice_user_invoices.invoice_user_id')
                 ->where(function ($query) use ($search) {
-                    $query->where('invoice_number', "LIKE", "%" . $search . "%")
-                        ->orWhere('name', "LIKE", "%" . $search . "%")
-                        ->orWhere('no_table', "LIKE", "%" . $search . "%");
+                    $query->where('invoices.invoice_number', "LIKE", "%" . $search . "%")
+                        ->orWhere('invoices.name', "LIKE", "%" . $search . "%")
+                        ->orWhere('invoices.no_table', "LIKE", "%" . $search . "%");
                 })
                 ->get();
         }
@@ -173,7 +177,7 @@ class OrderController extends Controller
         $row['products'] = $products;
 
         view()->share('row', $row);
-        $pdf = PDF::loadView('invoices.invoice_print_satuan', $row);
+        $pdf = PDF::loadView('invoices.invoice_print_satuan', $row)->setPaper([0, 0, 685.98, 226.772], 'landscape');
         $content = $pdf->download()->getOriginalContent();
         $name = \Str::random(20);
         Storage::disk('public')->put("invoices/$name.pdf", $content);
@@ -500,7 +504,7 @@ class OrderController extends Controller
         $row['products'] = $product;
 
         view()->share('row', $row);
-        $pdf = PDF::loadView('invoices.invoice_print', $row);
+        $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 226.772], 'landscape');;
         $content = $pdf->download()->getOriginalContent();
         $name = \Str::random(20);
         Storage::disk('public')->put("invoices/$name.pdf", $content);

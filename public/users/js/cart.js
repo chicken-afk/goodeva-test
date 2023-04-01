@@ -183,7 +183,7 @@ function minus(id) {
             },
             buttonsStyling: false
         })
-        
+
         swalWithBootstrapButtons.fire({
             title: '<p class="m-0" style="font-size : medium">Hapus Item?</p>',
             // showDenyButton: true,
@@ -346,6 +346,7 @@ function submitOrders() {
     }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
+            $("#loader-wrapper").removeClass("d-none");
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -357,7 +358,6 @@ function submitOrders() {
                 data: data,
                 success: function (response) {
 
-                    console.log(response)
                     if (response.status_code == 422) {
                         Swal.fire({
                             icon: 'Error',
@@ -370,8 +370,8 @@ function submitOrders() {
                     localStorage.removeItem('carts');
                     localStorage.setItem('invoice', response.invoice);
                     generateContent();
+                    $("#loader-wrapper").addClass("d-none");
                     window.location = "/invoice?invoice=" + response.invoice
-                    // window.location = "/products"
                 },
                 error: function (response) {
                     Swal.fire({

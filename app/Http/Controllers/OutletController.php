@@ -17,7 +17,7 @@ class OutletController extends Controller
     public function index()
     {
         $row["datas"] = DB::table('outlets')->where('outlets.is_active', 1)->join('users', 'users.id', 'outlets.user_id')
-            ->select('outlets.id', 'users.name', 'outlets.outlet_name', 'outlets.created_at', 'outlets.is_active')->get();
+            ->select('outlets.id', 'users.name', 'outlets.printer', 'outlets.paper', 'outlets.outlet_name', 'outlets.created_at', 'outlets.is_active')->get();
 
         return view('main.outlets', compact('row'));
     }
@@ -38,6 +38,8 @@ class OutletController extends Controller
             'outlet_name' => $request->outlet_name,
             'company_id' => Auth::user()->company_id,
             'user_id' => Auth::id(),
+            'printer' => $request->lstPrinters,
+            'paper' => $request->lstPrinterPapers,
             'is_active' => 1,
             'created_at' => now()
         ]);
@@ -79,6 +81,8 @@ class OutletController extends Controller
         // Insert to DB
         $insert = DB::table('outlets')->where('id', $request->id)->update([
             'outlet_name' => $request->outlet_name,
+            'paper' => $request->lstPrinterPapers,
+            'printer' => $request->lstPrinters,
             'user_id' => 1,
             'updated_at' => now()
         ]);

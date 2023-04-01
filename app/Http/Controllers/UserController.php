@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class UserController extends Controller
 {
@@ -89,6 +91,7 @@ class UserController extends Controller
         }
 
         /** End Get Total Price */
+
         $invoice = "INVC" . time() . $this->company_id . strtoupper(Str::random(2));
         $invoiceToday = DB::table('invoices')->whereDate('created_at', Carbon::today())->count();
         $invoice_code = $invoiceToday + 1;
@@ -112,19 +115,12 @@ class UserController extends Controller
             'payment_charge' => $totalPrice,
             'created_at' => now(),
         ]);
+        $outlets = array();
+        $j = 0;
         foreach ($request->carts as $p => $q) {
             $q = collect($q);
             $product = DB::table('active_products')->where('uuid', $q['uuid'])->first();
 
-            /**Insert invoice outlets */
-            $inserted = DB::table('invoice_outlets')->where('invoice_id', $invoiceId)->where('outlet_id', $product->outlet_id)->count();
-            if ($inserted == 0) {
-                DB::table('invoice_outlets')->insert([
-                    'invoice_id' => $invoiceId,
-                    'outlet_id' => $product->outlet_id,
-                    'created_at' => now()
-                ]);
-            }
 
             /**End insert invoice Outlets */
 
@@ -156,12 +152,77 @@ class UserController extends Controller
                     ]);
                 }
             }
+
+            /**Insert invoice outlets */
+            $inserted = DB::table('invoice_outlets')->where('invoice_id', $invoiceId)->where('outlet_id', $product->outlet_id)->count();
+            if ($inserted == 0) {
+                DB::table('invoice_outlets')->insert([
+                    'invoice_id' => $invoiceId,
+                    'outlet_id' => $product->outlet_id,
+                    'created_at' => now()
+                ]);
+            }
         }
+
+        /**
+         * Generate Invoice For Each Outlet
+         */
+        $outlets = DB::table('invoice_outlets')->where('invoice_id', $invoiceId)->select('outlet_id')->get()->toArray();
+        $invoice = DB::table('invoices')->where('id', $invoiceId)->first();
+        //Groupping product peroutlets
+        foreach ($outlets as $p => $q) {
+            $q = collect($q);
+            $index = 0;
+            $outletId = $q['outlet_id'];
+            foreach ($request->carts as $k => $v) {
+                $v = collect($v);
+                $product = DB::table('active_products')->where('uuid', $v['uuid'])->first();
+                if ($q['outlet_id'] == $product->outlet_id) {
+                    $topping_text = "";
+                    $varian_name = "";
+                    if ($q->has('varian_id')) {
+                        $varian_name = $v["varian_name"];
+                    }
+                    if ($v->has('toppings')) {
+                        foreach ($v['toppings']  as $topping) {
+                            $topping_text = $topping_text . $topping['topping_name'] . ", ";
+                        }
+                    }
+                    $outlets[$p]->products[$index] = array(
+                        'product_name' => $v['product_name'] . " " . $topping_text . " " . $varian_name,
+                        'product_qty' => $v['qty'],
+                        'total_price' => $v['price']
+                    );
+                    $index++;
+                }
+            }
+            /**Create Invoice */
+            $row['invoice_number'] = $invoice->invoice_number;
+            $row['name'] = $invoice->name;
+            $row['no_table'] = $invoice->no_table;
+            $row['payment_charge'] = $invoice->payment_charge;
+            $row['sub_total'] = $invoice->charge_before_tax;
+            $row['tax'] = $invoice->tax;
+            $row['products'] = $outlets[$p]->products;
+
+            view()->share('row', $row);
+            $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 226.772], 'landscape');;
+            $content = $pdf->download()->getOriginalContent();
+            $name = \Str::random(20);
+            Storage::disk('public')->put("invoices/$name.pdf", $content);
+            /**Update PDF TO DB */
+            DB::table('invoice_outlets')->where('outlet_id', $q['outlet_id'])->where('invoice_id', $invoice->id)->update([
+                'invoice_pdf' => "/storage/invoices/$name.pdf",
+                'updated_at' => now()
+            ]);
+        }
+
 
         return response()->json([
             'status_code' => 200,
-            'invoice' => $invoice,
-            'invoice_code' => $invoice_code
+            'invoice' => $invoice->invoice_number,
+            'invoice_code' => $invoice_code,
+            'outlets' => $outlets,
         ]);
     }
 

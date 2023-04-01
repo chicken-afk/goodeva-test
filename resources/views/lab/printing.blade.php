@@ -67,6 +67,8 @@
         </div>
         <hr />
         <button type="button" onclick="print();">Print Now...</button>
+
+        <button type="button" onclick="printOwn();">Print</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jsprintmanager@5.0.3/JSPrintManager.min.js"></script>
@@ -113,7 +115,6 @@
         function print() {
             if (jspmWSStatus()) {
                 console.log($('#lstPrinters').val());
-                return true;
 
                 //Create a ClientPrintJob
                 var cpj = new JSPM.ClientPrintJob();
@@ -122,6 +123,42 @@
                 var myPrinter = new JSPM.InstalledPrinter($('#lstPrinters').val());
                 myPrinter.paperName = $('#lstPrinterPapers').val();
                 myPrinter.trayName = $('#lstPrinterTrays').val();
+                console.log('paper name :' + $('#lstPrinterPapers').val());
+                console.log('Tray name :' + $('#lstPrinterTrays').val());
+
+                cpj.clientPrinter = myPrinter;
+
+                //Set PDF file
+                var my_file = new JSPM.PrintFilePDF($('#txtPdfFile').val(), JSPM.FileSourceType.URL, 'MyFile.pdf', 1);
+                my_file.printRotation = JSPM.PrintRotation[$('#lstPrintRotation').val()];
+                my_file.printRange = $('#txtPagesRange').val();
+                my_file.printAnnotations = $('#chkPrintAnnotations').prop('checked');
+                my_file.printAsGrayscale = $('#chkPrintAsGrayscale').prop('checked');
+                my_file.printInReverseOrder = $('#chkPrintInReverseOrder').prop('checked');
+
+                cpj.files.push(my_file);
+
+                //Send print job to printer!
+                cpj.sendToClient();
+
+            }
+        }
+
+        //Do printing...
+        function printOwn() {
+            if (jspmWSStatus()) {
+                console.log('printinggg')
+                var printerName = "OneNote (Desktop)";
+                var paperName = "Letter";
+                var trayName = null;
+
+                //Create a ClientPrintJob
+                var cpj = new JSPM.ClientPrintJob();
+
+                //Set Printer info
+                var myPrinter = new JSPM.InstalledPrinter(printerName);
+                myPrinter.paperName = paperName;
+                myPrinter.trayName = trayName;
 
                 cpj.clientPrinter = myPrinter;
 

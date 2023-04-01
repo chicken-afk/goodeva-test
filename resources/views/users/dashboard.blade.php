@@ -7,10 +7,10 @@
                 <select class="form-select bg-light form-select-sm fillter-category" aria-label="Default select example"
                     onchange="scrollToId()" id="selectBox">
                     <option>Semua</option>
-                        @foreach ($row['outlets'] as $key => $value)
-                            <option value="menu{{ $key }}">
-                                {{ $value->outlet_name }}</option>
-                        @endforeach
+                    @foreach ($row['outlets'] as $key => $value)
+                        <option value="menu{{ $key }}">
+                            {{ $value->outlet_name }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -304,12 +304,12 @@
             Swal.fire({
                 // title: 'Berhasil',
                 position: 'center',
-                title: '<p class="m-0" style="font-size : small; padding : 1px; color : #FFFFFF;">Berhasil Menambahkan Produk Ke keranjang!</p>',
-                footer: '<a style="font-size : small; padding : 1px; color : #FFFFFF;" style="font-size : small" href="/carts">Lihat Keranjang</a>',
+                title: '<p class="m-0" style="font-size : small; padding : 1px; color : black;">Berhasil Menambahkan Produk Ke keranjang!</p>',
+                footer: '<a style="font-size : small; padding : 1px; color : black;" style="font-size : small" href="/carts">Lihat Keranjang</a>',
                 // width: 300,
                 showConfirmButton: false,
                 timer: 1500,
-                background: '#4CC9F0'
+                background: '#FFFFFF'
             });
 
         }

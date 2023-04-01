@@ -14,7 +14,6 @@
         font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 100%;
-        padding: 0.2rem 1rem 0.2rem 1rem;
     }
 
     h3 {
