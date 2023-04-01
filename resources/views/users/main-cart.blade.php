@@ -176,11 +176,6 @@
 
         body {
             min-height: 100vh;
-            background-color: #1d2630;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            align-items: flex-start;
         }
 
         .spinner-box {
