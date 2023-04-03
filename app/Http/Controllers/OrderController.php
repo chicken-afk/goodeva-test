@@ -177,7 +177,7 @@ class OrderController extends Controller
         $row['products'] = $products;
 
         view()->share('row', $row);
-        $pdf = PDF::loadView('invoices.invoice_print_satuan', $row)->setPaper([0, 0, 685.98, 226.772], 'landscape');
+        $pdf = PDF::loadView('invoices.invoice_print_satuan', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
         $content = $pdf->download()->getOriginalContent();
         $name = \Str::random(20);
         Storage::disk('public')->put("invoices/$name.pdf", $content);
@@ -504,7 +504,7 @@ class OrderController extends Controller
         $row['products'] = $product;
 
         view()->share('row', $row);
-        $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 226.772], 'landscape');;
+        $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 210.772], 'landscape');
         $content = $pdf->download()->getOriginalContent();
         $name = \Str::random(20);
         Storage::disk('public')->put("invoices/$name.pdf", $content);

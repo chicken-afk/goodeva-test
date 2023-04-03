@@ -148,8 +148,8 @@
         function printOwn() {
             if (jspmWSStatus()) {
                 console.log('printinggg')
-                var printerName = "OneNote (Desktop)";
-                var paperName = "Letter";
+                var printerName = "POS-80";
+                var paperName = "80(72.1) x 210 mm";
                 var trayName = null;
 
                 //Create a ClientPrintJob

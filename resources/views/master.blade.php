@@ -231,6 +231,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--begin::Page Vendors(used by this page)-->
     <script src="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
     <script src="{{ asset('plugins/custom/leaflet/leaflet.bundle.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsprintmanager@5.0.3/JSPrintManager.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"></script>
+    <script src="{{ asset('js/auto-print.js') }}"></script>
 
     <!--end::Page Vendors-->
 

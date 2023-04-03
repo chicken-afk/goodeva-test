@@ -12,6 +12,7 @@ use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\GenerateInvoice;
+use App\Http\Controllers\PrinterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,13 @@ use App\Http\Controllers\GenerateInvoice;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+/**
+ * Route For Printer Function
+ */
+
+Route::get('/auto-print', [PrinterController::class, 'autoPrint']);
+Route::get('/print/{pdf}', [PrinterController::class, 'isPrintedTrue']);
 
 /**
  * Login Page

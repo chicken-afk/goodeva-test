@@ -206,7 +206,7 @@ class UserController extends Controller
             $row['products'] = $outlets[$p]->products;
 
             view()->share('row', $row);
-            $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 226.772], 'landscape');;
+            $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 210.772], 'landscape');
             $content = $pdf->download()->getOriginalContent();
             $name = \Str::random(20);
             Storage::disk('public')->put("invoices/$name.pdf", $content);
