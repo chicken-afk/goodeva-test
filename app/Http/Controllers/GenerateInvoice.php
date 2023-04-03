@@ -9,6 +9,10 @@ class GenerateInvoice extends Controller
 {
     public function generate()
     {
+        $row['no_table'] = "INVC12345";
+        $row['sub_total'] = 30000;
+        $row['tax'] = 3000;
+        $row['payment_charge'] = 33000;
         $row['invoice_number'] = "INVC12345";
         $row['name'] = "Andika";
         $row['products'] = array(
