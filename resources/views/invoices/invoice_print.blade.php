@@ -93,7 +93,15 @@
     </table>
     <div class="line"></div>
     @foreach ($row['products'] as $key => $value)
-        <p class="products" style="margin-bottom: 2px">{{ $value['product_name'] }}</p>
+        <p class="products" style="margin-bottom: 0px">{{ $value['product_name'] }}</p>
+        @if (isset($value['varian_name']) && $value['varian_name'] != '')
+            <p class="products" style="margin-bottom: 0px ;text-transform: none !important;">{{ $value['varian_name'] }}
+            </p>
+        @endif
+        @if (isset($value['topping_name']) && $value['topping_name'] != '')
+            <p class="products" style="margin-bottom: 0px;text-transform: none !important;">{{ $value['topping_name'] }}
+            </p>
+        @endif
         <table class="products table">
             <tr>
                 <td>{{ $value['product_qty'] }}x</td>
@@ -102,26 +110,28 @@
             </tr>
         </table>
     @endforeach
+    @if (isset($row['sub_total']))
+        <div class="line"></div>
+        <table class="table">
+            <tr class="invoice">
+                <td>Subtotal</td>
+                <td>:</td>
+                <td style="text-align: right">{{ $row['sub_total'] }}</td>
+            </tr>
+            <tr class="invoice">
+                <td>Pajak</td>
+                <td>:</td>
+                <td style="text-align: right">{{ $row['tax'] }}</td>
+            </tr>
+            <tr class="invoice">
+                <td>Total</td>
+                <td>:</td>
+                <td style="text-align: right">{{ $row['payment_charge'] }}</td>
+            </tr>
+        </table>
+    @endif
     <div class="line"></div>
-    <table class="table">
-        <tr class="invoice">
-            <td>Subtotal</td>
-            <td>:</td>
-            <td style="text-align: right">{{ $row['sub_total'] }}</td>
-        </tr>
-        <tr class="invoice">
-            <td>Pajak</td>
-            <td>:</td>
-            <td style="text-align: right">{{ $row['tax'] }}</td>
-        </tr>
-        <tr class="invoice">
-            <td>Total</td>
-            <td>:</td>
-            <td style="text-align: right">{{ $row['payment_charge'] }}</td>
-        </tr>
-    </table>
-    <div class="line"></div>
-    <p style="text-align: center; font-size : xx-small; font-weight : 600">21/03/2023 17:12:09</p>
+    <p style="text-align: center; font-size : xx-small; font-weight : 600">{{ date('H:i d/m/Y') }}</p>
 </body>
 
 </html>

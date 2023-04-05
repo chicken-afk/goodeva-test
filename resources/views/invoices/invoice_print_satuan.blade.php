@@ -121,7 +121,7 @@
         </tr>
     </table>
     <div class="line"></div>
-    <p style="text-align: center; font-size : xx-small; font-weight : 600">21/03/2023 17:12:09</p>
+    <p style="text-align: center; font-size : xx-small; font-weight : 600">{{ date('H:i d/m/Y') }}</p>
 </body>
 
 </html>
