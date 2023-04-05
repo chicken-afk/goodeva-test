@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+
 use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
@@ -47,7 +48,9 @@ class OrderController extends Controller
             ]);
         }
 
-        return view('main.order');
+        $cashier = DB::table('roles')->where('role_name', 'cashier')->first();
+
+        return view('main.order', compact('cashier'));
     }
 
     public function orderData(Request $request)

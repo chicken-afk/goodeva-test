@@ -31,4 +31,15 @@ class PrinterController extends Controller
             'message' => "Success Print $id"
         ]);
     }
+
+    public function cashierPrinter(Request $request)
+    {
+        DB::table('roles')->where('role_name', 'cashier')->update([
+            'printer' => $request->lstPrinters,
+            'paper' => $request->lstPrinterPapers,
+            'updated_at' => now()
+        ]);
+        alert('Success', "Printer Kasir Berubah menjadi $request->lstPrinters", 'success');
+        return redirect()->back();
+    }
 }
