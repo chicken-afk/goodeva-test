@@ -74,6 +74,7 @@ class OrderController extends Controller
                 ->join('invoice_outlets', 'invoice_outlets.invoice_id', 'invoices.id')
                 ->leftJoin('invoice_user_invoices', 'invoice_user_invoices.invoice_number', 'invoices.invoice_number')
                 ->leftJoin('invoice_users', 'invoice_users.id', 'invoice_user_invoices.invoice_user_id')
+                ->groupBy('invoices.id')
                 ->where(function ($query) use ($search) {
                     $query->where('invoices.invoice_number', "LIKE", "%" . $search . "%")
                         ->orWhere('invoices.name', "LIKE", "%" . $search . "%")
@@ -87,6 +88,7 @@ class OrderController extends Controller
                 ->whereIn('invoices.payment_status', $payment_status)
                 ->leftJoin('invoice_user_invoices', 'invoice_user_invoices.invoice_number', 'invoices.invoice_number')
                 ->leftJoin('invoice_users', 'invoice_users.id', 'invoice_user_invoices.invoice_user_id')
+                ->groupBy('invoices.id')
                 ->where(function ($query) use ($search) {
                     $query->where('invoices.invoice_number', "LIKE", "%" . $search . "%")
                         ->orWhere('invoices.name', "LIKE", "%" . $search . "%")

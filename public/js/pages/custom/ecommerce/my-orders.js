@@ -122,7 +122,7 @@ function submitFormMeja() {
                 text: 'Berhasil Melakukan Pembayaran'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.open(response.invoice_link);
+                    print(printer, paper, response.invoice_link)
                 }
             });
 
@@ -671,7 +671,7 @@ var KTEcommerceMyOrders = function () {
                             </svg>
                             <!--end::Svg Icon-->
                         </span>Detail</a>
-                        <a href="${row.invoice_pdf}" target="_blank" class="btn btn-sm btn-primary mb-2 font-weight-bolder">
+                        <a onclick="print('${printer}', '${paper}', '${row.invoice_pdf}')" target="_blank" class="btn btn-sm btn-primary mb-2 font-weight-bolder">
                         <span class="svg-icon svg-icon-md">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                             <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo4\dist/../src/media/svg/icons\Shopping\Money.svg-->
@@ -841,7 +841,7 @@ function submitForm() {
                 text: 'Berhasil Melakukan Pembayaran'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.open(response.invoice_link);
+                    print(printer, paper, response.invoice_link)
                 }
             });
             console.log(KTEcommerceMyOrders.datatable)
