@@ -241,8 +241,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="{{ asset('js/pages/widgets.js') }}"></script>
     <script>
         setInterval(() => {
-            // window.print()
-        }, 1000);
+            console.log('run printing..')
+            runPrint();
+        }, 5000);
     </script>
 
     @yield('script')

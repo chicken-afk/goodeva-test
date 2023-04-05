@@ -84,6 +84,7 @@ function jspmWSStatus() {
 
 //Do printing...
 function print(printerName, paper, pdf) {
+    console.log('masuk printing')
     if (jspmWSStatus()) {
         console.log('masuk if')
 
@@ -109,8 +110,3 @@ function print(printerName, paper, pdf) {
 
     }
 }
-
-setInterval(() => {
-    console.log('run printing..')
-    runPrint();
-}, 10000);
