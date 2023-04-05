@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+
 use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
-
 
     public function index(Request $request)
     {
@@ -48,7 +48,9 @@ class OrderController extends Controller
             ]);
         }
 
-        return view('main.order');
+        $cashier = DB::table('roles')->where('role_name', 'cashier')->first();
+
+        return view('main.order', compact('cashier'));
     }
 
     public function orderData(Request $request)
@@ -164,9 +166,8 @@ class OrderController extends Controller
                 $topping_text = $topping_text . $v->topping_name . ", ";
             }
             $row['products'][$key]->topping_text = $topping_text;
+            $row['products'][$key]->active_product_name = $row['products'][$key]->active_product_name . " " . $row['products'][$key]->varian_name . " " . $topping_text;
         }
-
-        $products =  $row['products'];
         /**Create Invoice */
         $row['invoice_number'] = "INVC" . time();
         $row['name'] = $invoice->name;
@@ -174,7 +175,6 @@ class OrderController extends Controller
         $row['payment_charge'] = $invoice->payment_charge;
         $row['sub_total'] = $invoice->charge_before_tax;
         $row['tax'] = $invoice->tax;
-        $row['products'] = $products;
 
         view()->share('row', $row);
         $pdf = PDF::loadView('invoices.invoice_print_satuan', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
@@ -486,7 +486,7 @@ class OrderController extends Controller
             /**Get Products List */
             foreach ($value['products'] as $k => $v) {
                 $product[$i] =    array(
-                    'product_name' => $v['active_product_name'] . "-" . $v['topping_text'] . "-" . $v['varian_name'],
+                    'product_name' => $v['active_product_name'] . " " . $v['varian_name'] . " " . $v['topping_text'],
                     'product_qty' => $v['qty'],
                     'total_price' => $v['price']
                 );
@@ -504,7 +504,7 @@ class OrderController extends Controller
         $row['products'] = $product;
 
         view()->share('row', $row);
-        $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 210.772], 'landscape');
+        $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
         $content = $pdf->download()->getOriginalContent();
         $name = \Str::random(20);
         Storage::disk('public')->put("invoices/$name.pdf", $content);

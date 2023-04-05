@@ -293,6 +293,7 @@ function submitOrders() {
         })
         return false
     }
+
     var nUser = document.getElementById('nUser');
     var nTable = document.getElementById('nTable');
     if (nUser.value == '' || nTable.value == '') {

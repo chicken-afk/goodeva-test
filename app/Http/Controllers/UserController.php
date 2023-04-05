@@ -59,31 +59,8 @@ class UserController extends Controller
         /**
          * Store Data Invoice
          */
-
-        /** Validasi Get Total Price */
-        $totalPrice = 0;
-        foreach ($request->carts as $key => $value) {
-            $value = collect($value);
-            $priceItem = 0;
-            $product = DB::table('active_products')->where('uuid', $value['uuid'])->first();
-            if ($value->has('varian_id')) {
-                $variants = DB::table('variants')->where('id', $value['varian_id'])->first();
-                $priceItem += $variants->varian_price;
-            } else {
-                $priceItem += $product->price_promo;
-            }
-            /**Get Price Toppings */
-            if ($value->has('toppings')) {
-                foreach ($value['toppings'] as $i => $v) {
-                    $topping = DB::table('toppings')->where('id', $v['topping_id'])->first();
-                    $priceItem += $topping->topping_price;
-                }
-            }
-            $priceItem = $priceItem * $value['qty'];
-            $totalPrice += $priceItem;
-        }
-
-        if ($totalPrice != $request->invoice_charge) {
+        $totalPrice = $this->validatePrice($request);
+        if ($totalPrice == false) {
             return response()->json([
                 'status_code' => 422,
                 'message' => 'Harga Beda'
@@ -180,16 +157,19 @@ class UserController extends Controller
                 if ($q['outlet_id'] == $product->outlet_id) {
                     $topping_text = "";
                     $varian_name = "";
-                    if ($q->has('varian_id')) {
-                        $varian_name = $v["varian_name"];
+                    if ($v->has('varian_id')) {
+                        $varian_name = "Varian : " . $v["varian_name"];
                     }
                     if ($v->has('toppings')) {
+                        $topping_text = "topping : ";
                         foreach ($v['toppings']  as $topping) {
                             $topping_text = $topping_text . $topping['topping_name'] . ", ";
                         }
                     }
                     $outlets[$p]->products[$index] = array(
-                        'product_name' => $v['product_name'] . " " . $topping_text . " " . $varian_name,
+                        'varian_name' => $varian_name,
+                        'topping_name' => $topping_text,
+                        'product_name' => $v['product_name'],
                         'product_qty' => $v['qty'],
                         'total_price' => $v['price']
                     );
@@ -200,13 +180,10 @@ class UserController extends Controller
             $row['invoice_number'] = $invoice->invoice_number;
             $row['name'] = $invoice->name;
             $row['no_table'] = $invoice->no_table;
-            $row['payment_charge'] = $invoice->payment_charge;
-            $row['sub_total'] = $invoice->charge_before_tax;
-            $row['tax'] = $invoice->tax;
             $row['products'] = $outlets[$p]->products;
 
             view()->share('row', $row);
-            $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 210.772], 'landscape');
+            $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
             $content = $pdf->download()->getOriginalContent();
             $name = \Str::random(20);
             Storage::disk('public')->put("invoices/$name.pdf", $content);
@@ -266,5 +243,40 @@ class UserController extends Controller
 
         // dd($row);
         return view('users.invoice', compact('row'));
+    }
+
+    /**
+     * Function to validate if price from form input equals to on database
+     */
+    public function validatePrice($request)
+    {
+        $totalPrice = 0;
+        foreach ($request->carts as $key => $value) {
+            $value = collect($value);
+            $priceItem = 0;
+            $product = DB::table('active_products')->where('uuid', $value['uuid'])->first();
+            if ($value->has('varian_id')) {
+                $variants = DB::table('variants')->where('id', $value['varian_id'])->first();
+                $priceItem += $variants->varian_price;
+            } else {
+                $priceItem += $product->price_promo;
+            }
+            /**Get Price Toppings */
+            if ($value->has('toppings')) {
+                foreach ($value['toppings'] as $i => $v) {
+                    $topping = DB::table('toppings')->where('id', $v['topping_id'])->first();
+                    $priceItem += $topping->topping_price;
+                }
+            }
+            $priceItem = $priceItem * $value['qty'];
+            $totalPrice += $priceItem;
+        }
+
+        if ($totalPrice != $request->invoice_charge) {
+            /**Price isnt equal */
+            return false;
+        }
+        /**Price Equals */
+        return $totalPrice;
     }
 }

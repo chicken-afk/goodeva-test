@@ -5,7 +5,7 @@
             <!--begin::Body-->
             <div class="card-body">
                 <!--begin::Nav Tabs-->
-                <ul class="dashboard-tabs nav nav-pills nav-danger row row-paddingless m-0 p-0 flex-column flex-sm-row">
+                <ul class="dashboard-tabs nav nav-pills nav-primary row row-paddingless m-0 p-0 flex-column flex-sm-row">
                     <!--begin::Item-->
                     <li class="nav-item d-flex col-sm flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0 ">
                         <a href="{{ route('getProduct') }}"

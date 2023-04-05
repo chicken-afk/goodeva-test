@@ -45,6 +45,8 @@ Route::get('/logout', [AdminController::class, 'logout'])->name('logoutAdmin');
  */
 
 Route::middleware(['login'])->group(function () {
+    /**Printers */
+    Route::post('/cashier-printer', [PrinterController::class, 'cashierPrinter'])->name('cashierPrinter');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route Product
     Route::get('/products', [ProductController::class, 'index'])->name('getProduct');

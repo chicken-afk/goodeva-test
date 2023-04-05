@@ -158,6 +158,14 @@ function printDocument(documentId) {
 
 function searchInvoice() {
     var tableNo = document.getElementById('nomor_meja').value;
+    if (tableNo == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'Nomor Meja Belum Di isi',
+        })
+        return false
+    }
     generateModalMeja(tableNo)
 }
 

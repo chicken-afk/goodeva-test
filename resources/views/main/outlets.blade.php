@@ -150,7 +150,7 @@
                 <div class="d-flex flex-row">
 
                     <!--begin::Content-->
-                    <div class="flex-row-fluid ml-lg-12">
+                    <div class="flex-row-fluid">
                         <!--end::Row-->
                         <!--begin::Advance Table: Widget 7-->
                         <div class="card card-custom gutter-b">
@@ -228,8 +228,8 @@
                                                             <td class="text-center">
                                                                 <button data-toggle="modal"
                                                                     data-target="#editModal{{ $value->id }}"
-                                                                    class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-primary">
+                                                                    class="btn btn-icon btn-light btn-hover-warning btn-sm mx-3">
+                                                                    <span class="svg-icon svg-icon-md svg-icon-warning">
                                                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Write.svg-->
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                                             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -256,8 +256,8 @@
 
 
                                                                 <a href="{{ route('deleteOutlet', $value->id) }}"
-                                                                    class="btn btn-icon btn-light btn-hover-primary btn-sm">
-                                                                    <span class="svg-icon svg-icon-md svg-icon-primary">
+                                                                    class="btn btn-icon btn-light btn-hover-danger btn-sm">
+                                                                    <span class="svg-icon svg-icon-md svg-icon-danger">
                                                                         <!--begin::Svg Icon | path:assets/media/svg/icons/General/Trash.svg-->
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                                             xmlns:xlink="http://www.w3.org/1999/xlink"
