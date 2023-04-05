@@ -35,7 +35,7 @@
                         </div>
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->
-                            <div class="dropdown dropdown-inline mr-2">
+                            {{-- <div class="dropdown dropdown-inline mr-2">
                                 <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="svg-icon svg-icon-md">
@@ -106,7 +106,7 @@
                                     <!--end::Navigation-->
                                 </div>
                                 <!--end::Dropdown Menu-->
-                            </div>
+                            </div> --}}
                             <!--end::Dropdown-->
                             <!--begin::Button-->
                             <a href="{{ route('addProductPage') }}" class="btn btn-primary font-weight-bolder">
@@ -245,7 +245,7 @@
                                                 class="btn btn-sm btn-clean btn-icon" title="Edit details"> <i
                                                     class="la la-edit"></i> </a> --}}
                                                 <a href="{{ route('deleteProduct', $value->uuid) }}"
-                                                    class="btn btn-sm btn-clean btn-icon" title="Delete"> <i
+                                                    class="btn btn-sm btn-outline-danger btn-icon" title="Delete"> <i
                                                         class="la la-trash"></i> </a>
                                             </span></td>
                                     </tr>

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Storage;
 class OrderController extends Controller
 {
 
-
     public function index(Request $request)
     {
         if ($request->has('invoice')) {
