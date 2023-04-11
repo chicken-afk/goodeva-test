@@ -105,8 +105,10 @@
         <table class="products table">
             <tr>
                 <td>{{ $value['product_qty'] }}x</td>
-                <td>{{ (int) $value['total_price'] }}</td>
-                <td style="text-align: right">{{ $value['total_price'] * (int) $value['product_qty'] }}</td>
+                @if (!isset($row['type']))
+                    <td>{{ (int) $value['total_price'] }}</td>
+                    <td style="text-align: right">{{ $value['total_price'] * (int) $value['product_qty'] }}</td>
+                @endif
             </tr>
         </table>
     @endforeach
