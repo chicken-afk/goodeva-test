@@ -8,10 +8,12 @@
     <title>Invoice</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <style>
     body {
-        font-family: arial, sans-serif;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
         border-collapse: collapse;
         width: 100%;
     }
@@ -24,7 +26,7 @@
     }
 
     h4 {
-        font-size: xx-small;
+        font-size: x-small;
         margin-top: 0px;
         text-align: center;
     }
@@ -38,18 +40,18 @@
     }
 
     .invoice {
-        font-size: x-small !important;
+        font-size: small !important;
         font-weight: 600;
     }
 
     .products {
-        font-size: x-small;
+        font-size: small;
         text-transform: uppercase;
         font-weight: 600;
     }
 
     span {
-        font-size: xx-small !important;
+        font-size: small !important;
         font-weight: 600 !important;
     }
 
@@ -105,8 +107,10 @@
         <table class="products table">
             <tr>
                 <td>{{ $value['product_qty'] }}x</td>
-                <td>{{ (int) $value['total_price'] }}</td>
-                <td style="text-align: right">{{ $value['total_price'] * (int) $value['product_qty'] }}</td>
+                @if (!isset($row['type']))
+                    <td>{{ (int) $value['total_price'] }}</td>
+                    <td style="text-align: right">{{ $value['total_price'] * (int) $value['product_qty'] }}</td>
+                @endif
             </tr>
         </table>
     @endforeach
@@ -131,7 +135,7 @@
         </table>
     @endif
     <div class="line"></div>
-    <p style="text-align: center; font-size : xx-small; font-weight : 600">{{ date('H:i d/m/Y') }}</p>
+    <p style="text-align: center; font-size : x-small; font-weight : 600">{{ date('H:i d/m/Y') }}</p>
 </body>
 
 </html>

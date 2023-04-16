@@ -181,6 +181,7 @@ class UserController extends Controller
             $row['name'] = $invoice->name;
             $row['no_table'] = $invoice->no_table;
             $row['products'] = $outlets[$p]->products;
+            $row['type'] = 'outlet';
 
             view()->share('row', $row);
             $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');

@@ -73,11 +73,14 @@
             $("#printerModal").modal("show");
         </script>
     @endif
-    <script>
-        function printInvoice() {
-            print(readyPrint.printer, readyPrint.paper, readyPrint.invoice_pdf);
-        }
-    </script>
+    @if (Auth::user()->role_id == 2)
+        <script>
+            setInterval(() => {
+                console.log('run printing..')
+                runPrint();
+            }, 3000);
+        </script>
+    @endif
 @endsection
 
 @section('content')

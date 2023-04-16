@@ -24,7 +24,7 @@
     }
 
     h4 {
-        font-size: xx-small;
+        font-size: x-small;
         margin-top: 0px;
         text-align: center;
     }
@@ -38,18 +38,18 @@
     }
 
     .invoice {
-        font-size: x-small !important;
+        font-size: small !important;
         font-weight: 600;
     }
 
     .products {
-        font-size: x-small;
+        font-size: small;
         text-transform: uppercase;
         font-weight: 600;
     }
 
     span {
-        font-size: xx-small !important;
+        font-size: x-small !important;
         font-weight: 600 !important;
     }
 
@@ -121,7 +121,7 @@
         </tr>
     </table>
     <div class="line"></div>
-    <p style="text-align: center; font-size : xx-small; font-weight : 600">{{ date('H:i d/m/Y') }}</p>
+    <p style="text-align: center; font-size : x-small; font-weight : 600">{{ date('H:i d/m/Y') }}</p>
 </body>
 
 </html>
