@@ -133,9 +133,9 @@ class OrderController extends Controller
         $invoiceId = DB::table('invoice_users')->insertGetId([
             'user_id' => Auth::id(),
             'no_table' => $invoice->no_table,
-            'payment_charge' => (int)$invoice->payment_charge,
-            'tax' => ((int)$invoice->payment_charge / 1.1) * 0.1,
-            'charge_before_tax' => (int)$invoice->payment_charge / 1.1,
+            'payment_charge' => (int) $invoice->payment_charge,
+            'tax' => ((int) $invoice->payment_charge / 1.1) * 0.1,
+            'charge_before_tax' => (int) $invoice->payment_charge / 1.1,
             'created_at' => now()
         ]);
         DB::table('invoice_user_invoices')->insert([
@@ -201,7 +201,7 @@ class OrderController extends Controller
 
     public function liveOrder()
     {
-        if (Auth::user()->role_id != 1) {
+        if (Auth::user()->role_id == 3) {
             $datas = DB::table('invoices')
                 ->join('invoice_outlets', 'invoice_outlets.invoice_id', 'invoices.id')
                 ->where('invoices.order_status', '!=', 'selesai')
@@ -215,7 +215,7 @@ class OrderController extends Controller
 
         foreach ($datas as $p => $q) {
             $invoice = $q;
-            if (Auth::user()->role_id != 1) {
+            if (Auth::user()->role_id == 3) {
                 $row['products'] = DB::table('invoice_products')
                     ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
                     ->join('outlets', 'outlets.id', 'active_products.outlet_id')
@@ -261,7 +261,7 @@ class OrderController extends Controller
     public function liveOrderData()
     {
 
-        if (Auth::user()->role_id != 1) {
+        if (Auth::user()->role_id == 3) {
             $datas = DB::table('invoices')
                 ->join('invoice_outlets', 'invoice_outlets.invoice_id', 'invoices.id')
                 ->where('invoices.order_status', '!=', 'selesai')
@@ -275,7 +275,7 @@ class OrderController extends Controller
 
         foreach ($datas as $k => $v) {
             $invoice = $v;
-            if (Auth::user()->role_id != 1) {
+            if (Auth::user()->role_id == 3) {
                 $row['products'] = DB::table('invoice_products')
                     ->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
                     ->join('outlets', 'outlets.id', 'active_products.outlet_id')
@@ -330,7 +330,7 @@ class OrderController extends Controller
         $invoice = DB::table('invoices')->where('invoice_number', $request->invoice)->first();
         $user = DB::table('users')->where('id', $request->user_id)->first();
         // Check if user role is outlet
-        if ($user->role_id != 1) {
+        if ($user->role_id == 3) {
             DB::table('invoice_outlets')->where('invoice_id', $invoice->id)->where('outlet_id', $user->outlet_id)->update([
                 'order_status' => $request->order_status,
                 'updated_at' => now()
@@ -460,9 +460,9 @@ class OrderController extends Controller
         $invoiceId = DB::table('invoice_users')->insertGetId([
             'user_id' => Auth::id(),
             'no_table' => $data['no_table'],
-            'payment_charge' => (int)$data['payment_charge'],
-            'tax' => ((int)$data['payment_charge'] / 1.1) * 0.1,
-            'charge_before_tax' => (int)$data['payment_charge'] / 1.1,
+            'payment_charge' => (int) $data['payment_charge'],
+            'tax' => ((int) $data['payment_charge'] / 1.1) * 0.1,
+            'charge_before_tax' => (int) $data['payment_charge'] / 1.1,
             'created_at' => now()
         ]);
 
