@@ -26,7 +26,7 @@
     }
 
     h4 {
-        font-size: xx-small;
+        font-size: x-small;
         margin-top: 0px;
         text-align: center;
     }
@@ -40,18 +40,18 @@
     }
 
     .invoice {
-        font-size: x-small !important;
+        font-size: small !important;
         font-weight: 600;
     }
 
     .products {
-        font-size: x-small;
+        font-size: small;
         text-transform: uppercase;
         font-weight: 600;
     }
 
     span {
-        font-size: xx-small !important;
+        font-size: x-small !important;
         font-weight: 600 !important;
     }
 
