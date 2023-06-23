@@ -12,14 +12,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <style>
+    @font-face {
+        font-family: 'tenso-reguler';
+        src: url("Tenso-Regular.otf") format("opentype");
+    }
+
     body {
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-family: "Helvetica" !important;
         border-collapse: collapse;
         width: 100%;
+        font-size: 12px !important;
+        line-height: 24px !important;
     }
 
     h3 {
-        font-size: large !important;
+        font-size: 14px !important;
+        line-height: 28px !important;
         text-align: center;
         margin-bottom: 3px;
         font-weight: 600;
@@ -95,22 +103,20 @@
     </table>
     <div class="line"></div>
     @foreach ($row['products'] as $key => $value)
-        <p class="products" style="margin-bottom: 0px">{{ $value['product_name'] }}</p>
-        @if (isset($value['varian_name']) && $value['varian_name'] != '')
+        <p class="products" style="margin-bottom: 0px">{{ $value->active_product_name }}</p>
+        @if (isset($value->varian_name) && $value->varian_name != '')
             <p class="products" style="margin-bottom: 0px ;text-transform: none !important;">{{ $value['varian_name'] }}
             </p>
         @endif
-        @if (isset($value['topping_name']) && $value['topping_name'] != '')
+        @if (isset($value->topping_name) && $value->topping_name != '')
             <p class="products" style="margin-bottom: 0px;text-transform: none !important;">{{ $value['topping_name'] }}
             </p>
         @endif
         <table class="products table">
             <tr>
-                <td>{{ $value['product_qty'] }}x</td>
-                @if (!isset($row['type']))
-                    <td>{{ (int) $value['total_price'] }}</td>
-                    <td style="text-align: right">{{ $value['total_price'] * (int) $value['product_qty'] }}</td>
-                @endif
+                <td>{{ $value->qty }}x</td>
+                <td>{{ (int) $value->price }}</td>
+                <td style="text-align: right">{{ $value->price * (int) $value->qty }}</td>
             </tr>
         </table>
     @endforeach

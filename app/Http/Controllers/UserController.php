@@ -13,7 +13,7 @@ use PDF;
 class UserController extends Controller
 {
 
-    protected int $company_id;
+    protected $company_id;
 
     public function __construct()
     {
@@ -184,7 +184,7 @@ class UserController extends Controller
             $row['type'] = 'outlet';
 
             view()->share('row', $row);
-            $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
+            $pdf = PDF::loadView('invoices.invoice_print_satuan', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
             $content = $pdf->download()->getOriginalContent();
             $name = \Str::random(20);
             Storage::disk('public')->put("invoices/$name.pdf", $content);
