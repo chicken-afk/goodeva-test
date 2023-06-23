@@ -140,6 +140,21 @@ Route::get('/migrate-data', function () {
     return 'Application Migrated Sucessfully!';
 });
 
+Route::get('/deploy-aslkfdjasr2ieryuiwsr', function () {
+    Artisan::call(
+        'migrate',
+        array(
+            '--path' => 'database/migrations',
+            '--database' => 'mysql',
+            '--force' => true
+        )
+    );
+    Artisan::call('storage:link');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    return 'Application deploy success!';
+});
+
 
 Route::get('/invoice-print', [GenerateInvoice::class, 'generate']);
 
