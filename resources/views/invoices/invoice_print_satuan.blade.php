@@ -11,9 +11,11 @@
 </head>
 <style>
     body {
-        font-family: arial, sans-serif;
+        font-family: "Helvetica" !important;
         border-collapse: collapse;
         width: 100%;
+        font-size: 12px !important;
+        line-height: 24px !important;
     }
 
     h3 {
@@ -93,33 +95,8 @@
     </table>
     <div class="line"></div>
     @foreach ($row['products'] as $key => $value)
-        <p class="products" style="margin-bottom: 2px">{{ $value->active_product_name }}</p>
-        <table class="products table">
-            <tr>
-                <td>{{ $value->qty }}x</td>
-                <td>{{ (int) $value->price }}</td>
-                <td style="text-align: right">{{ $value->price * (int) $value->qty }}</td>
-            </tr>
-        </table>
+        <p class="products" style="margin-bottom: 2px">{{ $value['product_name'] }} {{ $value['product_qty'] }}X</p>
     @endforeach
-    <div class="line"></div>
-    <table class="table">
-        <tr class="invoice">
-            <td>Subtotal</td>
-            <td>:</td>
-            <td style="text-align: right">{{ $row['sub_total'] }}</td>
-        </tr>
-        <tr class="invoice">
-            <td>Pajak</td>
-            <td>:</td>
-            <td style="text-align: right">{{ $row['tax'] }}</td>
-        </tr>
-        <tr class="invoice">
-            <td>Total</td>
-            <td>:</td>
-            <td style="text-align: right">{{ $row['payment_charge'] }}</td>
-        </tr>
-    </table>
     <div class="line"></div>
     <p style="text-align: center; font-size : xx-small; font-weight : 600">{{ date('H:i d/m/Y') }}</p>
 </body>

@@ -20,24 +20,25 @@ class GenerateInvoice extends Controller
                 'product_name' => "Nasi Goreng Spesial",
                 'product_sku' => 'NASGOR2923',
                 'product_qty' => '1',
-                'total_price' => '39.000'
+                'total_price' => '39000'
             ),
             array(
                 'product_name' => "Es Teh",
                 'product_sku' => 'ESTEH234',
                 'product_qty' => '1',
-                'total_price' => '5.000'
+                'total_price' => '5000'
             ),
             array(
                 'product_name' => "Americano",
                 'product_sku' => 'AMRCN132',
                 'product_qty' => '2',
-                'total_price' => '22.000'
+                'total_price' => '22000'
             )
         );
-        return view('invoices.invoice_print', compact('row'));
+        // return view('invoices.invoice_print', compact('row'));
         view()->share('row', $row);
-        $pdf = PDF::loadView('invoices.invoice_print', $row);
+        PDF::setBasePath(public_path());
+        $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
         // download PDF file with download method
         return $pdf->download('pdf23_file.pdf');
     }

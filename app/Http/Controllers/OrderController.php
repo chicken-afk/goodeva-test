@@ -133,9 +133,9 @@ class OrderController extends Controller
         $invoiceId = DB::table('invoice_users')->insertGetId([
             'user_id' => Auth::id(),
             'no_table' => $invoice->no_table,
-            'payment_charge' => (int)$invoice->payment_charge,
-            'tax' => ((int)$invoice->payment_charge / 1.1) * 0.1,
-            'charge_before_tax' => (int)$invoice->payment_charge / 1.1,
+            'payment_charge' => (int) $invoice->payment_charge,
+            'tax' => ((int) $invoice->payment_charge / 1.1) * 0.1,
+            'charge_before_tax' => (int) $invoice->payment_charge / 1.1,
             'created_at' => now()
         ]);
         DB::table('invoice_user_invoices')->insert([
@@ -178,8 +178,9 @@ class OrderController extends Controller
         $row['sub_total'] = $invoice->charge_before_tax;
         $row['tax'] = $invoice->tax;
 
+
         view()->share('row', $row);
-        $pdf = PDF::loadView('invoices.invoice_print_satuan', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
+        $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
         $content = $pdf->download()->getOriginalContent();
         $name = \Str::random(20);
         Storage::disk('public')->put("invoices/$name.pdf", $content);
@@ -460,9 +461,9 @@ class OrderController extends Controller
         $invoiceId = DB::table('invoice_users')->insertGetId([
             'user_id' => Auth::id(),
             'no_table' => $data['no_table'],
-            'payment_charge' => (int)$data['payment_charge'],
-            'tax' => ((int)$data['payment_charge'] / 1.1) * 0.1,
-            'charge_before_tax' => (int)$data['payment_charge'] / 1.1,
+            'payment_charge' => (int) $data['payment_charge'],
+            'tax' => ((int) $data['payment_charge'] / 1.1) * 0.1,
+            'charge_before_tax' => (int) $data['payment_charge'] / 1.1,
             'created_at' => now()
         ]);
 
@@ -506,7 +507,7 @@ class OrderController extends Controller
         $row['products'] = $product;
 
         view()->share('row', $row);
-        $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
+        $pdf = PDF::loadView('invoices.invoice_print_satuan', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
         $content = $pdf->download()->getOriginalContent();
         $name = \Str::random(20);
         Storage::disk('public')->put("invoices/$name.pdf", $content);
