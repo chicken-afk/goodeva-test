@@ -63,10 +63,6 @@
             $('#lstPrinterPapers').html(options);
             $('.lstPrinterPapersE').html(options);
         }
-
-        setInterval(() => {
-            // print()
-        }, 2000);
     </script>
     @if ($cashier->printer == null)
         <script>
@@ -78,7 +74,7 @@
             setInterval(() => {
                 console.log('run printing..')
                 runPrint();
-            }, 3000);
+            }, 1000);
         </script>
     @endif
 @endsection

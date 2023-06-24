@@ -26,8 +26,7 @@
     }
 
     h3 {
-        font-size: 14px !important;
-        line-height: 28px !important;
+        font-size: large !important;
         text-align: center;
         margin-bottom: 3px;
         font-weight: 600;
