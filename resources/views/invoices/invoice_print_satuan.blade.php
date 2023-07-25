@@ -101,6 +101,7 @@
     <div class="line"></div>
     @foreach ($row['products'] as $key => $value)
         <p class="products" style="margin-bottom: 2px">{{ $value['product_name'] }} {{ $value['product_qty'] }}X</p>
+        <p class="products" style="margin-bottom: 2px">Note : {{ $value['notes'] }}</p>
     @endforeach
     <div class="line"></div>
     <p style="text-align: center; font-size : xx-small; font-weight : 600">{{ date('H:i d/m/Y') }}</p>

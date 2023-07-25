@@ -26,8 +26,12 @@
                     @foreach ($row['outlets'][$key]->products as $val)
                         <div class="product_list" data-bs-toggle="modal" data-bs-target="#productModal{{ $val->uuid }}">
                             <div class="d-flex">
-                                <div class="p-2 wrapper_image">
+                                {{-- <div class="p-2 wrapper_image">
                                     <img loading="lazy" src="{{ asset($val->product_image) }}"
+                                        class="rounded float-start thumbnail-product" alt="...">
+                                </div> --}}
+                                <div class="p-2 wrapper_image">
+                                    <img loading="lazy" src="" alt="product image"
                                         class="rounded float-start thumbnail-product" alt="...">
                                 </div>
                                 <div class="p-0 product_detail pt-2">
@@ -61,9 +65,13 @@
                                     <div class="modal-body">
                                         <button type="button" class="btn-close close-modal" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                        <div class="justify-content-center text-center" style="">
+                                        {{-- <div class="justify-content-center text-center" style="">
                                             <img loading="lazy" src="{{ asset($val->product_image) }}"
                                                 class="rounded img-fluid" alt="...">
+                                        </div> --}}
+                                        <div class="justify-content-center text-center" style="">
+                                            <img loading="lazy" src="" alt="product image" class="rounded img-fluid"
+                                                alt="...">
                                         </div>
                                         <div class="product-detail">
                                             <input type="hidden" id="uuid-{{ $val->uuid }}"
@@ -126,7 +134,8 @@
                                                                             Rp.
                                                                             {{ number_format($i->varian_price) }},-</span>
                                                                     </label>
-                                                                    <div class="line-1" style="margin-bottom : 20px;"></div>
+                                                                    <div class="line-1" style="margin-bottom : 20px;">
+                                                                    </div>
                                                                 @endforeach
                                                             </div>
                                                         </div>
@@ -150,6 +159,12 @@
                                                             @endforeach
                                                         </div>
                                                     @endif
+                                                    <div class="varian">
+                                                        <h4>Notes</h4>
+                                                        <input id="notes-{{ $val->uuid }}" type="text"
+                                                            class="form-control form-control-solid form-control-sm"
+                                                            name="note-{{ $val->uuid }}" placeholder="Masukan note">
+                                                    </div>
                                                 </div>
 
                                             </div>
@@ -253,6 +268,7 @@
             data['product_name'] = $(`#product_name-${uuid}`).val();
             data['description'] = $(`#description-${uuid}`).val();
             data['qty'] = parseInt($(`#qty-${uuid}`).val());
+            data['note'] = $(`#notes-${uuid}`).val();
 
             if (varians != null) {
                 var varianArray = varians.split("|");

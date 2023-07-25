@@ -56,6 +56,8 @@ function generateContent() {
                 ${carts[i].product_name}
                 ${varians}
                 ${topping_text}
+
+                <p>Notes : ${carts[i].note}</p>
             </div>
             <div class="bd-highlight  ms-auto">
                 <img loading="lazy" src="${carts[i].product_image}"

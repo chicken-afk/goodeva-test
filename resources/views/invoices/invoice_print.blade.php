@@ -12,11 +12,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <style>
-    @font-face {
-        font-family: 'tenso-reguler';
-        src: url("Tenso-Regular.otf") format("opentype");
-    }
-
     body {
         font-family: "Helvetica" !important;
         border-collapse: collapse;
@@ -34,7 +29,8 @@
     }
 
     h4 {
-        font-size: x-small;
+        font-size: 9px !important;
+        line-height: 12px !important;
         margin-top: 0px;
         text-align: center;
     }
@@ -48,18 +44,21 @@
     }
 
     .invoice {
-        font-size: small !important;
+        font-size: 10px !important;
+        line-height: 16px !important;
         font-weight: 600;
     }
 
     .products {
-        font-size: small;
+        font-size: 10px !important;
+        line-height: 16px !important;
         text-transform: uppercase;
         font-weight: 600;
     }
 
     span {
-        font-size: small !important;
+        font-size: 10px !important;
+        line-height: 16px !important;
         font-weight: 600 !important;
     }
 

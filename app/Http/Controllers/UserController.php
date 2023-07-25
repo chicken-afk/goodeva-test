@@ -105,7 +105,7 @@ class UserController extends Controller
                 'invoice_id' => $invoiceId,
                 'active_product_id' => $product->id,
                 'qty' => $q['qty'],
-                'notes' => 'kosong',
+                'notes' => $q['note'],
                 'created_at' => now(),
                 'price' => $q['price']
             ]);
@@ -171,6 +171,7 @@ class UserController extends Controller
                         'topping_name' => $topping_text,
                         'product_name' => $v['product_name'],
                         'product_qty' => $v['qty'],
+                        'notes' => $v['note'],
                         'total_price' => $v['price']
                     );
                     $index++;
@@ -219,7 +220,7 @@ class UserController extends Controller
         $row['invoice'] = $invoice;
 
         $row['products'] = DB::table('invoice_products')->join('active_products', 'active_products.id', 'invoice_products.active_product_id')
-            ->select('invoice_products.id', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
+            ->select('invoice_products.id', 'invoice_products.notes', 'invoice_products.qty', 'invoice_products.price', 'invoice_products.active_product_id', 'active_products.active_product_name')
             ->where('invoice_products.invoice_id', $invoice->id)
             ->get();
 

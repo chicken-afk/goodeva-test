@@ -42,11 +42,11 @@
         <div class="container">
             <div class="card card-invoice">
                 <div class="card-header">
-                     <div class="d-flex justify-content-center mt-2 mb-2">
-                    <div class="brand" style="margin: auto !important;">
-                        <img src="{{ asset('media/client-logos/logo.png') }}" class="logo-brand" />
-                        <span> Warung Aceh Bang Ari </span>
-                    </div>
+                    <div class="d-flex justify-content-center mt-2 mb-2">
+                        <div class="brand" style="margin: auto !important;">
+                            <img src="{{ asset('media/client-logos/logo.png') }}" class="logo-brand" />
+                            <span> Warung Aceh Bang Ari </span>
+                        </div>
                     </div>
                     {{-- <h3 class="mt-3" style="font-size : large;">Pesanan Berhasil</h3> --}}
                     @php
@@ -113,6 +113,7 @@
                                     {{ $value->active_product_name }}
                                     <p>Varian : {{ $value->varian_name }}</p>
                                     <p>Topping : {{ $value->topping_text }}</p>
+                                    <p>Note : {{ $value->notes }}</p>
                                 </div>
                                 <div class="bd-highlight  ms-auto" style="font-weight:500;font-size:1rem">
                                     <p style="font-size: 0.8rem">Qty : {{ $value->qty }}</p>
