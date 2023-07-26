@@ -76,8 +76,8 @@
 </style>
 
 <body>
-    <h3>Warung Aceh Bang Ari</h3>
-    <h4>Jl. Tebet Barat Dalam V
+    <h3 class="fontA">Warung Aceh Bang Ari</h3>
+    <h4 class="fontB">Jl. Tebet Barat Dalam V
         No.1, RW.3, Tebet Bar., Kec. Tebet, Kota
         Jakarta Selatan,
         Daerah Khusus Ibukota Jakarta
@@ -102,20 +102,21 @@
     </table>
     <div class="line"></div>
     @foreach ($row['products'] as $key => $value)
-        <p class="products" style="margin-bottom: 0px">{{ $value->active_product_name }}</p>
-        @if (isset($value->varian_name) && $value->varian_name != '')
+        <p class="products" style="margin-bottom: 0px">{{ $value['active_product_name'] ?? $value['product_name'] }}</p>
+
+        @if (isset($value['varian_name']) && $value['varian_name'] != '')
             <p class="products" style="margin-bottom: 0px ;text-transform: none !important;">{{ $value['varian_name'] }}
             </p>
         @endif
-        @if (isset($value->topping_name) && $value->topping_name != '')
+        @if (isset($value['topping_name']) && $value['topping_name'] != '')
             <p class="products" style="margin-bottom: 0px;text-transform: none !important;">{{ $value['topping_name'] }}
             </p>
         @endif
         <table class="products table">
             <tr>
-                <td>{{ $value->qty }}x</td>
-                <td>{{ (int) $value->price }}</td>
-                <td style="text-align: right">{{ $value->price * (int) $value->qty }}</td>
+                <td>{{ $value['qty'] }}x</td>
+                <td>{{ $value['price'] }}</td>
+                <td style="text-align: right">{{ $value['price'] * (int) $value['qty'] }}</td>
             </tr>
         </table>
     @endforeach

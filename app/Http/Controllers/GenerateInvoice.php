@@ -17,24 +17,29 @@ class GenerateInvoice extends Controller
         $row['name'] = "Andika";
         $row['products'] = array(
             array(
-                'product_name' => "Nasi Goreng Spesial",
+                'active_product_name' => "Nasi Goreng Spesial",
                 'product_sku' => 'NASGOR2923',
-                'product_qty' => '1',
-                'total_price' => '39000'
+                'qty' => '1',
+                'notes' => 'note ya',
+                'price' => '39000'
             ),
             array(
-                'product_name' => "Es Teh",
+                'active_product_name' => "Es Teh",
                 'product_sku' => 'ESTEH234',
-                'product_qty' => '1',
-                'total_price' => '5000'
+                'qty' => '1',
+                'notes' => 'note ya',
+                'price' => '5000'
             ),
             array(
-                'product_name' => "Americano",
+                'active_product_name' => "Americano",
                 'product_sku' => 'AMRCN132',
-                'product_qty' => '2',
-                'total_price' => '22000'
+                'qty' => '2',
+                'notes' => 'note ya',
+                'price' => '22000'
             )
         );
+        $row['products'] = collect($row['products']);
+
         // return view('invoices.invoice_print', compact('row'));
         view()->share('row', $row);
         PDF::setBasePath(public_path());

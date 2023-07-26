@@ -97,6 +97,7 @@ function submitFormMeja() {
         type: "POST",
         data: datas,
         success: function (response) {
+            console.log(response);
             if (response.status_code == 404) {
                 Swal.fire({
                     icon: 'Error',
@@ -852,6 +853,7 @@ function submitForm() {
             // window.location = "/products"
         },
         error: function (response) {
+            console.log(response)
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal',
