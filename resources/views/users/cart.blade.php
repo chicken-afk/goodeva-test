@@ -37,6 +37,17 @@
                 </h4>
             </div>
             <div class="card-body detail-users">
+                <div class="form-group">
+                    <label>Dine In atau takeaway?</label>
+                    <div class="radio-inline">
+                        <label class="radio radio-lg">
+                            <input type="radio" checked="checked" name="keterangan" value="Dine In">
+                            <span></span>Dine In</label>
+                        <label class="radio radio-lg">
+                            <input type="radio" name="keterangan" value="Take Away">
+                            <span></span>Take Away</label>
+                    </div>
+                </div>
                 <div class="inpout-group mb-3">
                     <label for="">Nama Pemesan</label>
                     <p id="alert-user" class="d-none">Wajib Mengisi Nama</p>
@@ -45,18 +56,17 @@
                 </div>
                 <div class="inpout-group mb-3">
                     <label for="">Nomor Meja</label>
-                    <p id='alert-table' class="d-none mb-0">Wajib Mengisi Nomor Meja</p>
-                    <p>Input nomor yang ada di meja atau ambil nomor meja di kasir</p>
+                    <p id='alert-table' class="d-none mb-0">Wajib Mengisi Nomor Meja Untuk Dine In</p>
+                    <p class="bg-alert">Input nomor yang ada di meja atau ambil nomor meja di kasir Untuk Dine In</p>
                     <input id="nTable" type="number" class="form-control" placeholder="Nomor Meja"
-                        aria-label="Nomor Meja" aria-describedby="basic-addon1" name="table_no" required>
+                        aria-label="Nomor Meja" aria-describedby="basic-addon1" name="table_no">
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="footer sticky-bottom">
-        <button onclick="submitOrders()" id="buttonCheckout" type="button" class="btn btn-sm btn-primary">
-            {{-- Generate Using Javascript --}}
-        </button>
-    </div>
-@endsection
+        <div class="footer sticky-bottom">
+            <button onclick="submitOrders()" id="buttonCheckout" type="button" class="btn btn-sm btn-primary">
+                {{-- Generate Using Javascript --}}
+            </button>
+        </div>
+    @endsection

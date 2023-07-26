@@ -84,6 +84,7 @@ class UserController extends Controller
             'company_id' => $this->company_id,
             'invoice_code' => $invoice_code,
             'name' => $request->nama_pemesan,
+            'keterangan' => $request->keterangan,
             'no_table' => $request->nomor_meja,
             'started_at' => now(),
             'order_at' => now(),
@@ -183,6 +184,7 @@ class UserController extends Controller
             $row['no_table'] = $invoice->no_table;
             $row['products'] = $outlets[$p]->products;
             $row['type'] = 'outlet';
+            $row['keterangan'] = $request->keterangan;
 
             view()->share('row', $row);
             $pdf = PDF::loadView('invoices.invoice_print_satuan', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');

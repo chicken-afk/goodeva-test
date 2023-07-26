@@ -295,40 +295,54 @@ function submitOrders() {
         })
         return false
     }
-
+    var valError = false;
+    var keteranganValue = getSelectedKeterangan();
     var nUser = document.getElementById('nUser');
     var nTable = document.getElementById('nTable');
-    if (nUser.value == '' || nTable.value == '') {
-        if (nUser.value != '' && nTable.value == '') {
-            $("#alert-user").addClass("d-none");
-            $("#alert-table").removeClass("d-none");
-            var access = document.getElementById("detailPemesan");
-            access.scrollIntoView({ behavior: 'smooth' }, true);
-            return true
-        }
-        if (nUser.value == '' && nTable.value != '') {
+    if (keteranganValue == 'Take Away') {
+        console.log('take away')
+        console.log('value', nUser.value)
+        if (nUser.value == '') {
             $("#alert-user").removeClass("d-none");
             $("#alert-table").addClass("d-none");
             var access = document.getElementById("detailPemesan");
             access.scrollIntoView({ behavior: 'smooth' }, true);
             return true
         }
-        $("#alert-user").removeClass("d-none");
-        $("#alert-table").removeClass("d-none");
-        var access = document.getElementById("detailPemesan");
-        access.scrollIntoView({ behavior: 'smooth' }, true);
-        return true
+    } else {
+        if (nUser.value == '' || nTable.value == '') {
+            if (nUser.value != '' && nTable.value == '') {
+                $("#alert-user").addClass("d-none");
+                $("#alert-table").removeClass("d-none");
+                var access = document.getElementById("detailPemesan");
+                access.scrollIntoView({ behavior: 'smooth' }, true);
+                return true
+            }
+            if (nUser.value == '' && nTable.value != '') {
+                $("#alert-user").removeClass("d-none");
+                $("#alert-table").addClass("d-none");
+                var access = document.getElementById("detailPemesan");
+                access.scrollIntoView({ behavior: 'smooth' }, true);
+                return true
+            }
+
+            $("#alert-user").removeClass("d-none");
+            $("#alert-table").removeClass("d-none");
+            var access = document.getElementById("detailPemesan");
+            access.scrollIntoView({ behavior: 'smooth' }, true);
+            return true
+        }
     }
+
     $("#alert-user").addClass("d-none");
     $("#alert-table").addClass("d-none");
     data = {
         "nama_pemesan": nUser.value,
         "nomor_meja": nTable.value,
         "invoice_charge": getTotalPrice(),
+        "keterangan": keteranganValue,
         "carts": carts
     }
-    console.log(data)
-
     // Send Data Using AJax
 
 
@@ -391,6 +405,20 @@ function submitOrders() {
     })
 
 }
+
+function getSelectedKeterangan() {
+    var radios = document.querySelectorAll('input[name="keterangan"]');
+    var selectedValue = '';
+
+    radios.forEach(function (radio) {
+        if (radio.checked) {
+            selectedValue = radio.value;
+        }
+    });
+
+    return selectedValue;
+}
+
 
 getTotalPrice();
 

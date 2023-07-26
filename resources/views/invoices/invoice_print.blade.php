@@ -99,6 +99,11 @@
             <td class="invoice">:</td>
             <td class="invoice">{{ $row['no_table'] }}</td>
         </tr>
+        @if (isset($row['keterangan']))
+            <td class="invoice">Keterangan</td>
+            <td class="invoice">:</td>
+            <td class="invoice">{{ $row['keterangan'] }}</td>
+        @endif
     </table>
     <div class="line"></div>
     @foreach ($row['products'] as $key => $value)
