@@ -9,7 +9,7 @@ class GenerateInvoice extends Controller
 {
     public function generate()
     {
-        $row['no_table'] = "INVC12345";
+        $row['no_table'] = "6";
         $row['sub_total'] = 30000;
         $row['tax'] = 3000;
         $row['payment_charge'] = 33000;
@@ -17,28 +17,33 @@ class GenerateInvoice extends Controller
         $row['name'] = "Andika";
         $row['products'] = array(
             array(
-                'product_name' => "Nasi Goreng Spesial",
+                'active_product_name' => "Nasi Goreng Spesial",
                 'product_sku' => 'NASGOR2923',
-                'product_qty' => '1',
-                'total_price' => '39000'
+                'qty' => '1',
+                'notes' => 'note ya',
+                'price' => '39000'
             ),
             array(
-                'product_name' => "Es Teh",
+                'active_product_name' => "Es Teh",
                 'product_sku' => 'ESTEH234',
-                'product_qty' => '1',
-                'total_price' => '5000'
+                'qty' => '1',
+                'notes' => 'note ya',
+                'price' => '5000'
             ),
             array(
-                'product_name' => "Americano",
+                'active_product_name' => "Americano",
                 'product_sku' => 'AMRCN132',
-                'product_qty' => '2',
-                'total_price' => '22000'
+                'qty' => '2',
+                'notes' => 'note ya',
+                'price' => '22000'
             )
         );
-        // return view('invoices.invoice_print', compact('row'));
+        $row['products'] = collect($row['products']);
+
+        // return view('invoices.invoice_print_test', compact('row'));
         view()->share('row', $row);
         PDF::setBasePath(public_path());
-        $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
+        $pdf = PDF::loadView('invoices.invoice_print_test', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
         // download PDF file with download method
         return $pdf->download('pdf23_file.pdf');
     }

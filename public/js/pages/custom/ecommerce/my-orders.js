@@ -97,6 +97,7 @@ function submitFormMeja() {
         type: "POST",
         data: datas,
         success: function (response) {
+            console.log(response);
             if (response.status_code == 404) {
                 Swal.fire({
                     icon: 'Error',
@@ -556,6 +557,7 @@ var KTEcommerceMyOrders = function () {
             layout: {
                 scroll: true,
                 footer: false,
+                responsive: true, // Aktifkan fitur responsif
             },
 
             // column sorting
@@ -585,6 +587,10 @@ var KTEcommerceMyOrders = function () {
             {
                 field: 'name',
                 title: 'Nama',
+            },
+            {
+                field: 'keterangan',
+                title: 'Keterangan',
             },
             {
                 field: 'no_table',
@@ -852,6 +858,7 @@ function submitForm() {
             // window.location = "/products"
         },
         error: function (response) {
+            console.log(response)
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal',

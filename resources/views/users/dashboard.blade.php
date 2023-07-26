@@ -30,10 +30,10 @@
                                     <img loading="lazy" src="{{ asset($val->product_image) }}"
                                         class="rounded float-start thumbnail-product" alt="...">
                                 </div> --}}
-                                <div class="p-2 wrapper_image">
+                                {{-- <div class="p-2 wrapper_image">
                                     <img loading="lazy" src="" alt="product image"
                                         class="rounded float-start thumbnail-product" alt="...">
-                                </div>
+                                </div> --}}
                                 <div class="p-0 product_detail pt-2">
                                     <h4>{{ $val->active_product_name }}</h4>
                                     <p>{{ $val->description }}</p>
@@ -149,8 +149,7 @@
                                                                     <input class="form-check-input" type="checkbox"
                                                                         value="{{ $q->id }}|{{ $q->topping_name }}|{{ $q->topping_price }}"
                                                                         id="flexCheckDefault">
-                                                                    <label class="form-check-label"
-                                                                        for="flexCheckDefault">
+                                                                    <label class="form-check-label" for="flexCheckDefault">
                                                                         {{ $q->topping_name }} +Rp.
                                                                         {{ number_format($q->topping_price) }}
                                                                     </label>

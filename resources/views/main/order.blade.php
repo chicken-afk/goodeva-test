@@ -74,7 +74,7 @@
             setInterval(() => {
                 console.log('run printing..')
                 runPrint();
-            }, 1000);
+            }, 6000);
         </script>
     @endif
 @endsection
@@ -179,7 +179,7 @@
                                     </div>
                                     <div class="col-lg-6 col-xl-6">
                                         <div class="row align-items-center">
-                                            <div class="col-md-4">Bayar Berdasarkan Meja :</div>
+                                            <div class="col-md-4">Bayar Berdasarkan No Meja :</div>
                                             <div class="col-md-4 my-2 my-md-0">
                                                 <div class="input-icon">
                                                     <input type="text" class="form-control form-control-solid"
@@ -197,9 +197,11 @@
                             <!--end::Search Form-->
                             <!--end: Search Form-->
                             <!--begin: Datatable-->
+                            {{-- <table class="table-responsive"> --}}
                             <div class="datatable datatable-bordered datatable-head-custom table-responsive"
                                 id="kt_datatable">
                             </div>
+                            {{-- </table> --}}
                             <!--end: Datatable-->
                         </div>
                         <!--end::Body-->

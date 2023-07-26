@@ -160,7 +160,7 @@ return array(
          * the desired content might be different (e.g. screen or projection view of html file).
          * Therefore allow specification of content here.
          */
-        "default_media_type" => "screen",
+        "default_media_type" => "print",
 
         /**
          * The default paper size.
@@ -221,7 +221,8 @@ return array(
          *
          * @var int
          */
-        "dpi" => 96,
+        // "dpi" => 96,
+        "dpi" => 576,
 
         /**
          * Enable inline PHP
@@ -235,7 +236,7 @@ return array(
          *
          * @var bool
          */
-        "enable_php" => false,
+        "enable_php" => true,
 
         /**
          * Enable inline Javascript
@@ -269,7 +270,7 @@ return array(
         /**
          * A ratio applied to the fonts height to be more like browsers' line height
          */
-        "font_height_ratio" => 1.1,
+        "font_height_ratio" => 1.5,
 
         /**
          * Use the HTML5 Lib parser
