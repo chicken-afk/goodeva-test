@@ -9,7 +9,7 @@ class GenerateInvoice extends Controller
 {
     public function generate()
     {
-        $row['no_table'] = "INVC12345";
+        $row['no_table'] = "6";
         $row['sub_total'] = 30000;
         $row['tax'] = 3000;
         $row['payment_charge'] = 33000;
@@ -40,10 +40,10 @@ class GenerateInvoice extends Controller
         );
         $row['products'] = collect($row['products']);
 
-        // return view('invoices.invoice_print', compact('row'));
+        // return view('invoices.invoice_print_test', compact('row'));
         view()->share('row', $row);
         PDF::setBasePath(public_path());
-        $pdf = PDF::loadView('invoices.invoice_print', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
+        $pdf = PDF::loadView('invoices.invoice_print_test', $row)->setPaper([0, 0, 685.98, 215.772], 'landscape');
         // download PDF file with download method
         return $pdf->download('pdf23_file.pdf');
     }

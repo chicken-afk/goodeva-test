@@ -557,6 +557,7 @@ var KTEcommerceMyOrders = function () {
             layout: {
                 scroll: true,
                 footer: false,
+                responsive: true, // Aktifkan fitur responsif
             },
 
             // column sorting
@@ -586,6 +587,10 @@ var KTEcommerceMyOrders = function () {
             {
                 field: 'name',
                 title: 'Nama',
+            },
+            {
+                field: 'keterangan',
+                title: 'Keterangan',
             },
             {
                 field: 'no_table',

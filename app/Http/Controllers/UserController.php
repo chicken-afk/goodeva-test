@@ -171,7 +171,7 @@ class UserController extends Controller
                         'varian_name' => $varian_name,
                         'topping_name' => $topping_text,
                         'product_name' => $v['product_name'],
-                        'product_qty' => $v['qty'],
+                        'qty' => $v['qty'],
                         'notes' => $v['note'],
                         'total_price' => $v['price']
                     );
