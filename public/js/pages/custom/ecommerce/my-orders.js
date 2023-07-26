@@ -625,12 +625,12 @@ var KTEcommerceMyOrders = function () {
                     return '<span class="label font-weight-bold label-lg ' + status[row.payment_status].class + ' label-inline">' + status[row.payment_status].title + '</span>';
                 },
             },
-            {
-                field: 'payment_at',
-                title: 'Tanggal Pembayaran',
-                type: 'date',
-                format: 'H:i:s MM/DD/YYYY',
-            },
+            // {
+            //     field: 'payment_at',
+            //     title: 'Tanggal Pembayaran',
+            //     type: 'date',
+            //     format: 'H:i:s MM/DD/YYYY',
+            // },
             {
                 field: 'Actions',
                 title: 'Actions',
