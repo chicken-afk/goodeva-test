@@ -30,6 +30,10 @@ use App\Http\Controllers\ExportOrderController;
  * Route For Printer Function
  */
 
+Route::get('/', function () {
+    return redirect('/dashboard');
+});
+
 Route::get('/auto-print', [PrinterController::class, 'autoPrint']);
 Route::get('/print/{pdf}', [PrinterController::class, 'isPrintedTrue']);
 
