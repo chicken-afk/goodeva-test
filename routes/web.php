@@ -13,6 +13,7 @@ use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\GenerateInvoice;
 use App\Http\Controllers\PrinterController;
+use App\Http\Controllers\ExportOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,8 @@ Route::middleware(['login'])->group(function () {
     Route::get('/delete-invoice-product/{id}', [OrderController::class, 'deleteProductInvoice'])->name('deleteProductInvoice');
     Route::get('/invoices', [OrderController::class, 'getInvoices'])->name('getInvoices');
     Route::post('/payment-table', [OrderController::class, 'paymentTable'])->name('paymentTableApi');
+    Route::get('/orders-export', [ExportOrderController::class, 'export'])->name('exportOrder');
+    Route::get('/orders-export-pdf', [ExportOrderController::class, 'exportPdf'])->name('exportOrderPdf');
 
     /**Live Order Data */
     Route::get('/live-order', [OrderController::class, 'liveOrder'])->name('liveOrder');
