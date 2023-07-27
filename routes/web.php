@@ -79,6 +79,7 @@ Route::middleware(['login'])->group(function () {
     Route::post('/payment-table', [OrderController::class, 'paymentTable'])->name('paymentTableApi');
     Route::get('/orders-export', [ExportOrderController::class, 'export'])->name('exportOrder');
     Route::get('/orders-export-pdf', [ExportOrderController::class, 'exportPdf'])->name('exportOrderPdf');
+    Route::post('/orders-import', [ExportOrderController::class, 'importOrder'])->name('importOrder');
 
     /**Live Order Data */
     Route::get('/live-order', [OrderController::class, 'liveOrder'])->name('liveOrder');
