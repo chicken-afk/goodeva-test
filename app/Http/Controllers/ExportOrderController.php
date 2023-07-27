@@ -63,7 +63,9 @@ class ExportOrderController extends Controller
                         "payment_change" => $row[13],
                         "payment_status" => $row[15],
                         "tax" => $row[23] ?? 0,
-                        "charge_before_tax" => $row[24] ?? 0
+                        "charge_before_tax" => $row[24] ?? 0,
+                        "created_at" => now(),
+                        "updated_at" => now()
                     ]);
                 }
             }
