@@ -55,7 +55,7 @@ class ExportOrderController extends Controller
                         "no_table" => $row[5],
                         "name" => $row[6],
                         "keterangan" => $row[7],
-                        "payment_at" => $row[8],
+                        "payment_at" => $row[8] ?? now(),
                         "payment_method" => $row[9],
                         "started_at" => $row[10],
                         "order_at" => $row[11],
