@@ -11,7 +11,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-lg-4">
+            {{-- <div class="col-lg-4">
                 <div class="card card-custom gutter-b">
                     <div class="card-header">
                         <div class="card-title">
@@ -19,17 +19,16 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        {{-- Generate using Javascript --}}
                         <div id="statistic_1"></div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-8">
+            </div> --}}
+            <div class="col-lg-12">
                 <div class="card card-custom gutter-b">
                     <div class="card-header h-auto">
                         <div class="card-title py-5">
                             <div class="card-label">
-                                Chart Penjualan Berdasarkan Omset
+                                Chart Garis Berdasarkan Omset Perbulan
                             </div>
                         </div>
                     </div>
@@ -47,7 +46,7 @@
                     <div class="card-header h-auto">
                         <div class="card-title py-5">
                             <div class="card-label">
-                                Chart Penjualan Berdasarkan Outlet
+                                Chart Lingkaran Penjualan Berdasarkan Omset Perbulan
                             </div>
                         </div>
                     </div>
@@ -70,6 +69,24 @@
                     <div class="card-body text-center">
                         <!--begin::Chart-->
                         <div id="chart_12"></div>
+                        <!--end::Chart-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-custom gutter-b">
+                    <div class="card-header h-auto">
+                        <div class="card-title py-5">
+                            <div class="card-label">
+                                Bar Chart Berdasarkan Barang Dijual
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!--begin::Chart-->
+                        <div id="chart_3"></div>
                         <!--end::Chart-->
                     </div>
                 </div>

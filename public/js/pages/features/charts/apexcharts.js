@@ -146,13 +146,13 @@ var KTApexChartsDemo = function () {
 	}
 
 	var _demo11 = function () {
-		$.getJSON('/statistic-outlet', function (response) {
-			console.log(response);
+		$.getJSON('/statistic-omset', function (response) {
+			console.log('grafik bulat', response);
 			var data = [];
 			var categories = [];
 			for (var i = 0; i < response.data.length; i++) {
-				data[i] = parseInt(response.data[i].data);
-				categories[i] = response.data[i].outlet_name + " : " + data[i] + " Terjual";
+				data[i] = parseInt(response.data[i].omset);
+				categories[i] = response.data[i].new_date;
 			}
 			console.log(data, categories)
 
@@ -218,10 +218,70 @@ var KTApexChartsDemo = function () {
 		});
 	}
 
+	var _demo3 = function () {
+		$.getJSON('/statistic-product-permonth', function (response) {
+			console.log('product permonth', response);
+			var data = [];
+			var categories = [];
+
+			for (var i = 0; i < response.data.categories.length; i++) {
+				categories[i] = response.data.categories[i].date;
+			}
+
+			console.log(response.data.value)
+			const apexChart = "#chart_3";
+			var options = {
+				series: response.data.value,
+				chart: {
+					type: 'bar',
+					height: 350
+				},
+				plotOptions: {
+					bar: {
+						horizontal: false,
+						columnWidth: '55%',
+						endingShape: 'rounded'
+					},
+				},
+				dataLabels: {
+					enabled: false
+				},
+				stroke: {
+					show: true,
+					width: 2,
+					colors: ['transparent']
+				},
+				xaxis: {
+					categories: categories,
+				},
+				yaxis: {
+					title: {
+						text: 'Total Penjualan'
+					}
+				},
+				fill: {
+					opacity: 1
+				},
+				tooltip: {
+					y: {
+						formatter: function (val) {
+							return " " + val + " terjual"
+						}
+					}
+				},
+				colors: [primary, success, warning]
+			};
+
+			var chart = new ApexCharts(document.querySelector(apexChart), options);
+			chart.render();
+		});
+	}
+
 	return {
 		// public functions
 		init: function () {
 			_demo1();
+			_demo3();
 			_demo11();
 			_demo12();
 		}

@@ -47,7 +47,7 @@ Route::get('/logout', [AdminController::class, 'logout'])->name('logoutAdmin');
 Route::middleware(['login'])->group(function () {
     /**Printers */
     Route::post('/cashier-printer', [PrinterController::class, 'cashierPrinter'])->name('cashierPrinter');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [StatisticController::class, 'view'])->name('dashboard');
     // Route Product
     Route::get('/products', [ProductController::class, 'index'])->name('getProduct');
     Route::get('/products-add', [ProductController::class, 'addProductPage'])->name('addProductPage');
@@ -99,6 +99,7 @@ Route::middleware(['login'])->group(function () {
     Route::get('/statistic-outlet', [StatisticController::class, 'statisticOutlet'])->name('statisticOutlet');
     /**Chart Data Based On Product*/
     Route::get('/statistic-product', [StatisticController::class, 'statisticProduct'])->name('statisticProduct');
+    Route::get('/statistic-product-permonth', [StatisticController::class, 'statisticProductMonthly'])->name('statisticProduct');
     /**Chart Data Based On Omset Per Month */
     Route::get('/statistic-omset-day', [StatisticController::class, 'statisticOmsetDat'])->name('statisticOmsetDat');
 

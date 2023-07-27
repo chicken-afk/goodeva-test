@@ -45,25 +45,25 @@
             <!--end::Item-->
             @if (Auth::user()->role_id == 1)
                 <!--begin::Item-->
-                <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
+                {{-- <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
                     data-boundary="window" title="Statistik">
                     <a href="{{ route('getStatistic') }}"
                         class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('getStatistic') }}">
                         <i class="flaticon2-list-3 icon-lg"></i>
                     </a>
-                </li>
+                </li> --}}
 
                 <!--end::Item-->
 
                 <!--begin::Item-->
-                <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
+                {{-- <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
                     data-boundary="window" title="Master Data">
                     <a href="{{ route('getProduct') }}"
                         class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active(['getProduct', 'getCategory', 'getOutlets', 'addProductPage', 'createBundlePage']) }}"
                         role="tab">
                         <i class="flaticon2-layers icon-lg"></i>
                     </a>
-                </li>
+                </li> --}}
 
                 <!--end::Item-->
 
@@ -80,14 +80,14 @@
                 <!--end::Item-->
 
                 <!--begin::Item-->
-                <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
+                {{-- <li class="nav-item mb-5" data-toggle="tooltip" data-placement="right" data-container="body"
                     data-boundary="window" title="Setting">
                     <a href="{{ route('settingPage') }}"
                         class="nav-link btn btn-icon btn-clean btn-icon-white btn-lg {{ set_active('settingPage') }}"
                         role="tab">
                         <i class="flaticon2-gear icon-lg"></i>
                     </a>
-                </li>
+                </li> --}}
 
                 <!--end::Item-->
             @endif
